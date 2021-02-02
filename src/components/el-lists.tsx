@@ -4,8 +4,8 @@ import omit from 'lodash/omit'
 import defaultOptions from './default-options'
 
 interface Pagination {
-  pageSize: number
-  currentPage: number
+  pageSize: number | undefined | null
+  currentPage: number | undefined | null
 }
 
 @Component({
@@ -15,7 +15,7 @@ export default class extends Vue {
   @Prop(Number) readonly loading: Boolean | undefined
   @Prop({ default: () => [] }) private readonly data!: object[]
   @Prop({ default: () => [] }) private readonly columns!: object[]
-  @Prop({ type: [Object, Boolean], default: false  }) private readonly pagination: boolean | undefined | null | Pagination
+  @Prop({ type: [Object, Boolean], default: false  }) private readonly pagination: Pagination | undefined | null
   @Prop({ type: Number, default: 0 }) private readonly total!: Number
 
   private get defaultSetting() {
