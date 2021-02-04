@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <!-- <el-table-plus
-      :data="list"
-      :columns="columns"
-    /> -->
     <el-lists
       :data="listData"
       :columns="columns"
@@ -26,9 +22,23 @@ export default {
   data() {
     return {
       listData: [
-        { name: '测试', name1: 1, name2: 2, name3: 3, status: 1 },
-        { name: '测试1', name1: 11, name2: 22, name3: 33, status: 2 },
-        { name: '测试3', name1: 111, name2: 222, name3: 333, status: 3 },
+        { name: '测试', name1: 1, name2: 2, name3: 3, status: 1, title: 'ah' },
+        {
+          name: '测试1',
+          name1: 11,
+          name2: 22,
+          name3: 33,
+          status: 2,
+          title: 'ah',
+        },
+        {
+          name: '测试3',
+          name1: 111,
+          name2: 222,
+          name3: 333,
+          status: 3,
+          title: 'ah',
+        },
       ],
       columns: [
         { label: '数据名', prop: 'name', width: '10px' },

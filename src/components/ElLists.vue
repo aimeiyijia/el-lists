@@ -2,11 +2,15 @@
   <div class="el-lists">
     <div class="el-list" v-for="(list, key) in listData" :key="key">
       <div class="el-list_head">
-        <span class="status"></span>
-        <span class="title"></span>
+        <span class="status">{{ list.status }}</span>
+        <span class="title">{{ list.title }}</span>
       </div>
       <div class="el-list_content">
-        <div class="el-list_item" v-for="(list, index) in list" :key="index">
+        <div
+          class="el-list_item"
+          v-for="(list, index) in list.item"
+          :key="index"
+        >
           <span class="name">{{ list.label + '：' }}</span>
           <span class="data">{{ list.VALUE }}</span>
         </div>
@@ -46,21 +50,23 @@ export default class extends Vue {
   private currentPage = 1
 
   get listData() {
-    const b = [{item: [],}]
     let listData = []
     this.data.forEach(o => {
+      let title = o.title
+      let status = o.status
+      let statusName = o.statusName
+      let item = []
       this.columns.forEach(c => {
         let a = {}
         a.VALUE = o[c.prop]
-        Object.assign(a, c, o)
-        listData.push(a)
+        Object.assign(a, c)
+        item.push(a)
       })
+      listData.push({ title, status, statusName, item })
     })
-    const data = this.group(listData, listData.length / this.data.length)
-    data.map(o => {
-      console.log(o)
-    })
-    return data
+    // const data = this.group(listData, listData.length / this.data.length)
+    console.log(listData)
+    return listData
   }
 
   group(array, subGroupLength) {
