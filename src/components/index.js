@@ -1,11 +1,10 @@
-import Component from './el-lists.tsx'
+import Component from './ElLists'
 
-function install(Vue, options = {}) {
+function install(Vue) {
   if (install.installed) return
   install.installed = true
 
   Vue.component('el-lists', Component)
-  Vue.prototype.$ELEMENT_LISTS = options
 }
 Component.install = install
 

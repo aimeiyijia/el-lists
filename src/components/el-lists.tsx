@@ -1,7 +1,6 @@
-
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
-import omit from 'lodash/omit'
-import defaultOptions from './default-options'
+import { VNode, CreateElement } from 'vue'
+import './index.scss'
 
 interface Pagination {
   pageSize: number | undefined | null
@@ -12,132 +11,53 @@ interface Pagination {
   name: 'el-lists'
 })
 export default class extends Vue {
+
   @Prop(Number) readonly loading: Boolean | undefined
   @Prop({ default: () => [] }) private readonly data!: object[]
   @Prop({ default: () => [] }) private readonly columns!: object[]
-  @Prop({ type: [Object, Boolean], default: false  }) private readonly pagination: Pagination | undefined | null
+  @Prop({ type: [Object, Boolean], default: false }) private readonly pagination: Pagination | undefined | null
   @Prop({ type: Number, default: 0 }) private readonly total!: Number
+  private pageSize = 20
+  private currentPage = 1
 
-  private get defaultSetting() {
-    return {
-      pageSize: (this.pagination && this.pagination.pageSize) || 20,
-      currentPage: (this.pagination && this.pagination.currentPage) || 1,
-      tableWrap: null,
-    }
+  listScroll(e: MouseEvent) {
+    e.preventDefault()
+    this.$emit('scroll', e)
   }
-}
-
-export default {
-  data() {
-    return {
-      pageSize: (this.pagination && this.pagination.pageSize) || 20,
-      currentPage: (this.pagination && this.pagination.currentPage) || 1,
-      tableWrap: null,
-    }
-  },
-  mounted() {
-    const table = this.$refs.table
-    this.tableWrap = table.bodyWrapper
-
-    table.bodyWrapper.addEventListener('scroll', this.tableScroll)
-    this.$once('hook:beforeDestroy', () => {
-      this.tableWrap.removeEventListener('scroll', this.tableScroll)
+  pageSizeChange(pageSize: number) {
+    this.pageSize = pageSize
+    this.emitPageChangeEvent()
+  }
+  currentChange(currentPage: number) {
+    this.currentPage = currentPage
+    this.emitPageChangeEvent()
+  }
+  emitPageChangeEvent() {
+    this.$emit('page-change', {
+      pageSize: this.pageSize,
+      currentPage: this.currentPage,
     })
-  },
-  methods: {
-    tableScroll(e) {
-      e.preventDefault()
-      this.$emit('scroll', e)
-    },
-    pageSizeChange(pageSize) {
-      this.pageSize = pageSize
-      this.emitPageChangeEvent()
-    },
-    currentChange(currentPage) {
-      this.currentPage = currentPage
-      this.emitPageChangeEvent()
-    },
-    emitPageChangeEvent() {
-      this.$emit('page-change', {
-        pageSize: this.pageSize,
-        currentPage: this.currentPage,
-      })
-    },
-  },
-  render(h) {
-    const tableListeners = omit(this.$listeners, ['page-change'])
+  }
 
-    const getCellValue = (column, row) =>
-      column.prop.split('.').reduce((obj, cur) => obj[cur], row)
+  render(h: CreateElement): VNode {
 
-    const renderColumns = columns =>
-      columns
-        .filter(i => !i.hidden)
-        .map(c => {
-          const options = Object.assign({ scopedSlots: {}, prop: '' }, c)
-
-          const scopedSlots = {
-            default: ({ row, column: elColumn, $index }) => {
-              const column = Object.assign({}, options, elColumn)
-              // 支持链式. 如：xxx.xxx
-              const cellValue = getCellValue(column, row)
-
-              // 自定义组件
-              column.customRender =
-                column.customRender ||
-                this.$scopedSlots[column.scopedSlots.customRender]
-              if (column.customRender) {
-                return column.customRender({
-                  cellValue,
-                  row,
-                  column,
-                  $index,
-                  h,
-                })
-              }
-              // 兼容element-ui formatter属性 因为formatter是格式化cellValue的，所以需要拦截下
-              if (column.formatter) {
-                return column.formatter({
-                  row,
-                  column,
-                  cellValue,
-                  $index,
-                })
-              }
-
-              return cellValue
-            },
-            header: ({ column: elColumn, $index }) => {
-              const column = Object.assign({}, options, elColumn)
-
-              column.customTitle =
-                column.customTitle ||
-                this.$scopedSlots[column.scopedSlots.customTitle]
-              if (column.customTitle) {
-                return column.customTitle({ column, $index })
-              }
-              return column.label
-            },
-          }
-
-          return (
-            <el-table-column
-              key={options.prop}
-              {...{ props: options }}
-              scopedSlots={scopedSlots}
-            />
-          )
-        })
+    const rederList = o => {
+      return (
+        <div class="el-list">
+          <div class="el-list_title"></div>
+          <div class="el-list_content">
+            <div class="el-list_item">
+              <span class="name">数据名称</span>
+              <span class="data">数据</span>
+            </div>
+          </div>
+        </div>
+      )
+    }
 
     return (
-      <div class="el-table-plus" v-loading={this.loading}>
-        <el-table
-          ref="table"
-          data={this.data}
-          {...{ props: this.$attrs, on: tableListeners }}
-        >
-          {renderColumns(this.columns)}
-        </el-table>
+      <div class="el-lists" v-loading={this.loading}>
+        {rederList({data: this.data,columns: this.columns})}
         {this.pagination && (
           <el-pagination
             {...{ props: this.pagination }}
@@ -148,5 +68,5 @@ export default {
         )}
       </div>
     )
-  },
+  }
 }

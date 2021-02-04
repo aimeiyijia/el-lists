@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
@@ -34,7 +37,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/components/index.js"  ],
   "exclude": [
     "node_modules"
   ]
