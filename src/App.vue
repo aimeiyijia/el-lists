@@ -12,7 +12,13 @@
       }"
       :total="100"
       @page-change="pageChangeHandle"
-    ></el-lists>
+    >
+      <template v-slot:status="{ row }">
+        <div>
+          {{ row.status }}
+        </div>
+      </template>
+    </el-lists>
   </div>
 </template>
 

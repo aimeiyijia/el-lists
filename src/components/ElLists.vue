@@ -2,8 +2,10 @@
   <div class="el-lists">
     <div class="el-list" v-for="(list, key) in listData" :key="key">
       <div class="el-list_head">
-        <span class="status">{{ list.status }}</span>
-        <span class="title">{{ list.title }}</span>
+        <slot name="status" :row="list" v-if="$scopedSlots.status"></slot>
+        <span class="status" v-else>{{ list.status }}</span>
+        <slot name="status" :row="list" v-if="$scopedSlots.title"></slot>
+        <span class="title" v-else>{{ list.title }}</span>
       </div>
       <div class="el-list_content">
         <div
@@ -49,6 +51,10 @@ export default class extends Vue {
   private pageSize = 20
   private currentPage = 1
 
+  mounted() {
+    console.log(this)
+  }
+
   get listData() {
     let listData = []
     this.data.forEach(o => {
@@ -67,17 +73,6 @@ export default class extends Vue {
     // const data = this.group(listData, listData.length / this.data.length)
     console.log(listData)
     return listData
-  }
-
-  group(array, subGroupLength) {
-    var index = 0
-    var newArray = []
-
-    while (index < array.length) {
-      newArray.push(array.slice(index, (index += subGroupLength)))
-    }
-
-    return newArray
   }
 
   listScroll(e: MouseEvent) {
