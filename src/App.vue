@@ -51,11 +51,23 @@ export default {
         {
           label: '数据名',
           prop: 'name',
-          bootstrap: { xs: 8, sm: 6, md: 4, lg: 3, xl: 1 },
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 },
         },
-        { label: '数据名1', prop: 'name1' },
-        { label: '数据名2', prop: 'name2' },
-        { label: '数据名3', prop: 'name3' },
+        {
+          label: '数据名1',
+          prop: 'name1',
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 },
+        },
+        {
+          label: '数据名2',
+          prop: 'name2',
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 },
+        },
+        {
+          label: '数据名3',
+          prop: 'name3',
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 },
+        },
       ],
       styleConfig: {
         operaWd: 100,

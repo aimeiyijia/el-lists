@@ -100,7 +100,7 @@ export default class extends Vue {
         Object.assign(a, c)
         item.push(a)
       })
-      listData.push({ title, status, statusName, item })
+      listData.push(Object.assign(o, { item }))
     })
     console.log(listData)
     return listData
