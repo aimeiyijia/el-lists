@@ -1,13 +1,15 @@
 {
-  "name": "broke-service-main",
+  "name": "el-lists",
   "version": "1.0.0",
+  "main": "dist/el-lists.common.js",
+  "typings": "types/index.d.ts",
   "private": true,
   "author": "broke",
   "scripts": {
     "serve": "vue-cli-service serve",
     "test:unit": "jest --clearCache && vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "build:prod": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name el-lists ./src/components/index.js",
     "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6"
   },
   "dependencies": {

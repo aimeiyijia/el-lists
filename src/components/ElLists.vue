@@ -63,13 +63,21 @@ interface Pagination {
   currentPage: number | undefined | null
 }
 
+interface StyleConfig {
+  operaWd: number
+}
+
+interface Item {
+  VALUE: string
+}
+
 @Component({
   name: 'el-lists',
 })
 export default class extends Vue {
   @Prop(Number) readonly loading: Boolean | undefined
 
-  @Prop({ default: () => {} }) private readonly styleConfig!: object
+  @Prop({ default: () => {} }) private readonly styleConfig!: StyleConfig
 
   @Prop({ default: () => [] }) private readonly data!: object[]
 
@@ -88,21 +96,17 @@ export default class extends Vue {
   }
 
   get listData() {
-    let listData = []
-    this.data.forEach(o => {
-      let title = o.title
-      let status = o.status
-      let statusName = o.statusName
-      let item = []
-      this.columns.forEach(c => {
-        let a = {}
+    let listData: any[] = []
+    this.data.forEach((o: any) => {
+      let item: any[] = []
+      this.columns.forEach((c: any) => {
+        let a: Item = { VALUE: '' }
         a.VALUE = o[c.prop]
         Object.assign(a, c)
         item.push(a)
       })
       listData.push(Object.assign(o, { item }))
     })
-    console.log(listData)
     return listData
   }
 
