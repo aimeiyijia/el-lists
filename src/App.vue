@@ -48,7 +48,11 @@ export default {
         },
       ],
       columns: [
-        { label: '数据名', prop: 'name', width: '10px' },
+        {
+          label: '数据名',
+          prop: 'name',
+          bootstrap: { xs: 8, sm: 6, md: 4, lg: 3, xl: 1 },
+        },
         { label: '数据名1', prop: 'name1' },
         { label: '数据名2', prop: 'name2' },
         { label: '数据名3', prop: 'name3' },
@@ -65,23 +69,12 @@ export default {
     delHandle({ name }) {
       this.$message.error(`删除 ${name}`)
     },
-
-    rowClickHandle(row, column, event) {
-      console.log(column)
-      // console.log(row, column, event)
-    },
     sortChangeHandle(o) {
       console.log(o)
     },
     pageChangeHandle(e) {
       console.log(e)
       // console.log(pageSize, currentPage)
-    },
-
-    // formatter
-    formatter(row, column, cellValue, index) {
-      console.log(row, column, cellValue, index)
-      return 111
     },
   },
 }

@@ -2,27 +2,37 @@
   <div class="el-lists">
     <div class="el-list" v-for="(list, key) in listData" :key="key">
       <div class="el-list_head">
-        <slot name="status" :row="list" v-if="$scopedSlots.status"></slot>
+        <span class="status" v-if="$scopedSlots.status">
+          <slot name="status" :row="list" />
+        </span>
         <span class="status" v-else>{{ list.status }}</span>
-        <slot name="status" :row="list" v-if="$scopedSlots.title"></slot>
+
+        <span class="title" v-if="$scopedSlots.title">
+          <slot name="status" :row="list" />
+        </span>
         <span class="title" v-else>{{ list.title }}</span>
       </div>
       <div class="el-lists_main">
         <div class="el-list_content" :style="{ width: contentWd }">
           <el-row>
-            <el-col :span="6" v-for="(item, index) in list.item" :key="index">
+            <el-col
+              :span="6"
+              v-bind="item.bootstrap"
+              v-for="(item, index) in list.item"
+              :key="index"
+            >
               <div class="el-list_item">
                 <slot
                   name="itemName"
                   :row="{ item, list }"
                   v-if="$scopedSlots.itemName"
-                ></slot>
+                />
                 <span class="name" v-else>{{ item.label + '：' }}</span>
                 <slot
                   name="itemData"
                   :row="{ item, list }"
                   v-if="$scopedSlots.itemData"
-                ></slot>
+                />
                 <span class="data" v-else>{{ item.VALUE }}</span>
               </div>
             </el-col>
@@ -90,7 +100,7 @@ export default class extends Vue {
         Object.assign(a, c)
         item.push(a)
       })
-      listData.push({ title, status, statusName, o, item })
+      listData.push({ title, status, statusName, item })
     })
     console.log(listData)
     return listData

@@ -9,6 +9,16 @@
     border-bottom: 1px solid #e1e4f8;
     display: flex;
     padding: 0 25px;
+
+    .status {
+      margin-right: 12px;
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #363f4a;
+    }
   }
 }
 
