@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <el-lists
+      :styleConfig="styleConfig"
       :data="listData"
       :columns="columns"
       :pagination="{
@@ -14,9 +15,9 @@
       @page-change="pageChangeHandle"
     >
       <template v-slot:status="{ row }">
-        <div>
+        <span>
           {{ row.status }}
-        </div>
+        </span>
       </template>
     </el-lists>
   </div>
@@ -52,6 +53,9 @@ export default {
         { label: '数据名2', prop: 'name2' },
         { label: '数据名3', prop: 'name3' },
       ],
+      styleConfig: {
+        operaWd: 100,
+      },
     }
   },
   methods: {

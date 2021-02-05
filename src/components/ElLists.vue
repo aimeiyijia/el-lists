@@ -7,18 +7,36 @@
         <slot name="status" :row="list" v-if="$scopedSlots.title"></slot>
         <span class="title" v-else>{{ list.title }}</span>
       </div>
-      <div class="el-list_content">
-        <div
-          class="el-list_item"
-          v-for="(list, index) in list.item"
-          :key="index"
-        >
-          <span class="name">{{ list.label + '：' }}</span>
-          <span class="data">{{ list.VALUE }}</span>
+      <div class="el-lists_main">
+        <div class="el-list_content" :style="{ width: contentWd }">
+          <el-row>
+            <el-col :span="6" v-for="(item, index) in list.item" :key="index">
+              <div class="el-list_item">
+                <slot
+                  name="itemName"
+                  :row="{ item, list }"
+                  v-if="$scopedSlots.itemName"
+                ></slot>
+                <span class="name" v-else>{{ item.label + '：' }}</span>
+                <slot
+                  name="itemData"
+                  :row="{ item, list }"
+                  v-if="$scopedSlots.itemData"
+                ></slot>
+                <span class="data" v-else>{{ item.VALUE }}</span>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+
+        <div class="el-list_opera" :style="{ width: operaWd + 'px' }">
+          234
+          <slot name="opera" :row="list" v-if="$scopedSlots.opera"></slot>
         </div>
       </div>
     </div>
     <el-pagination
+      v-if="isPaginationShow"
       class="el-lists_pagination"
       v-bind="pagination"
       :total="total"
@@ -30,8 +48,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
-import { VNode, CreateElement } from 'vue'
-
 interface Pagination {
   pageSize: number | undefined | null
   currentPage: number | undefined | null
@@ -42,17 +58,23 @@ interface Pagination {
 })
 export default class extends Vue {
   @Prop(Number) readonly loading: Boolean | undefined
+
+  @Prop({ default: () => {} }) private readonly styleConfig!: object
+
   @Prop({ default: () => [] }) private readonly data!: object[]
+
   @Prop({ default: () => [] }) private readonly columns!: object[]
+
   @Prop({ type: [Object, Boolean], default: false })
   private readonly pagination: Pagination | undefined | null
+
   @Prop({ type: Number, default: 0 }) private readonly total!: Number
 
-  private pageSize = 20
-  private currentPage = 1
+  private pageSize: number = 10
+  private currentPage: number = 1
 
-  mounted() {
-    console.log(this)
+  private get isPaginationShow(): boolean {
+    return Boolean(this.pagination && this.pagination.pageSize)
   }
 
   get listData() {
@@ -68,30 +90,42 @@ export default class extends Vue {
         Object.assign(a, c)
         item.push(a)
       })
-      listData.push({ title, status, statusName, item })
+      listData.push({ title, status, statusName, o, item })
     })
-    // const data = this.group(listData, listData.length / this.data.length)
     console.log(listData)
     return listData
+  }
+
+  get contentWd() {
+    const width = this.styleConfig.operaWd + 48
+    return `calc(100% - ${width + 'px'})`
+  }
+
+  get operaWd() {
+    return this.styleConfig.operaWd
   }
 
   listScroll(e: MouseEvent) {
     e.preventDefault()
     this.$emit('scroll', e)
   }
+
   pageSizeChange(pageSize: number) {
     this.pageSize = pageSize
     this.emitPageChangeEvent()
   }
+
   currentChange(currentPage: number) {
     this.currentPage = currentPage
     this.emitPageChangeEvent()
   }
-  emitPageChangeEvent() {
-    this.$emit('page-change', {
+
+  @Emit('page-change')
+  emitPageChangeEvent(): Pagination {
+    return {
       pageSize: this.pageSize,
       currentPage: this.currentPage,
-    })
+    }
   }
 }
 </script>

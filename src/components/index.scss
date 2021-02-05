@@ -1,5 +1,4 @@
 .el-list {
-  width: calc(100% - 2px);
   height: 170px;
   border: 1px solid #e1e4f8;
   margin: 16px 0;
@@ -13,13 +12,15 @@
   }
 }
 
+.el-lists_main {
+  padding: 14px 24px;
+}
+
+.el-list_opera,.el-list_content  {
+  display: inline-block;
+  vertical-align: text-top;
+}
+
 .el-list_content {
   background: #fff;
-  padding: 14px 0 14px 25px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
 }
