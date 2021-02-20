@@ -9,12 +9,12 @@
         pageSize: 10,
         layout: 'prev, pager, next, sizes, jumper, ->, total',
         background: true,
-        small: false,
+        small: false
       }"
       :total="100"
       @page-change="pageChangeHandle"
     >
-      <template v-slot:status="{ row }">
+      <template v-slot:status="{row}">
         <span>
           {{ row.status }}
         </span>
@@ -36,7 +36,7 @@ export default {
           name2: 22,
           name3: 33,
           status: 2,
-          title: 'ah',
+          title: 'ah'
         },
         {
           name: '测试3',
@@ -44,34 +44,34 @@ export default {
           name2: 222,
           name3: 333,
           status: 3,
-          title: 'ah',
-        },
+          title: 'ah'
+        }
       ],
       columns: [
         {
           label: '数据名',
           prop: 'name',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 },
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 }
         },
         {
           label: '数据名1',
           prop: 'name1',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 },
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 }
         },
         {
           label: '数据名2',
           prop: 'name2',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 },
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 }
         },
         {
           label: '数据名3',
           prop: 'name3',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 },
-        },
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 }
+        }
       ],
       styleConfig: {
-        operaWd: 100,
-      },
+        operaWd: 100
+      }
     }
   },
   methods: {
@@ -87,7 +87,7 @@ export default {
     pageChangeHandle(e) {
       console.log(e)
       // console.log(pageSize, currentPage)
-    },
-  },
+    }
+  }
 }
 </script>

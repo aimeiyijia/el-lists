@@ -13,7 +13,7 @@
         <span class="title" v-else>{{ list.title }}</span>
       </div>
       <div class="el-lists_main">
-        <div class="el-list_content" :style="{ width: contentWd }">
+        <div class="el-list_content" :style="{width: contentWd}">
           <el-row>
             <el-col
               :span="6"
@@ -24,23 +24,23 @@
               <div class="el-list_item">
                 <slot
                   name="itemName"
-                  :row="{ item, list }"
+                  :row="{item, list}"
                   v-if="$scopedSlots.itemName"
                 />
                 <span class="name" v-else>{{ item.label + '：' }}</span>
                 <slot
                   name="itemData"
-                  :row="{ item, list }"
+                  :row="{item, list}"
                   v-if="$scopedSlots.itemData"
                 />
-                <span class="data" v-else>{{ item.VALUE }}</span>
+                <span class="data" v-else>{{ item.columnsValue }}</span>
               </div>
             </el-col>
           </el-row>
         </div>
 
-        <div class="el-list_opera" :style="{ width: operaWd + 'px' }">
-          234
+        <div class="el-list_opera" :style="{width: operaWd + 'px'}">
+          内置操作
           <slot name="opera" :row="list" v-if="$scopedSlots.opera"></slot>
         </div>
       </div>
@@ -68,11 +68,11 @@ interface StyleConfig {
 }
 
 interface Item {
-  VALUE: string
+  columnsValue: string
 }
 
 @Component({
-  name: 'el-lists',
+  name: 'el-lists'
 })
 export default class extends Vue {
   @Prop(Number) readonly loading: Boolean | undefined
@@ -88,23 +88,24 @@ export default class extends Vue {
 
   @Prop({ type: Number, default: 0 }) private readonly total!: Number
 
-  private pageSize: number = 10
-  private currentPage: number = 1
+  private pageSize = 10
+  private currentPage = 1
 
   private get isPaginationShow(): boolean {
     return Boolean(this.pagination && this.pagination.pageSize)
   }
 
   get listData() {
-    let listData: any[] = []
+    const listData: any[] = []
     this.data.forEach((o: any) => {
-      let item: any[] = []
+      const item: any[] = []
       this.columns.forEach((c: any) => {
-        let a: Item = { VALUE: '' }
-        a.VALUE = o[c.prop]
+        const a: Item = { columnsValue: '' }
+        a.columnsValue = o[c.prop]
         Object.assign(a, c)
         item.push(a)
       })
+      console.log(item)
       listData.push(Object.assign(o, { item }))
     })
     return listData
@@ -138,7 +139,7 @@ export default class extends Vue {
   emitPageChangeEvent(): Pagination {
     return {
       pageSize: this.pageSize,
-      currentPage: this.currentPage,
+      currentPage: this.currentPage
     }
   }
 }
