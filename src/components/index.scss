@@ -11,7 +11,34 @@
     padding: 0 25px;
 
     .status {
+      display: inline-block;
+      color: #fff;
+      background-color: #92a5fc;
+      height: 20px;
+      line-height: 20px;
+      margin-top: 10px;
       margin-right: 12px;
+      padding-left: 14px;
+      padding-right: 14px;
+      border-radius: 3px;
+      &.success {
+        background-color: #00C1CE;
+      }
+      &.fail {
+        background-color: #FF637B;
+      }
+      &.warning {
+        background-color: #EEC08E;
+      }
+      &.wait {
+        background-color: #92A5FC;
+      }
+      &.back {
+        background-color:  #C0C4CC;
+      }
+      &.other {
+        background-color:  #FF9BAA;
+      }
     }
 
     .title {
@@ -26,11 +53,18 @@
   padding: 14px 24px;
 }
 
-.el-list_opera,.el-list_content  {
+.el-list_opera,
+.el-list_content {
   display: inline-block;
   vertical-align: text-top;
 }
 
 .el-list_content {
   background: #fff;
+  .name {
+    color: #909399;
+  }
+  .data {
+    color: #303133;
+  }
 }

@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       listData: [
-        { name: '测试', name1: 1, name2: 2, name3: 3, status: 1, title: 'ah' },
+        { name: '测试', name1: 11111111111111111111, name2: 2, name3: 3, status: 1, title: 'ah' },
         {
           name: '测试1',
           name1: 11,
@@ -54,7 +54,7 @@ export default {
           bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 }
         },
         {
-          label: '数据名1',
+          label: '数据名1234567890',
           prop: 'name1',
           bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 }
         },

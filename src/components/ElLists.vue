@@ -58,6 +58,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import _ from 'lodash'
 interface Pagination {
   pageSize: number | undefined | null
   currentPage: number | undefined | null
@@ -77,7 +78,7 @@ interface Item {
 export default class extends Vue {
   @Prop(Number) readonly loading: Boolean | undefined
 
-  @Prop({ default: () => {} }) private readonly styleConfig!: StyleConfig
+  @Prop({ default: {} }) private readonly styleConfig!: StyleConfig
 
   @Prop({ default: () => [] }) private readonly data!: object[]
 
@@ -102,12 +103,14 @@ export default class extends Vue {
       this.columns.forEach((c: any) => {
         const a: Item = { columnsValue: '' }
         a.columnsValue = o[c.prop]
+        o = _.omit(o, [c.prop])
         Object.assign(a, c)
         item.push(a)
       })
-      console.log(item)
+      console.log(item, '项目')
       listData.push(Object.assign(o, { item }))
     })
+    console.log(listData)
     return listData
   }
 
