@@ -21,23 +21,29 @@
       padding-left: 14px;
       padding-right: 14px;
       border-radius: 3px;
+
       &.success {
         background-color: #00C1CE;
       }
-      &.fail {
+
+      &.error {
         background-color: #FF637B;
       }
+
       &.warning {
         background-color: #EEC08E;
       }
+
       &.wait {
         background-color: #92A5FC;
       }
+
       &.back {
-        background-color:  #C0C4CC;
+        background-color: #C0C4CC;
       }
+
       &.other {
-        background-color:  #FF9BAA;
+        background-color: #FF9BAA;
       }
     }
 
@@ -61,9 +67,18 @@
 
 .el-list_content {
   background: #fff;
+
+  .el-list_item {
+
+    overflow: hidden; //超出的文本隐藏
+    text-overflow: ellipsis; //溢出用省略号显示
+    white-space: nowrap; //溢出不换行
+  }
+
   .name {
     color: #909399;
   }
+
   .data {
     color: #303133;
   }

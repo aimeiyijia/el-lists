@@ -51,22 +51,22 @@ export default {
         {
           label: '数据名',
           prop: 'name',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 }
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 4 }
         },
         {
           label: '数据名1234567890',
           prop: 'name1',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 }
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名2',
           prop: 'name2',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 }
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 6 }
         },
         {
           label: '数据名3',
           prop: 'name3',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 1 }
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 6 }
         }
       ],
       styleConfig: {

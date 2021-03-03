@@ -2,24 +2,25 @@
   <div class="el-lists">
     <div class="el-list" v-for="(list, key) in listData" :key="key">
       <div class="el-list_head">
+        <!-- 状态 -->
         <span class="status" v-if="$scopedSlots.status">
           <slot name="status" :row="list" />
         </span>
         <span class="status" v-else>{{ list.status }}</span>
-
+        <!-- 标题 -->
         <span class="title" v-if="$scopedSlots.title">
           <slot name="status" :row="list" />
         </span>
         <span class="title" v-else>{{ list.title }}</span>
       </div>
+      <!-- 主体内容 -->
       <div class="el-lists_main">
         <div class="el-list_content" :style="{width: contentWd}">
-          <el-row>
+          <el-row :gutter="20">
             <el-col
-              :span="6"
-              v-bind="item.bootstrap"
               v-for="(item, index) in list.item"
               :key="index"
+              v-bind="item.bootstrap"
             >
               <div class="el-list_item">
                 <slot
