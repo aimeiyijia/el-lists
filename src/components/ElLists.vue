@@ -22,7 +22,7 @@
               :key="index"
               v-bind="item.bootstrap"
             >
-              <div class="el-list_item">
+              <div class="el-list_item" :ref="JSON.stringify(item)">
                 <slot
                   name="itemName"
                   :row="{item, list}"
@@ -34,6 +34,18 @@
                   :row="{item, list}"
                   v-if="$scopedSlots.itemData"
                 />
+                <el-tooltip
+                  v-else-if="
+                    item.showTooltip &&
+                    !$scopedSlots.itemData &&
+                    isShowTooltip(JSON.stringify(item))
+                  "
+                  effect="dark"
+                  :content="String(item.columnsValue)"
+                  placement="top-start"
+                >
+                  <span class="data">{{ item.columnsValue }}</span>
+                </el-tooltip>
                 <span class="data" v-else>{{ item.columnsValue }}</span>
               </div>
             </el-col>
@@ -122,6 +134,20 @@ export default class extends Vue {
 
   get operaWd() {
     return this.styleConfig.operaWd
+  }
+
+  isShowTooltip(elRef: string) {
+    if (this.$refs[elRef]) {
+      const box = (this.$refs[elRef] as HTMLElement[])[0]
+      if (box.scrollWidth > box.offsetWidth) {
+        // console.log('出现了省略号')
+        return true
+      } else {
+        // console.log('没有出现省略号')
+        return false
+      }
+    }
+    return false
   }
 
   listScroll(e: MouseEvent) {

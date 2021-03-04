@@ -56,6 +56,7 @@ export default {
         {
           label: '数据名1234567890',
           prop: 'name1',
+          showTooltip: true,
           bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
