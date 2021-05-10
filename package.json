@@ -20,6 +20,7 @@
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "script-loader": "^0.7.2",
+    "tippy.js": "^6.3.1",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^9.0.2",

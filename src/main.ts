@@ -5,6 +5,7 @@ import ElementUI from 'element-ui'
 import SvgIcon from 'vue-svgicon'
 
 import 'element-ui/lib/theme-chalk/index.css'
+import '@/styles/index.scss'
 
 import ElLists from './components/index.js'
 

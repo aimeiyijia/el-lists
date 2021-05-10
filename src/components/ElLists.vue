@@ -22,31 +22,25 @@
               :key="index"
               v-bind="item.bootstrap"
             >
-              <div class="el-list_item" :ref="JSON.stringify(item)">
+              <div
+                class="el-list_item"
+                :ref="JSON.stringify(item)"
+                @mouseover="isShowTooltip(item, JSON.stringify(item))"
+                @mouseout="isShowTooltip(item, JSON.stringify(item))"
+              >
                 <slot
                   name="itemName"
                   :row="{item, list}"
                   v-if="$scopedSlots.itemName"
                 />
                 <span class="name" v-else>{{ item.label + '：' }}</span>
-                <slot
-                  name="itemData"
-                  :row="{item, list}"
-                  v-if="$scopedSlots.itemData"
-                />
-                <el-tooltip
-                  v-else-if="
-                    item.showTooltip &&
-                    !$scopedSlots.itemData &&
-                    isShowTooltip(JSON.stringify(item))
-                  "
-                  effect="dark"
-                  :content="String(item.columnsValue)"
-                  placement="top-start"
-                >
-                  <span class="data">{{ item.columnsValue }}</span>
-                </el-tooltip>
-                <span class="data" v-else>{{ item.columnsValue }}</span>
+
+                <span v-if="$scopedSlots.itemData">
+                  <slot name="itemData" :row="{item, list}" />
+                </span>
+                <span class="data" v-else>
+                  {{ item.columnsValue }}
+                </span>
               </div>
             </el-col>
           </el-row>
@@ -72,6 +66,13 @@
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import _ from 'lodash'
+import tippy from 'tippy.js'
+import 'tippy.js/dist/tippy.css' // optional for styling
+import 'tippy.js/animations/scale-extreme.css'
+// import {
+//   addResizeListener,
+//   removeResizeListener
+// } from 'element-ui/src/utils/resize-event'
 interface Pagination {
   pageSize: number | undefined | null
   currentPage: number | undefined | null
@@ -136,18 +137,23 @@ export default class extends Vue {
     return this.styleConfig.operaWd
   }
 
-  isShowTooltip(elRef: string) {
-    if (this.$refs[elRef]) {
+  isShowTooltip(item, elRef) {
+    // console.log(status)
+    // console.log(item)
+    // console.log(elRef)
+    if (item.showTooltip === 'auto') {
       const box = (this.$refs[elRef] as HTMLElement[])[0]
+      // console.log(box)
       if (box.scrollWidth > box.offsetWidth) {
-        // console.log('出现了省略号')
-        return true
+        console.log('出现了省略号')
+        tippy(box, {
+          content: `${item.label}：${item.columnsValue}`,
+          animation: 'scale-extreme'
+        })
       } else {
-        // console.log('没有出现省略号')
-        return false
+        console.log('没有出现省略号')
       }
     }
-    return false
   }
 
   listScroll(e: MouseEvent) {

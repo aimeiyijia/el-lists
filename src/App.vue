@@ -56,7 +56,7 @@ export default {
         {
           label: '数据名1234567890',
           prop: 'name1',
-          showTooltip: true,
+          showTooltip: 'auto',
           bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
@@ -66,6 +66,11 @@ export default {
         },
         {
           label: '数据名3',
+          prop: 'name3',
+          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 6 }
+        },
+        {
+          label: '数据名4',
           prop: 'name3',
           bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 6 }
         }
@@ -92,3 +97,8 @@ export default {
   }
 }
 </script>
+<style>
+#app {
+  background-color: #92A5FC;
+}
+</style>

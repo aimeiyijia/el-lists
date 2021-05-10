@@ -1,7 +1,7 @@
 .el-list {
-  height: 170px;
   border: 1px solid #e1e4f8;
   margin: 16px 0;
+  background-color: #fff;
 
   .el-list_head {
     height: 40px;
@@ -62,11 +62,14 @@
 .el-list_opera,
 .el-list_content {
   display: inline-block;
-  vertical-align: text-top;
+  vertical-align: middle;
 }
 
 .el-list_content {
-  background: #fff;
+
+  .el-col {
+    margin: 12px 0;
+  }
 
   .el-list_item {
 
@@ -82,4 +85,8 @@
   .data {
     color: #303133;
   }
+}
+
+.el-lists_pagination {
+  text-align: right;
 }
