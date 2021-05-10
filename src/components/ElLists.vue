@@ -1,54 +1,56 @@
 <template>
-  <div class="el-lists">
-    <div class="el-list" v-for="(list, key) in listData" :key="key">
-      <div class="el-list_head">
-        <!-- 状态 -->
-        <span class="status" v-if="$scopedSlots.status">
-          <slot name="status" :row="list" />
-        </span>
-        <span class="status" v-else>{{ list.status }}</span>
-        <!-- 标题 -->
-        <span class="title" v-if="$scopedSlots.title">
-          <slot name="status" :row="list" />
-        </span>
-        <span class="title" v-else>{{ list.title }}</span>
-      </div>
-      <!-- 主体内容 -->
-      <div class="el-lists_main">
-        <div class="el-list_content" :style="{width: contentWd}">
-          <el-row :gutter="20">
-            <el-col
-              v-for="(item, index) in list.item"
-              :key="index"
-              v-bind="item.bootstrap"
-            >
-              <div
-                class="el-list_item"
-                :ref="JSON.stringify(item)"
-                @mouseover="isShowTooltip(item, JSON.stringify(item))"
-                @mouseout="isShowTooltip(item, JSON.stringify(item))"
-              >
-                <slot
-                  name="itemName"
-                  :row="{item, list}"
-                  v-if="$scopedSlots.itemName"
-                />
-                <span class="name" v-else>{{ item.label + '：' }}</span>
-
-                <span v-if="$scopedSlots.itemData">
-                  <slot name="itemData" :row="{item, list}" />
-                </span>
-                <span class="data" v-else>
-                  {{ item.columnsValue }}
-                </span>
-              </div>
-            </el-col>
-          </el-row>
+  <div class="el-lists-container">
+    <div class="el-lists" v-height-adaptive>
+      <div class="el-list" v-for="(list, key) in listData" :key="key">
+        <div class="el-list_head">
+          <!-- 状态 -->
+          <span class="status" v-if="$scopedSlots.status">
+            <slot name="status" :row="list" />
+          </span>
+          <span class="status" v-else>{{ list.status }}</span>
+          <!-- 标题 -->
+          <span class="title" v-if="$scopedSlots.title">
+            <slot name="status" :row="list" />
+          </span>
+          <span class="title" v-else>{{ list.title }}</span>
         </div>
+        <!-- 主体内容 -->
+        <div class="el-lists_main">
+          <div class="el-list_content" :style="{width: contentWd}">
+            <el-row :gutter="20">
+              <el-col
+                v-for="(item, index) in list.item"
+                :key="index"
+                v-bind="item.bootstrap"
+              >
+                <div
+                  class="el-list_item"
+                  :ref="JSON.stringify(item)"
+                  @mouseover="isShowTooltip(item, JSON.stringify(item))"
+                  @mouseout="isShowTooltip(item, JSON.stringify(item))"
+                >
+                  <slot
+                    name="itemName"
+                    :row="{item, list}"
+                    v-if="$scopedSlots.itemName"
+                  />
+                  <span class="name" v-else>{{ item.label + '：' }}</span>
 
-        <div class="el-list_opera" :style="{width: operaWd + 'px'}">
-          内置操作
-          <slot name="opera" :row="list" v-if="$scopedSlots.opera"></slot>
+                  <span v-if="$scopedSlots.itemData">
+                    <slot name="itemData" :row="{item, list}" />
+                  </span>
+                  <span class="data" v-else>
+                    {{ item.columnsValue }}
+                  </span>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+
+          <div class="el-list_opera" :style="{width: operaWd + 'px'}">
+            内置操作
+            <slot name="opera" :row="list" v-if="$scopedSlots.opera"></slot>
+          </div>
         </div>
       </div>
     </div>
@@ -69,6 +71,7 @@ import _ from 'lodash'
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css' // optional for styling
 import 'tippy.js/animations/scale-extreme.css'
+import './directives'
 // import {
 //   addResizeListener,
 //   removeResizeListener
