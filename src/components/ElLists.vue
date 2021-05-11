@@ -1,6 +1,6 @@
 <template>
   <div class="el-lists-container">
-    <div class="el-lists" v-height-adaptive>
+    <div class="el-lists" v-height-adaptive='{topOffset: 10, bottomOffset: 90, hOffset: 50}'>
       <div class="el-list" v-for="(list, key) in listData" :key="key">
         <div class="el-list_head">
           <!-- 状态 -->

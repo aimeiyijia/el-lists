@@ -12,12 +12,18 @@ const debounce = fn => {
   }
 }
 
-const calcHeight = (element, offset) => {
+const calcTableHeight = (element, offset) => {
   return (
-    window.innerHeight -
-    element.getBoundingClientRect().top -
-    offset.topOffset -
-    offset.bottomOffset
+    window.innerHeight - offset.hOffset - offset.topOffset - offset.bottomOffset
+  )
+}
+const calcHeight = (element, offset) => {
+  console.log(offset)
+  const elP = element.parentNode
+  console.log(element.parentNode)
+  console.log(elP.clientHeight)
+  return (
+    elP.clientHeight - offset.hOffset - offset.topOffset - offset.bottomOffset
   )
 }
 
@@ -35,7 +41,7 @@ const doTableResize = (el, binding, vnode) => {
   }
 
   if (!$table) return
-  const height = calcHeight(el, offset)
+  const height = calcTableHeight(el, offset)
   $table.$nextTick(() => {
     $table.layout.setHeight(height)
     $table.doLayout()
@@ -54,12 +60,12 @@ const checkTag = (el, binding, vnode) => {
     const { value } = binding
     const offset = {
       topOffset: (value && value.topOffset) || 10,
-      bottomOffset: (value && value.bottomOffset) || 10
+      bottomOffset: (value && value.bottomOffset) || 10,
+      hOffset: (value && value.hOffset) || 10
     }
     el.style.marginTop = offset.topOffset + 'px'
     el.style.marginBottom = offset.bottomOffset + 'px'
-    el.style.height =
-      calcHeight(el, offset) - offset.topOffset - offset.bottomOffset + 'px'
+    el.style.height = calcHeight(el, offset) + 'px'
   }
 }
 
