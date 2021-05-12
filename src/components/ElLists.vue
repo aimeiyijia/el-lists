@@ -51,7 +51,6 @@
           </div>
 
           <div class="el-list_opera" :style="{width: operaWd + 'px'}">
-            内置操作
             <slot name="opera" :row="list" v-if="$scopedSlots.opera"></slot>
           </div>
         </div>

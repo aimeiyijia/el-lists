@@ -19,6 +19,11 @@
           {{ row.status }}
         </span>
       </template>
+      <template v-slot:opera="{row}">
+        <span>
+          操作部分{{ row.status }}
+        </span>
+      </template>
     </el-lists>
   </div>
 </template>
