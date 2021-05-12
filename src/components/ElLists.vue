@@ -1,6 +1,9 @@
 <template>
   <div class="el-lists-container">
-    <div class="el-lists" v-height-adaptive='{topOffset: 10, bottomOffset: 90, hOffset: 50}'>
+    <div
+      class="el-lists"
+      v-height-adaptive="{topOffset: 10, bottomOffset: 90, hOffset: 50}"
+    >
       <div class="el-list" v-for="(list, key) in listData" :key="key">
         <div class="el-list_head">
           <!-- 状态 -->
@@ -27,7 +30,7 @@
                   class="el-list_item"
                   :ref="JSON.stringify(item)"
                   @mouseover="isShowTooltip(item, JSON.stringify(item))"
-                  @mouseout="isShowTooltip(item, JSON.stringify(item))"
+                  @mouseout="hideTooltip"
                 >
                   <slot
                     name="itemName"
@@ -67,10 +70,12 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import { VNode } from 'vue'
 import _ from 'lodash'
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css' // optional for styling
 import 'tippy.js/animations/scale-extreme.css'
+import 'tippy.js/themes/light.css'
 import './directives'
 // import {
 //   addResizeListener,
@@ -87,6 +92,10 @@ interface StyleConfig {
 
 interface Item {
   columnsValue: string
+  bootstrap?: {}
+  label?: string
+  prop?: string
+  showTooltip?: boolean | string
 }
 
 @Component({
@@ -106,6 +115,8 @@ export default class extends Vue {
 
   @Prop({ type: Number, default: 0 }) private readonly total!: Number
 
+  private instance: any = null
+
   private pageSize = 10
   private currentPage = 1
 
@@ -124,7 +135,6 @@ export default class extends Vue {
         Object.assign(a, c)
         item.push(a)
       })
-      console.log(item, '项目')
       listData.push(Object.assign(o, { item }))
     })
     console.log(listData)
@@ -140,22 +150,37 @@ export default class extends Vue {
     return this.styleConfig.operaWd
   }
 
-  isShowTooltip(item, elRef) {
+  createTooltip(el: HTMLElement, content: string) {
+    const instance = tippy(el, {
+      content,
+      animation: 'scale-extreme',
+      theme: 'light'
+    })
+    return instance
+  }
+
+  isShowTooltip(item: Item, elRef: string) {
     // console.log(status)
     // console.log(item)
     // console.log(elRef)
     if (item.showTooltip === 'auto') {
       const box = (this.$refs[elRef] as HTMLElement[])[0]
-      // console.log(box)
       if (box.scrollWidth > box.offsetWidth) {
-        console.log('出现了省略号')
-        tippy(box, {
-          content: `${item.label}：${item.columnsValue}`,
-          animation: 'scale-extreme'
-        })
+        // console.log('出现了省略号')
+        this.instance = this.createTooltip(
+          box,
+          `${item.label}：${item.columnsValue}`
+        )
       } else {
-        console.log('没有出现省略号')
+        // console.log('没有出现省略号')
       }
+    }
+  }
+
+  hideTooltip() {
+    // console.log('鼠标移出')
+    if (this.instance) {
+      this.instance.destroy()
     }
   }
 

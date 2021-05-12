@@ -18,10 +18,10 @@ const calcTableHeight = (element, offset) => {
   )
 }
 const calcHeight = (element, offset) => {
-  console.log(offset)
+  // console.log(offset)
   const elP = element.parentNode
-  console.log(element.parentNode)
-  console.log(elP.clientHeight)
+  // console.log(element.parentNode)
+  // console.log(elP.clientHeight)
   return (
     elP.clientHeight - offset.hOffset - offset.topOffset - offset.bottomOffset
   )
