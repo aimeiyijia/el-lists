@@ -63,6 +63,7 @@ const checkTag = (el, binding, vnode) => {
       bottomOffset: (value && value.bottomOffset) || 10,
       hOffset: (value && value.hOffset) || 10
     }
+    el.style.overflow = 'auto'
     el.style.marginTop = offset.topOffset + 'px'
     el.style.marginBottom = offset.bottomOffset + 'px'
     el.style.height = calcHeight(el, offset) + 'px'
