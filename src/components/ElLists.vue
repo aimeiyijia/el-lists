@@ -75,7 +75,7 @@ import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css' // optional for styling
 import 'tippy.js/animations/scale-extreme.css'
 import 'tippy.js/themes/light.css'
-import './directives'
+// import './directives'
 // import {
 //   addResizeListener,
 //   removeResizeListener

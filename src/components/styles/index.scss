@@ -1,0 +1,102 @@
+.el-lists-container {
+  height: 100%;
+  overflow: auto;
+}
+.el-lists {
+  border: 1px solid #e1e4f8;
+  margin: 8px 0;
+  background-color: #fff;
+
+  &:nth-child(1){
+    margin-top: 0;
+  }
+  &:nth-last-child(1){
+    margin-bottom: 0;
+  }
+
+  .el-lists_header {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #e1e4f8;
+    display: flex;
+    padding: 0 25px;
+
+    .status {
+      display: inline-block;
+      color: #fff;
+      background-color: #92a5fc;
+      height: 20px;
+      line-height: 20px;
+      margin-top: 10px;
+      margin-right: 12px;
+      padding-left: 14px;
+      padding-right: 14px;
+      border-radius: 3px;
+
+      &.success {
+        background-color: #00C1CE;
+      }
+
+      &.error {
+        background-color: #FF637B;
+      }
+
+      &.warning {
+        background-color: #EEC08E;
+      }
+
+      &.wait {
+        background-color: #92A5FC;
+      }
+
+      &.back {
+        background-color: #C0C4CC;
+      }
+
+      &.other {
+        background-color: #FF9BAA;
+      }
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #363f4a;
+    }
+  }
+}
+
+.el-lists_main {
+  padding: 14px 24px;
+}
+
+.el-lists_opera,
+.el-lists_content {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.el-lists_content {
+
+  .el-col {
+    margin: 12px 0;
+  }
+
+  .el-lists_item {
+    overflow: hidden; //超出的文本隐藏
+    text-overflow: ellipsis; //溢出用省略号显示
+    white-space: nowrap; //溢出不换行
+  }
+
+  .name {
+    color: #909399;
+  }
+
+  .data {
+    color: #303133;
+  }
+}
+
+.el-lists_pagination {
+  text-align: right;
+}

@@ -1,4 +1,4 @@
-import Component from './ElLists'
+import Component from './components/lists'
 
 function install(Vue) {
   if (install.installed) return
