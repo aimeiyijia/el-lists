@@ -18,7 +18,10 @@
       <template #handleTitle>
         <span>自定义title</span>
       </template>
-      <!-- 内置插槽。#status #title #opera #middle #right -->
+      <!-- 内置插槽。#left #status #title #opera #middle #right -->
+      <template #left>
+        <span>左</span>
+      </template>
       <template #status="row">
         <span>
           {{ row.status }}
