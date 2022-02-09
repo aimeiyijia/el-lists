@@ -20,9 +20,9 @@ interface IListData {
 })
 export default class extends Vue {
   @Prop({ default: () => { } }) private readonly data!: IListData
-  created() {
-    console.log(this, '头数据')
-  }
+  // created() {
+  //   console.log(this, '头数据')
+  // }
   render() {
     const data = this.data
     const { status, title, left, middle, right } = this.$scopedSlots
@@ -31,7 +31,7 @@ export default class extends Vue {
       return status(this.data)
     }
     const renderTitleSlot = () => {
-      if (!title) return data.status
+      if (!title) return data.title
       return title(this.data)
     }
     const renderLeftSlot = () => {

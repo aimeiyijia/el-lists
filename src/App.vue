@@ -1,19 +1,9 @@
 <template>
   <div id="app">
     <el-lists
-      :styleConfig="styleConfig"
       :layout="layout"
       :data="listData"
       :columns="columns"
-      :pagination="{
-        pageSizes: [10, 20, 50, 70],
-        pageSize: 10,
-        layout: 'prev, pager, next, sizes, jumper, ->, total',
-        background: true,
-        small: false
-      }"
-      :total="100"
-      @page-change="pageChangeHandle"
     >
       <template #handleTitle>
         <span>自定义title</span>
@@ -37,7 +27,7 @@
         <span>右边</span>
       </template>
       <template #opera="row">
-        <span>操作部分{{ row.status }}</span>
+        <span>操作部分</span>
       </template>
     </el-lists>
   </div>
@@ -56,97 +46,27 @@ export default {
           name3: 33333,
           status: '转账成功',
           statusType: 'success',
-          title: 'ah',
+          title: '标题一',
           other: 123
+        },
+        {
+          name: '测试1',
+          name1: 11,
+          name2: 22,
+          name3: 33,
+          status: '转账失败',
+          statusType: 'error',
+          title: '标题二'
+        },
+        {
+          name: '测试3',
+          name1: 111,
+          name2: 222,
+          name3: 333,
+          status: '等待结果中',
+          statusType: 'wait',
+          title: '标题三'
         }
-        // {
-        //   name: '测试1',
-        //   name1: 11,
-        //   name2: 22,
-        //   name3: 33,
-        //   status: 2,
-        //   title: 'ah'
-        // },
-        // {
-        //   name: '测试3',
-        //   name1: 111,
-        //   name2: 222,
-        //   name3: 333,
-        //   status: 3,
-        //   title: 'ah'
-        // },
-        // {
-        //   name: '测试3',
-        //   name1: 111,
-        //   name2: 222,
-        //   name3: 333,
-        //   status: 4,
-        //   title: 'ah'
-        // },
-        // {
-        //   name: '测试3',
-        //   name1: 111,
-        //   name2: 222,
-        //   name3: 333,
-        //   status: 5,
-        //   title: 'ah'
-        // },
-        // {
-        //   name: '测试3',
-        //   name1: 111,
-        //   name2: 222,
-        //   name3: 333,
-        //   status: 6,
-        //   title: 'ah'
-        // },
-        // {
-        //   name: '测试3',
-        //   name1: 111,
-        //   name2: 222,
-        //   name3: 333,
-        //   status: 7,
-        //   title: 'ah'
-        // },
-        // {
-        //   name: '测试3',
-        //   name1: 111,
-        //   name2: 222,
-        //   name3: 333,
-        //   status: 8,
-        //   title: 'ah'
-        // },
-        // {
-        //   name: '测试3',
-        //   name1: 111,
-        //   name2: 222,
-        //   name3: 333,
-        //   status: 3,
-        //   title: 'ah'
-        // },
-        // {
-        //   name: '测试3',
-        //   name1: 111,
-        //   name2: 222,
-        //   name3: 333,
-        //   status: 9,
-        //   title: 'ah'
-        // },
-        // {
-        //   name: '测试3',
-        //   name1: 111,
-        //   name2: 222,
-        //   name3: 333,
-        //   status: 3,
-        //   title: 'ah'
-        // },
-        // {
-        //   name: '测试3',
-        //   name1: 111,
-        //   name2: 222,
-        //   name3: 333,
-        //   status: 3,
-        //   title: 'ah'
-        // }
       ],
       columns: [
         {
@@ -192,31 +112,11 @@ export default {
       // 整体的布局配置
       layout: {
         row: {},
-        col: {},
-        opera: {}
-      },
-      // 样式配置
-      styleConfig: {
-        // 操作栏宽度
-        operaWidth: 100
+        col: {}
       }
     }
   },
-  methods: {
-    detailHandle(row) {
-      console.log(row)
-    },
-    delHandle({ name }) {
-      this.$message.error(`删除 ${name}`)
-    },
-    sortChangeHandle(o) {
-      console.log(o)
-    },
-    pageChangeHandle(e) {
-      console.log(e)
-      // console.log(pageSize, currentPage)
-    }
-  }
+  methods: {}
 }
 </script>
 <style>

@@ -136,7 +136,6 @@ export default class extends Vue {
       })
       listData.push(Object.assign(o, { item }))
     })
-    console.log(listData)
     return listData
   }
 
@@ -159,9 +158,6 @@ export default class extends Vue {
   }
 
   isShowTooltip(item: Item, elRef: string) {
-    // console.log(status)
-    // console.log(item)
-    // console.log(elRef)
     if (item.showTooltip === 'auto') {
       const box = (this.$refs[elRef] as HTMLElement[])[0]
       if (box.scrollWidth > box.offsetWidth) {

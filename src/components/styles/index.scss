@@ -4,14 +4,11 @@
 }
 .el-lists {
   border: 1px solid #e1e4f8;
-  margin: 8px 0;
+  margin-top: 16px;
   background-color: #fff;
 
   &:nth-child(1){
     margin-top: 0;
-  }
-  &:nth-last-child(1){
-    margin-bottom: 0;
   }
 
   .el-lists_header {
@@ -80,6 +77,14 @@
       color: #363f4a;
     }
   }
+
+  &:hover {
+    border-color: #92a5fc;
+    box-shadow: 0 0 10px #d5d9eb;
+    transition: all .3s
+  }
+
+
 }
 
 .el-lists_main {

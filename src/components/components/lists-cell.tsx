@@ -27,7 +27,7 @@ export default class extends Vue {
 
   render() {
     const cellData = Object.assign({}, { scopedSlots: {} }, this.data)
-    console.log(cellData, 'cell数据')
+    // console.log(cellData, 'cell数据')
     const { customTitle, customRender } = cellData.scopedSlots
     const renderTitle = () => {
       if(customTitle){

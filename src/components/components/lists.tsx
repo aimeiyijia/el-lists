@@ -1,12 +1,12 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
+import { Row, Col } from 'element-ui'
 import omit from 'lodash/omit'
 
 import ListsHeader from './lists-header'
 import ListsBody from './lists-body'
 
 import '../styles/index.scss'
-
 
 @Component({
   name: 'ElLists',
@@ -17,6 +17,8 @@ export default class extends Vue {
   @Prop({ default: () => [] }) private readonly data!: object[]
 
   @Prop({ default: () => [] }) private readonly columns!: object[]
+
+  // @Prop({ default: () => { } }) private readonly layout?: ILayout
 
   // 拼装好的数据
   get listsData() {
@@ -35,9 +37,9 @@ export default class extends Vue {
     return listsData
   }
 
-  mounted() {
-    // console.log(this.$scopedSlots, '实例插槽')
-  }
+  // mounted() {
+  //   console.log(this, '实例插槽')
+  // }
 
   listScroll(e: MouseEvent) {
     e.preventDefault()
@@ -45,14 +47,19 @@ export default class extends Vue {
   }
 
   render(h: CreateElement): VNode {
-    // 分离插槽
-    const { opera, status } = this.$scopedSlots
     const renderLists = () => {
       return this.listsData.map((list) => {
+        const attrs = {
+          props: {
+            data: list,
+            layout: this.$attrs.layout || {}
+          },
+          scopedSlots: this.$scopedSlots
+        }
         return (
           <div class="el-lists">
-            <lists-header data={list} {... { scopedSlots: this.$scopedSlots }} />
-            <lists-body data={list} {... { scopedSlots: this.$scopedSlots }} />
+            <lists-header {...attrs} />
+            <lists-body {...attrs} />
           </div>
         )
       })
