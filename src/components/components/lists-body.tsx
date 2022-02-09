@@ -38,7 +38,7 @@ export default class extends Vue {
               cellData.map((cell: ICell) => {
                 return (
                   <el-col {...{ props: cell.col }}>
-                    <lists-cell data={cell}></lists-cell>
+                    <lists-cell data={cell} {... { scopedSlots: this.$scopedSlots }}></lists-cell>
                   </el-col>
                 )
               })

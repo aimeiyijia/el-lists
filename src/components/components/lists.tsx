@@ -52,7 +52,7 @@ export default class extends Vue {
         return (
           <div class="el-lists">
             <lists-header data={list} />
-            <lists-body data={list} {... { scopedSlots: { opera } }} />
+            <lists-body data={list} {... { scopedSlots: this.$scopedSlots }} />
           </div>
         )
       })

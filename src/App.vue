@@ -15,6 +15,9 @@
       :total="100"
       @page-change="pageChangeHandle"
     >
+      <template #handleTitle>
+        <span>自定义title</span>
+      </template>
       <template #status="{row}">
         <span>
           {{ row.status }}
@@ -35,100 +38,100 @@ export default {
       listData: [
         {
           name: '测试',
-          name1: 11111111111111111111,
+          name1: 111111,
           name2: 2,
-          name3: 3333333333333333,
+          name3: 33333,
           status: 1,
           title: 'ah'
-        },
-        {
-          name: '测试1',
-          name1: 11,
-          name2: 22,
-          name3: 33,
-          status: 2,
-          title: 'ah'
-        },
-        {
-          name: '测试3',
-          name1: 111,
-          name2: 222,
-          name3: 333,
-          status: 3,
-          title: 'ah'
-        },
-        {
-          name: '测试3',
-          name1: 111,
-          name2: 222,
-          name3: 333,
-          status: 4,
-          title: 'ah'
-        },
-        {
-          name: '测试3',
-          name1: 111,
-          name2: 222,
-          name3: 333,
-          status: 5,
-          title: 'ah'
-        },
-        {
-          name: '测试3',
-          name1: 111,
-          name2: 222,
-          name3: 333,
-          status: 6,
-          title: 'ah'
-        },
-        {
-          name: '测试3',
-          name1: 111,
-          name2: 222,
-          name3: 333,
-          status: 7,
-          title: 'ah'
-        },
-        {
-          name: '测试3',
-          name1: 111,
-          name2: 222,
-          name3: 333,
-          status: 8,
-          title: 'ah'
-        },
-        {
-          name: '测试3',
-          name1: 111,
-          name2: 222,
-          name3: 333,
-          status: 3,
-          title: 'ah'
-        },
-        {
-          name: '测试3',
-          name1: 111,
-          name2: 222,
-          name3: 333,
-          status: 9,
-          title: 'ah'
-        },
-        {
-          name: '测试3',
-          name1: 111,
-          name2: 222,
-          name3: 333,
-          status: 3,
-          title: 'ah'
-        },
-        {
-          name: '测试3',
-          name1: 111,
-          name2: 222,
-          name3: 333,
-          status: 3,
-          title: 'ah'
         }
+        // {
+        //   name: '测试1',
+        //   name1: 11,
+        //   name2: 22,
+        //   name3: 33,
+        //   status: 2,
+        //   title: 'ah'
+        // },
+        // {
+        //   name: '测试3',
+        //   name1: 111,
+        //   name2: 222,
+        //   name3: 333,
+        //   status: 3,
+        //   title: 'ah'
+        // },
+        // {
+        //   name: '测试3',
+        //   name1: 111,
+        //   name2: 222,
+        //   name3: 333,
+        //   status: 4,
+        //   title: 'ah'
+        // },
+        // {
+        //   name: '测试3',
+        //   name1: 111,
+        //   name2: 222,
+        //   name3: 333,
+        //   status: 5,
+        //   title: 'ah'
+        // },
+        // {
+        //   name: '测试3',
+        //   name1: 111,
+        //   name2: 222,
+        //   name3: 333,
+        //   status: 6,
+        //   title: 'ah'
+        // },
+        // {
+        //   name: '测试3',
+        //   name1: 111,
+        //   name2: 222,
+        //   name3: 333,
+        //   status: 7,
+        //   title: 'ah'
+        // },
+        // {
+        //   name: '测试3',
+        //   name1: 111,
+        //   name2: 222,
+        //   name3: 333,
+        //   status: 8,
+        //   title: 'ah'
+        // },
+        // {
+        //   name: '测试3',
+        //   name1: 111,
+        //   name2: 222,
+        //   name3: 333,
+        //   status: 3,
+        //   title: 'ah'
+        // },
+        // {
+        //   name: '测试3',
+        //   name1: 111,
+        //   name2: 222,
+        //   name3: 333,
+        //   status: 9,
+        //   title: 'ah'
+        // },
+        // {
+        //   name: '测试3',
+        //   name1: 111,
+        //   name2: 222,
+        //   name3: 333,
+        //   status: 3,
+        //   title: 'ah'
+        // },
+        // {
+        //   name: '测试3',
+        //   name1: 111,
+        //   name2: 222,
+        //   name3: 333,
+        //   status: 3,
+        //   title: 'ah'
+        // }
       ],
       columns: [
         {
@@ -137,13 +140,23 @@ export default {
           // 数据项对应的数据字段名称
           prop: 'name',
           // 当前数据项的布局
-          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
+          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 },
+          customRender: () => {
+            return <span>自定义的数据</span>
+          },
+          customTitle: () => {
+            return <div>自定义的名称</div>
+          }
         },
         {
-          label: '数据名1234567890',
+          label: '数据名0',
           prop: 'name1',
           showTooltip: 'auto',
-          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
+          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 },
+          scopedSlots: {
+            customRender: 'handle',
+            customTitle: 'handleTitle'
+          }
         },
         {
           label: '数据名2',
@@ -164,12 +177,13 @@ export default {
       // 整体的布局配置
       layout: {
         row: {},
-        col: {}
+        col: {},
+        opera: {}
       },
       // 样式配置
       styleConfig: {
         // 操作栏宽度
-        operawidth: 100
+        operaWidth: 100
       }
     }
   },
@@ -192,6 +206,6 @@ export default {
 </script>
 <style>
 #app {
-  background-color: #92a5fc;
+  background-color: #fafbff;
 }
 </style>
