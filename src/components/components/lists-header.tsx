@@ -1,5 +1,5 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
-import  { Fragment }  from 'vue-fragment'
+import { Fragment } from 'vue-fragment'
 interface ICell {
   columnsValue: string
   col?: {}
@@ -9,8 +9,9 @@ interface ICell {
 }
 
 interface IListData {
-  title: string,
-  status: number,
+  title?: string,
+  status?: number,
+  statusType?: string,
   cellData: ICell[]
 }
 @Component({
@@ -41,7 +42,7 @@ export default class extends Vue {
       if (renderStatusSlot() || renderTitleSlot()) {
         return (
           <fragment>
-            <span class="status">{renderStatusSlot()}</span>
+            <span class={['status', data.statusType]}>{renderStatusSlot()}</span>
             <span class="title">{renderTitleSlot()}</span>
           </fragment>
         )
@@ -58,11 +59,9 @@ export default class extends Vue {
     }
     return (
       <div class="el-lists_header">
-        <div class="header_left">
-          {renderLeft()}
-        </div>
-        <div class="header_middle">{renderMiddleSlot()}</div>
-        <div class="header_right">{renderRightSlot()}</div>
+        <div class="header_left">{renderLeft()}</div>
+        {renderMiddleSlot() && <div class="header_middle">{renderMiddleSlot()}</div>}
+        {renderRightSlot() && <div class="header_right">{renderRightSlot()}</div>}
       </div>
     )
   }

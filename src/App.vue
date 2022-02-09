@@ -22,14 +22,14 @@
       <template #left>
         <span>左</span>
       </template>
-      <template #status="row">
+      <!-- <template #status="row">
         <span>
           {{ row.status }}
         </span>
       </template>
       <template #title>
         <span>名称</span>
-      </template>
+      </template> -->
       <template #middle>
         <span>中</span>
       </template>
@@ -54,7 +54,8 @@ export default {
           name1: 111111,
           name2: 2,
           name3: 33333,
-          status: 1,
+          status: '转账成功',
+          statusType: 'success',
           title: 'ah',
           other: 123
         }

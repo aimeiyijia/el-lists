@@ -20,19 +20,34 @@
     border-bottom: 1px solid #e1e4f8;
     padding: 0 25px;
     display: flex;
-    justify-content: space-between;
+
+    .header_left,.header_middle,.header_right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .header_left {
+      justify-content: left;
+    }
+    .header_middle {
+      justify-content: center;
+    }
+    .header_right {
+      justify-content: right;
+    }
 
     .status {
       display: inline-block;
       color: #fff;
-      background-color: #92a5fc;
-      height: 20px;
-      line-height: 20px;
-      margin-top: 10px;
+      background-color: #92A5FC;
+      height: 24px;
+      line-height: 24px;
       margin-right: 12px;
       padding-left: 14px;
       padding-right: 14px;
-      border-radius: 3px;
+      border-radius: 4px;
+      font-size: 14px;
 
       &.success {
         background-color: #00C1CE;
