@@ -18,8 +18,9 @@
     height: 40px;
     line-height: 40px;
     border-bottom: 1px solid #e1e4f8;
-    display: flex;
     padding: 0 25px;
+    display: flex;
+    justify-content: space-between;
 
     .status {
       display: inline-block;

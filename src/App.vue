@@ -18,10 +18,20 @@
       <template #handleTitle>
         <span>自定义title</span>
       </template>
-      <template #status="{row}">
+      <!-- 内置插槽。#status #title #opera #middle #right -->
+      <template #status="row">
         <span>
           {{ row.status }}
         </span>
+      </template>
+      <template #title>
+        <span>名称</span>
+      </template>
+      <template #middle>
+        <span>中</span>
+      </template>
+      <template #right>
+        <span>右边</span>
       </template>
       <template #opera="row">
         <span>操作部分{{ row.status }}</span>
@@ -42,7 +52,8 @@ export default {
           name2: 2,
           name3: 33333,
           status: 1,
-          title: 'ah'
+          title: 'ah',
+          other: 123
         }
         // {
         //   name: '测试1',

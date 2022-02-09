@@ -51,7 +51,7 @@ export default class extends Vue {
       return this.listsData.map((list) => {
         return (
           <div class="el-lists">
-            <lists-header data={list} />
+            <lists-header data={list} {... { scopedSlots: this.$scopedSlots }} />
             <lists-body data={list} {... { scopedSlots: this.$scopedSlots }} />
           </div>
         )
