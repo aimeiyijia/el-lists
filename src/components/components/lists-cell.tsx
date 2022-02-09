@@ -3,7 +3,7 @@ import ListsCell from './lists-cell'
 
 interface ICell {
   columnsValue: string
-  bootstrap?: {}
+  col?: {}
   label?: string
   prop?: string
   showTooltip?: boolean | string

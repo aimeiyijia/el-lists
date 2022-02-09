@@ -1,15 +1,24 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
-interface ITitle {
-  status: string
-  title: string
+interface ICell {
+  columnsValue: string
+  col?: {}
+  label?: string
+  prop?: string
+  showTooltip?: boolean | string
+}
+
+interface IListData {
+  title: string,
+  status: number,
+  cellData: ICell[]
 }
 @Component({
   name: 'ListsHeader'
 })
 export default class extends Vue {
-  @Prop({ default: () => { } }) private readonly data!: ITitle
+  @Prop({ default: () => {} }) private readonly data!: IListData
   created() {
-    console.log(this.data, '头数据')
+    // console.log(this.data, '头数据')
   }
   render() {
     const data = this.data

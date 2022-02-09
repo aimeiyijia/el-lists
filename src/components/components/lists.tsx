@@ -7,25 +7,12 @@ import ListsBody from './lists-body'
 
 import '../styles/index.scss'
 
-interface StyleConfig {
-  operaWd: number
-}
-
-interface Item {
-  columnsValue: string
-  bootstrap?: {}
-  label?: string
-  prop?: string
-  showTooltip?: boolean | string
-}
 
 @Component({
   name: 'ElLists',
-  components: {ListsHeader, ListsBody},
+  components: { ListsHeader, ListsBody },
 })
 export default class extends Vue {
-
-  @Prop({ default: {} }) private readonly styleConfig!: StyleConfig
 
   @Prop({ default: () => [] }) private readonly data!: object[]
 
@@ -35,30 +22,21 @@ export default class extends Vue {
   get listsData() {
     const listsData: any[] = []
     this.data.forEach((o: any) => {
-      const item: any[] = []
+      const cellData: any[] = []
       this.columns.forEach((c: any) => {
-        const a: Item = { columnsValue: '' }
+        const a: any = { columnsValue: '' }
         a.columnsValue = o[c.prop]
         o = omit(o, [c.prop])
         Object.assign(a, c)
-        item.push(a)
+        cellData.push(a)
       })
-      listsData.push(Object.assign(o, { item }))
+      listsData.push(Object.assign(o, { cellData }))
     })
     return listsData
   }
 
-  get contentWd() {
-    const width = this.styleConfig.operaWd + 48
-    return `calc(100% - ${width + 'px'})`
-  }
-
-  get operaWd() {
-    return this.styleConfig.operaWd
-  }
-
-  created() {
-    console.log(this.listsData, '数据')
+  mounted() {
+    // console.log(this.$scopedSlots, '实例插槽')
   }
 
   listScroll(e: MouseEvent) {
@@ -67,17 +45,22 @@ export default class extends Vue {
   }
 
   render(h: CreateElement): VNode {
+    // 分离插槽
+    const { opera, status } = this.$scopedSlots
     const renderLists = () => {
       return this.listsData.map((list) => {
-        const titleData = omit(list, ['item'])
-        return <div class="el-lists">
-          <lists-header data={titleData}></lists-header>
-          <lists-body data={list.item}></lists-body>
-        </div>
+        return (
+          <div class="el-lists">
+            <lists-header data={list} />
+            <lists-body data={list} {... { scopedSlots: { opera } }} />
+          </div>
+        )
       })
     }
-    return <div class="el-lists-container">
-      {renderLists()}
-    </div>
+    return (
+      <div class="el-lists-container">
+        {renderLists()}
+      </div>
+    )
   }
 }

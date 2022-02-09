@@ -3,36 +3,51 @@ import ListsCell from './lists-cell'
 
 interface ICell {
   columnsValue: string
-  bootstrap?: {}
+  col?: {}
   label?: string
   prop?: string
   showTooltip?: boolean | string
 }
+
+interface IListData {
+  title: string,
+  status: number,
+  cellData: ICell[]
+}
 @Component({
   name: 'ListsBody',
-  components: {ListsCell}
+  components: { ListsCell }
 })
 export default class extends Vue {
-  @Prop({ default: () => [] }) private readonly data!: ICell[]
-  created() {
-    console.log(this.data, '主体数据')
+  @Prop({ default: () => {} }) private readonly data!: IListData
+  mounted() {
+    // console.log(this, '主体数据')
   }
+
   render() {
-    const cellData = this.data
+    const cellData = this.data.cellData
+    const renderOperaSlot = () => {
+      if (!this.$scopedSlots.hasOwnProperty('opera')) return
+      return this.$scopedSlots.opera!(this.data)
+    }
     return (
       <div class="el-lists_main">
         <div class="el-lists_content">
-          <el-row>
+          <el-row gutter={20}>
             {
               cellData.map((cell: ICell) => {
-                return <el-col>
-                  <lists-cell data={cell}></lists-cell>
-                </el-col>
+                return (
+                  <el-col {...{ props: cell.col }}>
+                    <lists-cell data={cell}></lists-cell>
+                  </el-col>
+                )
               })
             }
           </el-row>
         </div>
-        <div class="el-list_opera"></div>
+        <div class="el-lists_opera">
+          {renderOperaSlot()}
+        </div>
       </div>
     )
   }

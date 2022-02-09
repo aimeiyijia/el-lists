@@ -68,15 +68,19 @@
 
 .el-lists_main {
   padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.el-lists_opera,
-.el-lists_content {
-  display: inline-block;
-  vertical-align: middle;
+.el-lists_opera{
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-left: 36px;
 }
 
 .el-lists_content {
+  flex-grow: 1;
 
   .el-col {
     margin: 12px 0;

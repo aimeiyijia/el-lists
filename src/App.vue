@@ -2,6 +2,7 @@
   <div id="app">
     <el-lists
       :styleConfig="styleConfig"
+      :layout="layout"
       :data="listData"
       :columns="columns"
       :pagination="{
@@ -14,15 +15,13 @@
       :total="100"
       @page-change="pageChangeHandle"
     >
-      <template v-slot:status="{row}">
+      <template #status="{row}">
         <span>
           {{ row.status }}
         </span>
       </template>
-      <template v-slot:opera="{row}">
-        <span>
-          操作部分{{ row.status }}
-        </span>
+      <template #opera="row">
+        <span>操作部分{{ row.status }}</span>
       </template>
     </el-lists>
   </div>
@@ -34,7 +33,14 @@ export default {
   data() {
     return {
       listData: [
-        { name: '测试', name1: 11111111111111111111, name2: 2, name3: 3, status: 1, title: 'ah' },
+        {
+          name: '测试',
+          name1: 11111111111111111111,
+          name2: 2,
+          name3: 3333333333333333,
+          status: 1,
+          title: 'ah'
+        },
         {
           name: '测试1',
           name1: 11,
@@ -126,34 +132,44 @@ export default {
       ],
       columns: [
         {
+          // 数据项名
           label: '数据名',
+          // 数据项对应的数据字段名称
           prop: 'name',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 4 }
+          // 当前数据项的布局
+          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名1234567890',
           prop: 'name1',
           showTooltip: 'auto',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
+          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名2',
           prop: 'name2',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 6 }
+          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名3',
           prop: 'name3',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 6 }
+          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名4',
           prop: 'name3',
-          bootstrap: { xs: 8, sm: 6, md: 6, lg: 6, xl: 6 }
+          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         }
       ],
+      // 整体的布局配置
+      layout: {
+        row: {},
+        col: {}
+      },
+      // 样式配置
       styleConfig: {
-        operaWd: 100
+        // 操作栏宽度
+        operawidth: 100
       }
     }
   },
@@ -176,6 +192,6 @@ export default {
 </script>
 <style>
 #app {
-  background-color: #92A5FC;
+  background-color: #92a5fc;
 }
 </style>
