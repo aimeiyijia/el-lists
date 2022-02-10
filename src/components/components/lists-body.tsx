@@ -4,7 +4,7 @@ import ListsCell from './lists-cell'
 
 interface ICell {
   columnsValue: string
-  col?: {}
+  col?: Col
   label?: string
   prop?: string
   showTooltip?: boolean | string

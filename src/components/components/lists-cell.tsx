@@ -1,6 +1,7 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode } from 'vue'
 import ListsCell from './lists-cell'
+import Clamp from '../utils/Clamp'
 
 interface IScopedSlots {
   customRender?: string
@@ -24,6 +25,14 @@ interface ICell {
 })
 export default class extends Vue {
   @Prop({ default: () => [] }) private readonly data!: ICell
+
+  mounted() {
+    // const hrContentEls = document.querySelectorAll(`.el-lists_item .${this.data.prop}`)
+    // console.log(hrContentEls, '元素')
+    // hrContentEls.forEach(el => {
+    //   Clamp(2, el)
+    // })
+  }
 
   render() {
     const cellData = Object.assign({}, { scopedSlots: {} }, this.data)
@@ -51,7 +60,7 @@ export default class extends Vue {
       <div class="el-lists_item">
         <span class="name">{renderTitle()}</span>
         ：
-        <span class="data">
+        <span class={['data', cellData.prop]}>
           {renderValue()}
         </span>
       </div>

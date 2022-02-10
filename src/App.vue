@@ -20,9 +20,6 @@
       <template #title>
         <span>名称</span>
       </template> -->
-      <template #middle>
-        <span>中</span>
-      </template>
       <template #right>
         <span>右边</span>
       </template>
@@ -44,15 +41,18 @@ export default {
           name1: 111111,
           name2: 2,
           name3: 33333,
+          // 内置 状态描述
           status: '转账成功',
+          // 内置 css className 或者使用内置
           statusType: 'success',
+          // 内置 行名称
           title: '标题一',
           other: 123
         },
         {
           name: '测试1',
           name1: 11,
-          name2: 22,
+          name2: '超长的字符字符字符字符字符字符字符字符',
           name3: 33,
           status: '转账失败',
           statusType: 'error',
@@ -75,7 +75,7 @@ export default {
           // 数据项对应的数据字段名称
           prop: 'name',
           // 当前数据项的布局
-          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 },
+          // col: { xs: 12, sm: 12, md: 6, lg: 6, xl: 8 },
           customRender: () => {
             return <span>自定义的数据</span>
           },
@@ -87,7 +87,7 @@ export default {
           label: '数据名0',
           prop: 'name1',
           showTooltip: 'auto',
-          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 },
+          // col: { xs: 12, sm: 12, md: 6, lg: 6, xl: 8 },
           scopedSlots: {
             customRender: 'handle',
             customTitle: 'handleTitle'
@@ -95,24 +95,27 @@ export default {
         },
         {
           label: '数据名2',
-          prop: 'name2',
-          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
+          prop: 'name2'
+          // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名3',
-          prop: 'name3',
-          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
+          prop: 'name3'
+          // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名4',
-          prop: 'name3',
-          col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
+          prop: 'name3'
+          // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         }
       ],
       // 整体的布局配置
       layout: {
-        row: {},
-        col: {}
+        row: {
+          gutter: 20
+        },
+        // 优先级低于columns列配置内的col配置项
+        col: { xs: 24, sm: 12, md: 6, lg: 6, xl: 8 }
       }
     }
   },

@@ -25,7 +25,7 @@ export default class extends Vue {
   // }
   render() {
     const data = this.data
-    const { status, title, left, middle, right } = this.$scopedSlots
+    const { status, title, left, right } = this.$scopedSlots
     const renderStatusSlot = () => {
       if (!status) return data.status
       return status(this.data)
@@ -49,10 +49,6 @@ export default class extends Vue {
       }
       return renderLeftSlot()
     }
-    const renderMiddleSlot = () => {
-      if (!middle) return
-      return middle(this.data)
-    }
     const renderRightSlot = () => {
       if (!right) return
       return right(this.data)
@@ -60,7 +56,6 @@ export default class extends Vue {
     return (
       <div class="el-lists_header">
         <div class="header_left">{renderLeft()}</div>
-        {renderMiddleSlot() && <div class="header_middle">{renderMiddleSlot()}</div>}
         {renderRightSlot() && <div class="header_right">{renderRightSlot()}</div>}
       </div>
     )
