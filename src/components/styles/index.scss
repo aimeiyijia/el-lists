@@ -105,11 +105,10 @@
     margin: 12px 0;
   }
 
-  // .el-lists_item {
-  //   overflow: hidden;
-  //   text-overflow: ellipsis;
-  //   white-space: nowrap;
-  // }
+  .el-lists_item {
+    display: flex;
+    white-space: nowrap;
+  }
 
   .name,.data {
     display: inline-block;
@@ -121,6 +120,11 @@
 
   .data {
     color: #303133;
+    flex: 1;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
