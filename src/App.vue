@@ -52,7 +52,7 @@ export default {
         {
           name: '测试1',
           name1: 11,
-          name2: '超长的字符字符字符字符字符字符字符字符',
+          name2: '超长的字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符',
           name3: 33,
           status: '转账失败',
           statusType: 'error',
@@ -74,10 +74,11 @@ export default {
           label: '数据名',
           // 数据项对应的数据字段名称
           prop: 'name',
+          showTooltip: 'auto',
           // 当前数据项的布局
           // col: { xs: 12, sm: 12, md: 6, lg: 6, xl: 8 },
           customRender: () => {
-            return <span>自定义的数据</span>
+            return <span>自定义的数据啊啊啊啊啊啊啊啊啊啊啊啊啊</span>
           },
           customTitle: () => {
             return <div>自定义的名称</div>
@@ -95,17 +96,20 @@ export default {
         },
         {
           label: '数据名2',
-          prop: 'name2'
+          prop: 'name2',
+          showTooltip: 'auto'
           // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名3',
-          prop: 'name3'
+          prop: 'name3',
+          showTooltip: 'auto'
           // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名4',
-          prop: 'name3'
+          prop: 'name3',
+          showTooltip: 'auto'
           // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         }
       ],

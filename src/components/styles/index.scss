@@ -107,7 +107,7 @@
 
   .el-lists_item {
     display: flex;
-    white-space: nowrap;
+    // white-space: nowrap;
   }
 
   .name,.data {
@@ -121,6 +121,8 @@
   .data {
     color: #303133;
     flex: 1;
+
+    width: 0;
 
     white-space: nowrap;
     overflow: hidden;

@@ -1,7 +1,12 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
-import { VNode } from 'vue'
+import { VNode, CreateElement } from 'vue'
 import ListsCell from './lists-cell'
 import Clamp from '../utils/Clamp'
+
+import tippy from 'tippy.js'
+import 'tippy.js/dist/tippy.css' // optional for styling
+import 'tippy.js/animations/scale-extreme.css'
+import 'tippy.js/themes/light.css'
 
 interface IScopedSlots {
   customRender?: string
@@ -26,6 +31,8 @@ interface ICell {
 export default class extends Vue {
   @Prop({ default: () => [] }) private readonly data!: ICell
 
+  private instance: any = null
+
   mounted() {
     // const hrContentEls = document.querySelectorAll(`.el-lists_item .${this.data.prop}`)
     // console.log(hrContentEls, '元素')
@@ -34,12 +41,49 @@ export default class extends Vue {
     // })
   }
 
-  render() {
+
+
+
+  createTooltip(el: HTMLElement, content: string) {
+    const instance = tippy(el, {
+      allowHTML: true,
+      content,
+      animation: 'scale-extreme',
+      theme: 'light'
+    })
+    return instance
+  }
+
+  isShowTooltip(item: ICell, elRef: string) {
+    if (item.showTooltip === 'auto') {
+      const box = this.$el.querySelector('.data') as HTMLElement
+      if (box.scrollWidth > box.offsetWidth) {
+        this.instance = this.createTooltip(
+          box,
+          box.innerHTML
+        )
+      } else {
+        // console.log('没有出现省略号')
+      }
+    }
+  }
+
+  hideTooltip() {
+    if (this.instance) {
+      this.instance.destroy()
+    }
+  }
+
+
+
+
+
+  render(h: CreateElement): VNode {
     const cellData = Object.assign({}, { scopedSlots: {} }, this.data)
     // console.log(cellData, 'cell数据')
     const { customTitle, customRender } = cellData.scopedSlots
     const renderTitle = () => {
-      if(customTitle){
+      if (customTitle) {
         cellData.customTitle = this.$scopedSlots[customTitle]
       }
       if (cellData.customTitle) {
@@ -48,7 +92,7 @@ export default class extends Vue {
       return cellData.label
     }
     const renderValue = () => {
-      if(customRender){
+      if (customRender) {
         cellData.customRender = this.$scopedSlots[customRender]
       }
       if (cellData.customRender) {
@@ -56,8 +100,16 @@ export default class extends Vue {
       }
       return cellData.columnsValue
     }
+
     return (
-      <div class="el-lists_item">
+      <div class="el-lists_item"
+        ref={JSON.stringify(cellData)}
+        {...{
+          on: {
+            mouseover: () => this.isShowTooltip(cellData, JSON.stringify(cellData)),
+            mouseout: this.hideTooltip
+          }
+        }}>
         <span class="name">{renderTitle()}</span>
         ：
         <span class={['data', cellData.prop]}>
