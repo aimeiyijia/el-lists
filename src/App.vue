@@ -74,7 +74,7 @@ export default {
           label: '数据名',
           // 数据项对应的数据字段名称
           prop: 'name',
-          showTooltip: 'auto',
+          showTooltip: true,
           // 当前数据项的布局
           // col: { xs: 12, sm: 12, md: 6, lg: 6, xl: 8 },
           customRender: () => {

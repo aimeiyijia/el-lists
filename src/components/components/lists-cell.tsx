@@ -1,7 +1,7 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
 import ListsCell from './lists-cell'
-import Clamp from '../utils/Clamp'
+import isBoolean from 'lodash/isBoolean'
 
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css' // optional for styling
@@ -55,15 +55,14 @@ export default class extends Vue {
   }
 
   isShowTooltip(item: ICell, elRef: string) {
-    if (item.showTooltip === 'auto') {
+    if(!isBoolean(item.showTooltip)) return console.error('showTooltip must be boolean')
+    if (item.showTooltip) {
       const box = this.$el.querySelector('.data') as HTMLElement
       if (box.scrollWidth > box.offsetWidth) {
         this.instance = this.createTooltip(
           box,
           box.innerHTML
         )
-      } else {
-        // console.log('没有出现省略号')
       }
     }
   }
