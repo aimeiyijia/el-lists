@@ -87,7 +87,7 @@ export default {
         {
           label: '数据名0',
           prop: 'name1',
-          showTooltip: 'auto',
+          showTooltip: true,
           // col: { xs: 12, sm: 12, md: 6, lg: 6, xl: 8 },
           scopedSlots: {
             customRender: 'handle',
@@ -97,19 +97,19 @@ export default {
         {
           label: '数据名2',
           prop: 'name2',
-          showTooltip: 'auto'
+          showTooltip: true
           // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名3',
           prop: 'name3',
-          showTooltip: 'auto'
+          showTooltip: true
           // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },
         {
           label: '数据名4',
           prop: 'name3',
-          showTooltip: 'auto'
+          showTooltip: true
           // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         }
       ],

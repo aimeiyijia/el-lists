@@ -57,6 +57,7 @@ export default class extends Vue {
       <div class="el-lists_header">
         <div class="header_left">{renderLeft()}</div>
         {renderRightSlot() && <div class="header_right">{renderRightSlot()}</div>}
+        <i class="el-icon-arrow-right" />
       </div>
     )
   }

@@ -3,7 +3,7 @@
   overflow: auto;
 }
 .el-lists {
-  border: 1px solid #e1e4f8;
+  border: 2px solid #e1e4f8;
   margin-top: 16px;
   background-color: #fff;
 
@@ -14,9 +14,10 @@
   .el-lists_header {
     height: 40px;
     line-height: 40px;
-    border-bottom: 1px solid #e1e4f8;
     padding: 0 25px;
     display: flex;
+    background: linear-gradient(to bottom, #FEFEFF, #F7F7FF);
+    align-items: center;
 
     .header_left,.header_right {
       flex: 1;
@@ -74,6 +75,15 @@
       font-weight: 700;
       color: #363f4a;
     }
+
+    .el-icon-arrow-right {
+      border: 1px solid #606266;
+      border-radius: 50%;
+      padding: 1px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-left: 16px;
+    }
   }
 
   &:hover {
@@ -90,6 +100,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-top: 1px solid #e1e4f8;
 }
 
 .el-lists_opera{
@@ -100,7 +111,6 @@
 
 .el-lists_content {
   flex-grow: 1;
-
   .el-col {
     margin: 12px 0;
   }
