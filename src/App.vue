@@ -1,14 +1,10 @@
 <template>
   <div id="app">
-    <el-lists
-      :layout="layout"
-      :data="listData"
-      :columns="columns"
-    >
+    <el-lists :layout="layout" :data="listData" :columns="columns">
       <template #handleTitle>
         <span>自定义title</span>
       </template>
-      <!-- 内置插槽。#left #status #title #opera #middle #right -->
+      <!-- 内置插槽。#left #status #title #opera #middle #right #expand -->
       <template #left>
         <span>左</span>
       </template>
@@ -23,8 +19,11 @@
       <template #right>
         <span>右边</span>
       </template>
+      <template #expand>
+        <span>展开插槽</span>
+      </template>
       <template #opera="row">
-        <span>操作部分</span>
+        <span>操作部分{{ row.status }}</span>
       </template>
     </el-lists>
   </div>
@@ -47,12 +46,39 @@ export default {
           statusType: 'success',
           // 内置 行名称
           title: '标题一',
-          other: 123
+          other: 123,
+          extra: [
+            {
+              name: 'in1测试',
+              name1: 111111,
+              name2: 2,
+              name3: 'in1测试',
+              // 内置 状态描述
+              status: '转账成功',
+              // 内置 css className 或者使用内置
+              statusType: 'success',
+              // 内置 行名称
+              title: '标题一'
+            },
+            {
+              name: 'in2测试',
+              name1: 111111,
+              name2: 2,
+              name3: 'in2测试',
+              // 内置 状态描述
+              status: '转账成功',
+              // 内置 css className 或者使用内置
+              statusType: 'success',
+              // 内置 行名称
+              title: '标题一'
+            }
+          ]
         },
         {
           name: '测试1',
           name1: 11,
-          name2: '超长的字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符',
+          name2:
+            '超长的字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符',
           name3: 33,
           status: '转账失败',
           statusType: 'error',
@@ -108,7 +134,7 @@ export default {
         },
         {
           label: '数据名4',
-          prop: 'name3',
+          prop: 'name4',
           showTooltip: true
           // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         }
@@ -122,6 +148,12 @@ export default {
         col: { xs: 24, sm: 12, md: 6, lg: 6, xl: 8 }
       }
     }
+  },
+  created() {
+    // setTimeout(() => {
+    //   console.log('定时器')
+    //   this.listData[0].name3 = '899088908'
+    // }, 3000)
   },
   methods: {}
 }

@@ -20,9 +20,20 @@ interface IListData {
 })
 export default class extends Vue {
   @Prop({ default: () => { } }) private readonly data!: IListData
-  // created() {
-  //   console.log(this, '头数据')
-  // }
+
+  // 展开状态
+  private isExpand = false
+
+  private toggleExpand() {
+    this.isExpand = !this.isExpand
+    this.emitExpandChangeEvent()
+  }
+
+  @Emit('expand-change')
+  emitExpandChangeEvent() {
+    return this.isExpand
+  }
+
   render() {
     const data = this.data
     const { status, title, left, right } = this.$scopedSlots
@@ -57,7 +68,7 @@ export default class extends Vue {
       <div class="el-lists_header">
         <div class="header_left">{renderLeft()}</div>
         {renderRightSlot() && <div class="header_right">{renderRightSlot()}</div>}
-        <i class="el-icon-arrow-right" />
+        <i class={[this.isExpand ? 'el-icon-arrow-down' : 'el-icon-arrow-right']} onClick={this.toggleExpand} />
       </div>
     )
   }
