@@ -1,4 +1,4 @@
-import Component from './components/lists'
+import Component from './components'
 
 function install(Vue) {
   if (install.installed) return

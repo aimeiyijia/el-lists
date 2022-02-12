@@ -9,10 +9,12 @@ interface ICell {
 }
 
 interface IListData {
+  columnID: string
   title?: string,
   status?: number,
   statusType?: string,
-  cellData: ICell[]
+  cellData: ICell[],
+  extraData: ICell[],
 }
 @Component({
   name: 'ListsHeader',
@@ -31,10 +33,14 @@ export default class extends Vue {
 
   @Emit('expand-change')
   emitExpandChangeEvent() {
-    return this.isExpand
+    return {
+      columnID: this.data.columnID,
+      isExpand: this.isExpand
+    }
   }
 
   render() {
+    console.log(this.data, '123455678')
     const data = this.data
     const { status, title, left, right } = this.$scopedSlots
     const renderStatusSlot = () => {
@@ -68,7 +74,7 @@ export default class extends Vue {
       <div class="el-lists_header">
         <div class="header_left">{renderLeft()}</div>
         {renderRightSlot() && <div class="header_right">{renderRightSlot()}</div>}
-        <i class={[this.isExpand ? 'el-icon-arrow-down' : 'el-icon-arrow-right']} onClick={this.toggleExpand} />
+        {this.data.extraData.length > 0 && <i class={[this.isExpand ? 'el-icon-arrow-down' : 'el-icon-arrow-right']} onClick={this.toggleExpand}/> }
       </div>
     )
   }
