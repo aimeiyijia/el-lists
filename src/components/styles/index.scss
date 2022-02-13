@@ -1,9 +1,33 @@
-.el-lists-container {
-  height: 100%;
-  overflow: auto;
-}
 .el-lists {
-  border: 2px solid #e1e4f8;
+  height: 100%;
+  overflow: hidden;
+  .el-pagination {
+    text-align: right;
+    margin-top: 4px;
+  }
+  .el-pagination__slot {
+    float: right;
+    padding: 2px 5px;
+    font-weight: 400;
+    color: #606266;
+    font-size: 13px;
+  }
+}
+.el-lists-container {
+  height: calc(100% - 42px);
+  overflow: auto;
+  .el-scrollbar {
+    height: 100%;
+  }
+  .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+  .el-scrollbar__view {
+    padding-right: 10px;
+  }
+}
+.el-lists_single {
+  border: 1px solid #e1e4f8;
   margin-top: 16px;
   background-color: #fff;
 
@@ -138,8 +162,4 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-}
-
-.el-lists_pagination {
-  text-align: right;
 }

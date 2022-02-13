@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <el-lists :layout="layout" :data="listData" :columns="columns">
+    <el-lists
+      :layout="layout"
+      :data="listData"
+      :columns="columns"
+      :pagination="pagination"
+      :total="100"
+    >
       <template #handleTitle>
         <span>自定义title</span>
       </template>
@@ -92,6 +98,33 @@ export default {
           status: '等待结果中',
           statusType: 'wait',
           title: '标题三'
+        },
+        {
+          name: '测试3',
+          name1: 111,
+          name2: 222,
+          name3: 333,
+          status: '等待结果中',
+          statusType: 'wait',
+          title: '标题三'
+        },
+        {
+          name: '测试3',
+          name1: 111,
+          name2: 222,
+          name3: 333,
+          status: '等待结果中',
+          statusType: 'wait',
+          title: '标题三'
+        },
+        {
+          name: '测试3',
+          name1: 111,
+          name2: 222,
+          name3: 333,
+          status: '等待结果中',
+          statusType: 'wait',
+          title: '标题三'
         }
       ],
       columns: [
@@ -146,6 +179,13 @@ export default {
         },
         // 优先级低于columns列配置内的col配置项
         col: { xs: 24, sm: 12, md: 6, lg: 6, xl: 8 }
+      },
+      pagination: {
+        pageSizes: [10, 20, 50, 70],
+        pageSize: 10,
+        layout: 'slot, pager, sizes',
+        background: true,
+        currentPage: 1
       }
     }
   },

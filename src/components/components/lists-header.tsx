@@ -40,7 +40,6 @@ export default class extends Vue {
   }
 
   render() {
-    console.log(this.data, '123455678')
     const data = this.data
     const { status, title, left, right } = this.$scopedSlots
     const renderStatusSlot = () => {

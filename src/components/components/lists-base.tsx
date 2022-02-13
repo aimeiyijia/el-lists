@@ -19,10 +19,6 @@ export default class extends Vue {
 
   @Prop({ default: () => [] }) private readonly layout!: {}
 
-  mounted() {
-    console.log(this, '1234567')
-  }
-
   // 展开状态
   private expandParams = {
     isExpand: false,
@@ -35,7 +31,6 @@ export default class extends Vue {
   }
 
   handleExpandChange(params: any) {
-    console.log(params, '123')
     this.expandParams = params
   }
 
@@ -77,7 +72,7 @@ export default class extends Vue {
       scopedSlots
     }
     return  (
-        <div class="el-lists">
+        <div class="el-lists_single">
           <lists-header {...attrs} {... { on: { 'expand-change': this.handleExpandChange } }} />
           {renderBody(this.data)}
         </div>
