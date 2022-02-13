@@ -33,17 +33,6 @@ export default class extends Vue {
 
   private instance: any = null
 
-  mounted() {
-    // const hrContentEls = document.querySelectorAll(`.el-lists_item .${this.data.prop}`)
-    // console.log(hrContentEls, '元素')
-    // hrContentEls.forEach(el => {
-    //   Clamp(2, el)
-    // })
-  }
-
-
-
-
   createTooltip(el: HTMLElement, content: string) {
     const instance = tippy(el, {
       allowHTML: true,
@@ -72,10 +61,6 @@ export default class extends Vue {
       this.instance.destroy()
     }
   }
-
-
-
-
 
   render(h: CreateElement): VNode {
     const cellData = Object.assign({}, { scopedSlots: {} }, this.data)

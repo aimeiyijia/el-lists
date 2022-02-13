@@ -1,4 +1,5 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import { VNode, CreateElement } from 'vue'
 import { Row, Col } from 'element-ui'
 import ListsCell from './lists-cell'
 
@@ -27,11 +28,8 @@ interface ILayout {
 export default class extends Vue {
   @Prop({ default: () => { } }) private readonly data!: IListData
   @Prop({ default: () => { } }) private readonly layout!: ILayout
-  // mounted() {
-  //   console.log(this.layout, '主体数据')
-  // }
 
-  render() {
+  render(h: CreateElement): VNode {
     const cellData = this.data.cellData
     const { row = { gutter: 20 }, col = {} } = this.layout
     const renderOperaSlot = () => {

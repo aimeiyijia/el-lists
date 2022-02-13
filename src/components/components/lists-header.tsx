@@ -1,4 +1,5 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import { VNode, CreateElement } from 'vue'
 import { Fragment } from 'vue-fragment'
 interface ICell {
   columnsValue: string
@@ -39,7 +40,7 @@ export default class extends Vue {
     }
   }
 
-  render() {
+  render(h: CreateElement): VNode {
     const data = this.data
     const { status, title, left, right } = this.$scopedSlots
     const renderStatusSlot = () => {

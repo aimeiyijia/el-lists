@@ -7,7 +7,7 @@ import SvgIcon from 'vue-svgicon'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.scss'
 
-import ElLists from './components/index'
+import ElLists from './components'
 
 import App from '@/App.vue'
 import '@/icons/components'

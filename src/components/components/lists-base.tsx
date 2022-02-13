@@ -2,8 +2,6 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
 import cloneDeep from 'lodash/cloneDeep'
 
-import  {guid} from '../utils'
-
 import ListsHeader from './lists-header'
 import ListsBody from './lists-body'
 
@@ -46,7 +44,7 @@ export default class extends Vue {
         },
         scopedSlots
       }
-      bodyVnodes.push(<lists-body {...attrs} />)
+      bodyVnodes.push(<lists-body {...attrs}></lists-body>)
       if (list.extraData) {
         list.extraData.map((e: any) => {
           const cloneList = cloneDeep(list)
@@ -58,7 +56,7 @@ export default class extends Vue {
             },
             scopedSlots
           }
-          bodyVnodes.push(<lists-body v-show={this.expandParams.columnID === list.columnID && this.expandParams.isExpand} {...extraDataAttrs} />)
+          bodyVnodes.push(<lists-body v-show={this.expandParams.columnID === list.columnID && this.expandParams.isExpand} {...extraDataAttrs}></lists-body>)
         })
       }
       return bodyVnodes
@@ -73,7 +71,7 @@ export default class extends Vue {
     }
     return  (
         <div class="el-lists_single">
-          <lists-header {...attrs} {... { on: { 'expand-change': this.handleExpandChange } }} />
+          <lists-header {...attrs} {... { on: { 'expand-change': this.handleExpandChange } }}></lists-header>
           {renderBody(this.data)}
         </div>
       )
