@@ -1,12 +1,17 @@
 module.exports = {
+  parser: 'vue-eslint-parser',
+  plugins: ['@typescript-eslint', 'prettier'],
   root: true,
   env: {
     node: true
   },
   extends: [
+    '@vue/typescript/recommended',
     'plugin:vue/essential',
     '@vue/standard',
-    '@vue/typescript/recommended'
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier'
   ],
   parserOptions: {
     ecmaVersion: 2020
@@ -14,7 +19,8 @@ module.exports = {
   rules: {
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/member-delimiter-style': ['error',
+    '@typescript-eslint/member-delimiter-style': [
+      'error',
       {
         multiline: {
           delimiter: 'none'
@@ -22,9 +28,11 @@ module.exports = {
         singleline: {
           delimiter: 'comma'
         }
-      }],
+      }
+    ],
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'space-before-function-paren': ['error', 'never'],
@@ -44,6 +52,7 @@ module.exports = {
     {
       files: [
         '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/**/*.spec.{j,t}s?(x)',
         '**/tests/unit/**/*.spec.{j,t}s?(x)'
       ],
       env: {
