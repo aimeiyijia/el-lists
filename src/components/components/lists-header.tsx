@@ -1,22 +1,8 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
 import { Fragment } from 'vue-fragment'
-interface ICell {
-  columnsValue: string
-  col?: {}
-  label?: string
-  prop?: string
-  showTooltip?: boolean | string
-}
 
-interface IListData {
-  columnID: string
-  title?: string,
-  status?: number,
-  statusType?: string,
-  cellData: ICell[],
-  extraData: ICell[],
-}
+import { IListData } from 'types/index.d'
 @Component({
   name: 'ListsHeader',
   components: { Fragment }
@@ -74,7 +60,7 @@ export default class extends Vue {
       <div class="el-lists_header">
         <div class="header_left">{renderLeft()}</div>
         {renderRightSlot() && <div class="header_right">{renderRightSlot()}</div>}
-        {this.data.extraData.length > 0 && <i class={[this.isExpand ? 'el-icon-arrow-down' : 'el-icon-arrow-right']} onClick={this.toggleExpand}/> }
+        {this.data.extraData.length > 0 && <i class={[this.isExpand ? 'el-icon-arrow-down' : 'el-icon-arrow-right']} onClick={this.toggleExpand} />}
       </div>
     )
   }

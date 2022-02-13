@@ -14,6 +14,7 @@ module.exports = {
     //
     config.resolve.alias
       .set('@', path.resolve('src'))
+      .set('types', path.resolve('types'))
       .set('mock', path.resolve('mock'))
     // Discussed here https://github.com/vuejs/vue-cli/issues/1081
     if (process.env.NODE_ENV === 'production') {

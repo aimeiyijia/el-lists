@@ -3,24 +3,7 @@ import { VNode, CreateElement } from 'vue'
 import { Row, Col } from 'element-ui'
 import ListsCell from './lists-cell'
 
-interface ICell {
-  columnsValue: string
-  col?: Col
-  label?: string
-  prop?: string
-  showTooltip?: boolean | string
-}
-
-interface IListData {
-  title: string,
-  status: number,
-  cellData: ICell[]
-}
-
-interface ILayout {
-  row?: Row
-  col?: Col
-}
+import {ICell, IListData, ILayout} from 'types/index.d'
 @Component({
   name: 'ListsBody',
   components: { ListsCell }

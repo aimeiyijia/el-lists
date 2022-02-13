@@ -8,20 +8,8 @@ import 'tippy.js/dist/tippy.css' // optional for styling
 import 'tippy.js/animations/scale-extreme.css'
 import 'tippy.js/themes/light.css'
 
-interface IScopedSlots {
-  customRender?: string
-  customTitle?: string
-}
-interface ICell {
-  columnsValue: string
-  col?: {}
-  label?: string
-  prop?: string
-  showTooltip?: boolean | string
-  scopedSlots?: IScopedSlots
-  customRender?: any
-  customTitle?: any
-}
+import { ICell } from 'types/index.d'
+
 
 
 @Component({
@@ -44,7 +32,7 @@ export default class extends Vue {
   }
 
   isShowTooltip(item: ICell, elRef: string) {
-    if(!isBoolean(item.showTooltip)) return console.error('showTooltip must be boolean')
+    if (!isBoolean(item.showTooltip)) return console.error('showTooltip must be boolean')
     if (item.showTooltip) {
       const box = this.$el.querySelector('.data') as HTMLElement
       if (box.scrollWidth > box.offsetWidth) {
