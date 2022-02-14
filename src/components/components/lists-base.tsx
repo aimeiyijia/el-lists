@@ -5,6 +5,8 @@ import cloneDeep from 'lodash/cloneDeep'
 import ListsHeader from './lists-header'
 import ListsBody from './lists-body'
 
+import { ILayout } from 'types/index.d'
+
 import '../styles/index.scss'
 
 @Component({
@@ -15,7 +17,7 @@ export default class extends Vue {
 
   @Prop({ default: () => [] }) private readonly data!: object[]
 
-  @Prop({ default: () => [] }) private readonly layout!: {}
+  @Prop({ default: () => {} }) private readonly layout?: ILayout
 
   // 展开状态
   private expandParams = {

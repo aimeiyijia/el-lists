@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <el-lists
-      :layout="layout"
       :data="listData"
       :columns="columns"
       :pagination="pagination"
@@ -45,7 +44,7 @@ export default {
           name: '测试',
           name1: 111111,
           name2: 2,
-          name3: 33333,
+          name3: {name: '多层对象'},
           // 内置 状态描述
           status: '转账成功',
           // 内置 css className 或者使用内置
@@ -58,7 +57,7 @@ export default {
               name: 'in1测试',
               name1: 111111,
               name2: 2,
-              name3: 'in1测试',
+              name3: {name: 'in1测试'},
               // 内置 状态描述
               status: '转账成功',
               // 内置 css className 或者使用内置
@@ -70,7 +69,7 @@ export default {
               name: 'in2测试',
               name1: 111111,
               name2: 2,
-              name3: 'in2测试',
+              name3: {name: 'in2测试'},
               // 内置 状态描述
               status: '转账成功',
               // 内置 css className 或者使用内置
@@ -85,7 +84,7 @@ export default {
           name1: 11,
           name2:
             '超长的字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符字符',
-          name3: 33,
+          name3: {name: '多层对象'},
           status: '转账失败',
           statusType: 'error',
           title: '标题二'
@@ -94,7 +93,7 @@ export default {
           name: '测试3',
           name1: 111,
           name2: 222,
-          name3: 333,
+          name3: {name: '多层对象'},
           status: '等待结果中',
           statusType: 'wait',
           title: '标题三'
@@ -103,7 +102,7 @@ export default {
           name: '测试3',
           name1: 111,
           name2: 222,
-          name3: 333,
+          name3: {name: '多层对象'},
           status: '等待结果中',
           statusType: 'wait',
           title: '标题三'
@@ -112,7 +111,7 @@ export default {
           name: '测试3',
           name1: 111,
           name2: 222,
-          name3: 333,
+          name3: {name: '多层对象'},
           status: '等待结果中',
           statusType: 'wait',
           title: '标题三'
@@ -121,7 +120,7 @@ export default {
           name: '测试3',
           name1: 111,
           name2: 222,
-          name3: 333,
+          name3: {name: '多层对象'},
           status: '等待结果中',
           statusType: 'wait',
           title: '标题三'
@@ -134,6 +133,7 @@ export default {
           // 数据项对应的数据字段名称
           prop: 'name',
           showTooltip: true,
+          hidden: false,
           // 当前数据项的布局
           // col: { xs: 12, sm: 12, md: 6, lg: 6, xl: 8 },
           customRender: () => {
@@ -161,7 +161,7 @@ export default {
         },
         {
           label: '数据名3',
-          prop: 'name3',
+          prop: 'name3.name',
           showTooltip: true
           // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },

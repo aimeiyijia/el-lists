@@ -31,9 +31,10 @@ export default class extends Vue {
     return instance
   }
 
-  isShowTooltip(item: ICell, elRef: string) {
-    if (!isBoolean(item.showTooltip)) return console.error('showTooltip must be boolean')
-    if (item.showTooltip) {
+  isShowTooltip(item: ICell) {
+    const isExit = Object.hasOwnProperty.call(item, 'showTooltip')
+    if (isExit && !isBoolean(item.showTooltip)) return console.error('showTooltip must be boolean')
+    if (!isExit || item.showTooltip) {
       const box = this.$el.querySelector('.data') as HTMLElement
       if (box.scrollWidth > box.offsetWidth) {
         this.instance = this.createTooltip(
@@ -74,10 +75,9 @@ export default class extends Vue {
 
     return (
       <div class="el-lists_item"
-        ref={JSON.stringify(cellData)}
         {...{
           on: {
-            mouseover: () => this.isShowTooltip(cellData, JSON.stringify(cellData)),
+            mouseover: () => this.isShowTooltip(cellData),
             mouseout: this.hideTooltip
           }
         }}>

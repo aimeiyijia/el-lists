@@ -76,12 +76,21 @@ export default class extends Vue {
     return listsData
   }
 
+  // 支持深层次的对象取值
+  getCellValue(column: TableColumn, row: any) {
+    return column.prop.split('.').reduce((obj, cur) => {
+      if (obj) {
+        return obj[cur]
+      }
+    }, row)
+  }
+
   // 将this.data转换成符合列表要求的结构
   confgDataToListData(o: any) {
     const cellData: any[] = []
     cloneDeep(this.columns).forEach((c: any) => {
       const a: any = { columnsValue: '' }
-      a.columnsValue = o[c.prop]
+      a.columnsValue = this.getCellValue(c, o)
       Object.assign(a, c)
       cellData.push(a)
     })

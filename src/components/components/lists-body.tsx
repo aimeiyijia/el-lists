@@ -3,7 +3,7 @@ import { VNode, CreateElement } from 'vue'
 import { Row, Col } from 'element-ui'
 import ListsCell from './lists-cell'
 
-import {ICell, IListData, ILayout} from 'types/index.d'
+import { ICell, IListData, ILayout } from 'types/index.d'
 @Component({
   name: 'ListsBody',
   components: { ListsCell }
@@ -14,7 +14,7 @@ export default class extends Vue {
 
   render(h: CreateElement): VNode {
     const cellData = this.data.cellData
-    const { row = { gutter: 20 }, col = {} } = this.layout
+    const { row = { gutter: 20 }, col = { span: 6 } } = this.layout
     const renderOperaSlot = () => {
       if (!this.$scopedSlots.hasOwnProperty('opera')) return
       return this.$scopedSlots.opera!(this.data)

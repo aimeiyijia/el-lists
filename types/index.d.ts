@@ -8,6 +8,12 @@ import { Row, Col } from 'element-ui'
 // now
 export function install(vue: typeof Vue): void
 
+
+
+export interface IScopedSlots {
+  customRender?: string
+  customTitle?: string
+}
 export interface ICell {
   columnsValue: string
   col?: {}
@@ -21,20 +27,15 @@ export interface ICell {
 
 export interface IListData {
   columnID: string
-  title?: string,
-  status?: number,
-  statusType?: string,
-  cellData: ICell[],
-  extraData: ICell[],
+  title?: string
+  status?: number
+  statusType?: string
+  cellData: ICell[]
+  extraData: ICell[]
 }
 
 export interface ILayout {
   row?: Row
   col?: Col
-}
-
-export interface IScopedSlots {
-  customRender?: string
-  customTitle?: string
 }
 
