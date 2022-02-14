@@ -17,7 +17,8 @@ import { ICell } from 'types/index.d'
   components: { ListsCell }
 })
 export default class extends Vue {
-  @Prop({ default: () => [] }) private readonly data!: ICell
+  @Prop({ default: () => { } }) private readonly data!: ICell
+  @Prop({ default: () => [] }) private readonly columnData!: ICell[]
 
   private instance: any = null
 
@@ -59,7 +60,11 @@ export default class extends Vue {
         cellData.customTitle = this.$scopedSlots[customTitle]
       }
       if (cellData.customTitle) {
-        return cellData.customTitle(cellData)
+        return cellData.customTitle({
+          h,
+          data: this.columnData,
+          cellData
+        })
       }
       return cellData.label
     }
@@ -68,7 +73,11 @@ export default class extends Vue {
         cellData.customRender = this.$scopedSlots[customRender]
       }
       if (cellData.customRender) {
-        return cellData.customRender(cellData)
+        return cellData.customRender({
+          h,
+          data: this.columnData,
+          cellData
+        })
       }
       return cellData.columnsValue
     }

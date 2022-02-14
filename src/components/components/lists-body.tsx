@@ -17,7 +17,10 @@ export default class extends Vue {
     const { row = { gutter: 20 }, col = { span: 6 } } = this.layout
     const renderOperaSlot = () => {
       if (!this.$scopedSlots.hasOwnProperty('opera')) return
-      return this.$scopedSlots.opera!(this.data)
+      return this.$scopedSlots.opera!({
+        data: this.data,
+        h
+      })
     }
     return (
       <div class="el-lists_main">
@@ -27,7 +30,7 @@ export default class extends Vue {
               cellData.map((cell: ICell) => {
                 return (
                   <el-col {...{ props: Object.assign({}, col, cell.col) }}>
-                    <lists-cell data={cell} {... { scopedSlots: this.$scopedSlots }}></lists-cell>
+                    <lists-cell columnData={this.data} data={cell} {... { scopedSlots: this.$scopedSlots }}></lists-cell>
                   </el-col>
                 )
               })

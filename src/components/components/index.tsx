@@ -203,6 +203,7 @@ export default class extends Vue {
     const renderPageSlot = () => {
       if (!this.$scopedSlots.hasOwnProperty('pagination')) return
       return this.$scopedSlots.pagination!({
+        h,
         total: this.total,
         config: omit(this.defPagination, ['pageSize', 'currentPage'])
       })
