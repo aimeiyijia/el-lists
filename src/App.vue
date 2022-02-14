@@ -5,6 +5,9 @@
       :columns="columns"
       :pagination="pagination"
       :total="100"
+      @current-click="currentClick"
+      @scroll="currentClick"
+      @expand="currentClick"
     >
       <template #handleTitle>
         <span>自定义title</span>
@@ -196,7 +199,11 @@ export default {
     //   this.listData[0].name3 = '899088908'
     // }, 3000)
   },
-  methods: {},
+  methods: {
+    currentClick(data){
+      console.log(data, '项点击')
+    }
+  },
 }
 </script>
 <style>

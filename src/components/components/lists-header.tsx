@@ -21,6 +21,7 @@ export default class extends Vue {
   @Emit('expand-change')
   emitExpandChangeEvent() {
     return {
+      data: this.data,
       columnID: this.data.columnID,
       isExpand: this.isExpand
     }

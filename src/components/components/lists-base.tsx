@@ -32,6 +32,7 @@ export default class extends Vue {
 
   handleExpandChange(params: any) {
     this.expandParams = params
+    this.$emit('expand', params)
   }
 
   render(h: CreateElement): VNode {
@@ -44,6 +45,7 @@ export default class extends Vue {
           data: list,
           layout
         },
+        on: this.$listeners,
         scopedSlots
       }
       bodyVnodes.push(<lists-body {...attrs}></lists-body>)
@@ -56,6 +58,7 @@ export default class extends Vue {
               data: cloneList,
               layout
             },
+            on: this.$listeners,
             scopedSlots
           }
           bodyVnodes.push(<lists-body v-show={this.expandParams.columnID === list.columnID && this.expandParams.isExpand} {...extraDataAttrs}></lists-body>)
@@ -73,7 +76,7 @@ export default class extends Vue {
     }
     return  (
         <div class="el-lists_single">
-          <lists-header {...attrs} {... { on: { 'expand-change': this.handleExpandChange } }}></lists-header>
+          <lists-header {...attrs} {... { on: {  ...this.$listeners, 'expand-change': this.handleExpandChange } }}></lists-header>
           {renderBody(this.data)}
         </div>
       )

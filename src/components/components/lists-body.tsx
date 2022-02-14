@@ -30,7 +30,7 @@ export default class extends Vue {
               cellData.map((cell: ICell) => {
                 return (
                   <el-col {...{ props: Object.assign({}, col, cell.col) }}>
-                    <lists-cell columnData={this.data} data={cell} {... { scopedSlots: this.$scopedSlots }}></lists-cell>
+                    <lists-cell columnData={this.data} data={cell} {... { on: this.$listeners, scopedSlots: this.$scopedSlots }}></lists-cell>
                   </el-col>
                 )
               })

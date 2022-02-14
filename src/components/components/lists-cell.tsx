@@ -87,7 +87,11 @@ export default class extends Vue {
         {...{
           on: {
             mouseover: () => this.isShowTooltip(cellData),
-            mouseout: this.hideTooltip
+            mouseout: this.hideTooltip,
+            click: () => this.$emit('current-click', {
+              data: this.columnData,
+              cellData
+            })
           }
         }}>
         <span class="name">{renderTitle()}</span>

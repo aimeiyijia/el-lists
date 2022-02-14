@@ -194,6 +194,7 @@ export default class extends Vue {
             ...this.$attrs,
             data: list,
           },
+          on: this.$listeners,
           scopedSlots: this.$scopedSlots
         }
         return <lists-base  {...attrs}></lists-base>
