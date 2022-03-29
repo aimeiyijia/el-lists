@@ -166,6 +166,7 @@ export default {
         {
           label: '数据名3',
           prop: 'name3.name',
+          hidden: false,
           showTooltip: true,
           // col: { xs: 8, sm: 6, md: 6, lg: 6, xl: 8 }
         },

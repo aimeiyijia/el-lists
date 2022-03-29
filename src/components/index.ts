@@ -2,7 +2,7 @@ import ElLists from './components/index'
 import _Vue, { PluginFunction, VueConstructor } from 'vue'
 
 interface InstallFunction extends PluginFunction<any> {
-  installed?: boolean;
+  installed?: boolean
 }
 
 const Components: { [key: string]: VueConstructor } = {

@@ -19,6 +19,7 @@ export interface ICell {
   col?: {}
   label?: string
   prop?: string
+  hidden?: boolean | ((data: any, cell: any) => boolean)
   showTooltip?: boolean | string
   scopedSlots?: IScopedSlots
   customRender?: any

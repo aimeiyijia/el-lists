@@ -1,7 +1,8 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
-import { Row, Col } from 'element-ui'
 import ListsCell from './lists-cell'
+
+import { isBoolean, isFunction, isUndefined } from '../utils/types'
 
 import { ICell, IListData, ILayout } from 'types/index.d'
 @Component({
@@ -28,12 +29,21 @@ export default class extends Vue {
           <el-row {...{ props: row }}>
             {
               cellData.map((cell: ICell) => {
+                const { hidden } = cell
+                let willHidden = false
+                if (isFunction(hidden)) {
+                  willHidden = (hidden as Function)(this.data, cell)
+                }else {
+                  willHidden = isBoolean(hidden) ? hidden as boolean : false
+                }
+                if (willHidden) return
+
                 return (
                   <el-col {...{ props: Object.assign({}, col, cell.col) }}>
                     <lists-cell columnData={this.data} data={cell} {... { on: this.$listeners, scopedSlots: this.$scopedSlots }}></lists-cell>
                   </el-col>
                 )
-              })
+              }).filter(o => o)
             }
           </el-row>
         </div>
