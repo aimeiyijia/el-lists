@@ -34,6 +34,8 @@
         <el-button type="primary" size="small">
           {{ row.data.status }}
         </el-button>
+        <div>操作栏占位</div>
+        <div>又一个占位</div>
       </template>
     </el-lists>
   </div>

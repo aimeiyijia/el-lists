@@ -22,9 +22,6 @@
   .el-scrollbar__wrap {
     overflow-x: hidden;
   }
-  .el-scrollbar__view {
-    padding-right: 10px;
-  }
 }
 .el-lists_single {
   border: 1px solid #e1e4f8;
@@ -131,6 +128,7 @@
   flex-grow: 0;
   flex-shrink: 0;
   margin-left: 36px;
+  display: flex;
 }
 
 .el-lists_content {
