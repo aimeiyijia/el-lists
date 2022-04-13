@@ -3,6 +3,7 @@
     <el-lists
       :data="listData"
       :columns="columns"
+      :layout="layout"
       :pagination="pagination"
       :total="100"
       @current-click="currentClick"
@@ -182,10 +183,14 @@ export default {
       // 整体的布局配置
       layout: {
         row: {
-          gutter: 20,
+          gutter: 200,
         },
         // 优先级低于columns列配置内的col配置项
         col: { xs: 24, sm: 12, md: 6, lg: 6, xl: 8 },
+        operaStyleClass: '',
+        operaStyle: {
+          width: '240px'
+        }
       },
       pagination: {
         pageSizes: [10, 20, 50, 70],

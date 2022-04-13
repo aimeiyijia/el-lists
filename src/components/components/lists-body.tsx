@@ -15,7 +15,7 @@ export default class extends Vue {
 
   render(h: CreateElement): VNode {
     const cellData = this.data.cellData
-    const { row = { gutter: 20 }, col = { span: 6 } } = this.layout
+    const { row = { gutter: 20 }, col = { span: 6 }, operaStyle = {}, operaStyleClass = '' } = this.layout
     const renderOperaSlot = () => {
       if (!this.$scopedSlots.hasOwnProperty('opera')) return
       return this.$scopedSlots.opera!({
@@ -33,7 +33,7 @@ export default class extends Vue {
                 let willHidden = false
                 if (isFunction(hidden)) {
                   willHidden = (hidden as Function)(this.data, cell)
-                }else {
+                } else {
                   willHidden = isBoolean(hidden) ? hidden as boolean : false
                 }
                 if (willHidden) return
@@ -47,7 +47,7 @@ export default class extends Vue {
             }
           </el-row>
         </div>
-        <div class="el-lists_opera">
+        <div class={['el-lists_opera', operaStyleClass]} style={operaStyle} >
           {renderOperaSlot()}
         </div>
       </div>

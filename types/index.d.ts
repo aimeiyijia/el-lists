@@ -38,5 +38,7 @@ export interface IListData {
 export interface ILayout {
   row?: Row
   col?: Col
+  operaStyleClass?: string
+  operaStyle?: Object
 }
 
