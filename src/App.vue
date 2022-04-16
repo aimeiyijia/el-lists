@@ -1,13 +1,16 @@
 <template>
   <div id="app">
+    <div class="big-leg">我是超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的占位元素</div>
     <el-lists
       :data="listData"
       :columns="columns"
       :layout="layout"
       :pagination="pagination"
+      :directives="{
+        offset: 120
+      }"
       :total="100"
       @current-click="currentClick"
-      @scroll="currentClick"
       @expand="currentClick"
     >
       <template #handleTitle>
@@ -217,5 +220,8 @@ export default {
 <style>
 #app {
   background-color: #fafbff;
+}
+.big-leg {
+  font-size: 24px;
 }
 </style>

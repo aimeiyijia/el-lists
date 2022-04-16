@@ -2,10 +2,11 @@ import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
 import cloneDeep from 'lodash/cloneDeep'
 import omit from 'lodash/omit'
-import isString from 'lodash/isString'
 import isBoolean from 'lodash/isBoolean'
 import isObject from 'lodash/isObject'
 import { Pagination, TableColumn } from 'element-ui'
+
+import '../directives/height-adaptive'
 
 import { guid } from '../utils'
 
@@ -14,7 +15,7 @@ import ListsBase from './lists-base'
 import PagStore from '../utils/store'
 
 import '../styles/index.scss'
-declare class ElTableTsDefPagination {
+declare class ElListsDefPagination {
   currentPage: number
   pageSizes: number[]
   pageSize: number
@@ -22,11 +23,17 @@ declare class ElTableTsDefPagination {
   background: boolean
 }
 
+declare interface IHeigthDirectives {
+  offset: number
+}
+
 @Component({
   name: 'ElLists',
   components: { ListsBase },
 })
 export default class extends Vue {
+  // 内置指令的配置项
+  @Prop({ type: Object, default: () => { return { offset: 40 } } }) readonly directives?: IHeigthDirectives
 
   @Prop({ default: () => [] }) private readonly data!: object[]
 
@@ -43,7 +50,7 @@ export default class extends Vue {
   isShowPag = true
 
   // 默认分页配置
-  private defPagination: ElTableTsDefPagination = {
+  private defPagination: ElListsDefPagination = {
     currentPage: 1,
     pageSizes: [10, 20, 30, 50],
     pageSize: 10,
@@ -104,10 +111,6 @@ export default class extends Vue {
     this.setTableScrollListener()
 
   }
-
-
-
-
 
   // 设置分页配置
   setPagination() {
@@ -187,6 +190,10 @@ export default class extends Vue {
 
   render(h: CreateElement): VNode {
 
+    const directives = [
+      { name: 'height-adaptive', value: { offset: this.directives!.offset } }
+    ]
+
     const renderLists = () => {
       return cloneDeep(this.listsData).map((list) => {
         const attrs = {
@@ -212,7 +219,7 @@ export default class extends Vue {
 
     return (
       <div class="el-lists" ref="el-lists">
-        <div class="el-lists-container" ref="el-lists-container">
+        <div class="el-lists-container" ref="el-lists-container" {...{ directives }}>
           <el-scrollbar
             native={false}
             noresize={true}
