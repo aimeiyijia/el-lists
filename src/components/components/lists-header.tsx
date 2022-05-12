@@ -30,6 +30,8 @@ export default class extends Vue {
   render(h: CreateElement): VNode {
     const data = this.data
     const { status, title, left, right } = this.$scopedSlots
+
+    // 左侧-状态插槽
     const renderStatusSlot = () => {
       if (!status) return data.status
       return status({
@@ -37,6 +39,7 @@ export default class extends Vue {
         data: this.data,
       })
     }
+    // 左侧-title插槽
     const renderTitleSlot = () => {
       if (!title) return data.title
       return title({
@@ -44,6 +47,7 @@ export default class extends Vue {
         data: this.data,
       })
     }
+    // 左侧插槽
     const renderLeftSlot = () => {
       if (!left) return
       return left({
@@ -52,15 +56,17 @@ export default class extends Vue {
       })
     }
     const renderLeft = () => {
-      if (renderStatusSlot() || renderTitleSlot()) {
-        return (
-          <fragment>
-            <span class={['status', data.statusType]}>{renderStatusSlot()}</span>
-            <span class="title">{renderTitleSlot()}</span>
-          </fragment>
-        )
+      // 左侧插槽的优先级最高
+      if (renderLeftSlot()) {
+        return renderLeftSlot()
       }
-      return renderLeftSlot()
+
+      return (
+        <fragment>
+          <span class={['status', data.statusType]}>{renderStatusSlot()}</span>
+          <span class="title">{renderTitleSlot()}</span>
+        </fragment>
+      )
     }
     const renderRightSlot = () => {
       if (!right) return
