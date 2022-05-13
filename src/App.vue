@@ -4,6 +4,7 @@
     <el-lists
       :data="listData"
       :columns="columns"
+      :rowProps="rowProps"
       :layout="layout"
       :pagination="pagination"
       :directives="{
@@ -17,9 +18,9 @@
         <span>自定义title</span>
       </template>
       <!-- 内置插槽。#left #status #title #opera #middle #right #expand -->
-      <template #left>
+      <!-- <template #left>
         <span>左</span>
-      </template>
+      </template> -->
       <!-- <template #status="row">
         <span>
           {{ row.status }}
@@ -56,12 +57,16 @@ export default {
           name1: 111111,
           name2: 2,
           name3: { name: '多层对象' },
+          name4: 4,
           // 内置 状态描述
           status: '转账成功',
           // 内置 css className 或者使用内置
           statusType: 'success',
           // 内置 行名称
           title: '标题一',
+          title123: {
+            abc: '标题一123'
+          },
           other: 123,
           extra: [
             {
@@ -116,7 +121,33 @@ export default {
           name3: { name: '多层对象' },
           status: '等待结果中',
           statusType: 'wait',
-          title: '标题三',
+          title: '标题四',
+          extra: [
+            {
+              name: 'in1测试',
+              name1: 111111,
+              name2: 2,
+              name3: { name: 'in1测试' },
+              // 内置 状态描述
+              status: '转账成功',
+              // 内置 css className 或者使用内置
+              statusType: 'success',
+              // 内置 行名称
+              title: '标题一',
+            },
+            {
+              name: 'in2测试',
+              name1: 111111,
+              name2: 2,
+              name3: { name: 'in2测试' },
+              // 内置 状态描述
+              status: '转账成功',
+              // 内置 css className 或者使用内置
+              statusType: 'success',
+              // 内置 行名称
+              title: '标题一',
+            },
+          ],
         },
         {
           name: '测试3',
@@ -125,7 +156,7 @@ export default {
           name3: { name: '多层对象' },
           status: '等待结果中',
           statusType: 'wait',
-          title: '标题三',
+          title: '标题五',
         },
         {
           name: '测试3',
@@ -134,9 +165,16 @@ export default {
           name3: { name: '多层对象' },
           status: '等待结果中',
           statusType: 'wait',
-          title: '标题三',
+          title: '标题六',
         },
       ],
+      // 每行的通用的字段在data中的取值key
+      rowProps: {
+        titleProp: 'title123.abc',
+        // statusProp: 'status',
+        // extraProp: 'extra',
+        // statusTypeProp: 'statusType',
+      },
       columns: [
         {
           // 数据项名

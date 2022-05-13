@@ -27,6 +27,20 @@ declare interface IHeigthDirectives {
   offset: number
 }
 
+declare interface IRowProps {
+  titleProp: string,
+  statusProp: string,
+  extraProp: string,
+  statusTypeProp: string,
+}
+
+const defaultRowProps: IRowProps = {
+  titleProp: 'title',
+  statusProp: 'status',
+  extraProp: 'extra',
+  statusTypeProp: 'statusType',
+}
+
 @Component({
   name: 'ElLists',
   components: { ListsBase },
@@ -38,6 +52,8 @@ export default class extends Vue {
   @Prop({ default: () => [] }) private readonly data!: object[]
 
   @Prop({ default: () => [] }) private readonly columns!: object[]
+
+  @Prop({ default: () => defaultRowProps }) private readonly rowProps!: IRowProps
 
   // 分页
   @Prop({ type: [Boolean, Object], default: () => { return { pageSize: 10, currentPage: 1 } } }) readonly pagination: Pagination | undefined | boolean
@@ -63,29 +79,41 @@ export default class extends Vue {
     this.setPagination()
   }
 
+  get mergeProps() {
+    return Object.assign({}, defaultRowProps, this.rowProps)
+  }
+
   // 拼装好的数据
   get listsData() {
     const listsData: any[] = []
+    const { titleProp, statusProp, extraProp, statusTypeProp } = this.mergeProps
     this.data.forEach((o: any) => {
-      o.columnID = guid()
       let cellData: any[] = []
-      let extraData: any[] = []
+      let singleColumnExtraData: any[] = []
+      o.$columnID = guid()
       cellData = this.confgDataToListData(o)
-      if (o.extra) {
-        o.extra.forEach((m: any) => {
-          extraData.push(this.confgDataToListData(m))
+
+      o.$columnTitle = this.getValueByKey(titleProp, o)
+      o.$columnStatus = this.getValueByKey(statusProp, o)
+      o.$columnStatusType = this.getValueByKey(statusTypeProp, o)
+
+      const singleColumnExtra = this.getValueByKey(extraProp, o)
+      if (singleColumnExtra) {
+        singleColumnExtra.forEach((m: any) => {
+          singleColumnExtraData.push(this.confgDataToListData(m))
         })
       }
-      this.$set(o, 'cellData', cellData)
-      this.$set(o, 'extraData', extraData)
+      this.$set(o, '$cellData', cellData)
+      this.$set(o, '$columnExtraData', singleColumnExtraData)
       listsData.push(o)
     })
+    console.log(listsData, '所有的列表数据')
     return listsData
   }
 
   // 支持深层次的对象取值
-  getCellValue(column: TableColumn, row: any) {
-    return column.prop.split('.').reduce((obj, cur) => {
+  getValueByKey(key: string, row: any) {
+    return key.split('.').reduce((obj, cur) => {
       if (obj) {
         return obj[cur]
       }
@@ -96,10 +124,10 @@ export default class extends Vue {
   confgDataToListData(o: any) {
     const cellData: any[] = []
     cloneDeep(this.columns).forEach((c: any) => {
-      const a: any = { columnsValue: '' }
-      a.columnsValue = this.getCellValue(c, o)
-      Object.assign(a, c)
-      cellData.push(a)
+      const cols: any = { columnsValue: '' }
+      cols.columnsValue = this.getValueByKey(c.prop, o)
+      Object.assign(cols, c)
+      cellData.push(cols)
     })
     return cellData
   }

@@ -27,12 +27,12 @@ export interface ICell {
 }
 
 export interface IListData {
-  columnID: string
-  title?: string
-  status?: number
-  statusType?: string
-  cellData: ICell[]
-  extraData: ICell[]
+  $columnID: string
+  $columnTitle?: string
+  $columnStatus?: number
+  $columnStatusType?: string
+  $cellData: ICell[]
+  $columnExtraData: ICell[]
 }
 
 export interface ILayout {

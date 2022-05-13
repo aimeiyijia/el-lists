@@ -22,7 +22,7 @@ export default class extends Vue {
   emitExpandChangeEvent() {
     return {
       data: this.data,
-      columnID: this.data.columnID,
+      columnID: this.data.$columnID,
       isExpand: this.isExpand
     }
   }
@@ -33,7 +33,7 @@ export default class extends Vue {
 
     // 左侧-状态插槽
     const renderStatusSlot = () => {
-      if (!status) return data.status
+      if (!status) return data.$columnStatus
       return status({
         h,
         data: this.data,
@@ -41,7 +41,7 @@ export default class extends Vue {
     }
     // 左侧-title插槽
     const renderTitleSlot = () => {
-      if (!title) return data.title
+      if (!title) return data.$columnTitle
       return title({
         h,
         data: this.data,
@@ -63,7 +63,7 @@ export default class extends Vue {
 
       return (
         <fragment>
-          <span class={['status', data.statusType]}>{renderStatusSlot()}</span>
+          <span class={['status', data.$columnStatusType]}>{renderStatusSlot()}</span>
           <span class="title">{renderTitleSlot()}</span>
         </fragment>
       )
@@ -79,7 +79,7 @@ export default class extends Vue {
       <div class="el-lists_header">
         <div class="header_left">{renderLeft()}</div>
         {renderRightSlot() && <div class="header_right">{renderRightSlot()}</div>}
-        {this.data.extraData.length > 0 && <i class={[this.isExpand ? 'el-icon-arrow-down' : 'el-icon-arrow-right']} onClick={this.toggleExpand} />}
+        {this.data.$columnExtraData.length > 0 && <i class={[this.isExpand ? 'el-icon-arrow-down' : 'el-icon-arrow-right']} onClick={this.toggleExpand} />}
       </div>
     )
   }

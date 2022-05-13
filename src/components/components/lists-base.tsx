@@ -49,10 +49,10 @@ export default class extends Vue {
         scopedSlots
       }
       bodyVnodes.push(<lists-body {...attrs}></lists-body>)
-      if (list.extraData) {
-        list.extraData.map((e: any) => {
+      if (list.$columnExtraData) {
+        list.$columnExtraData.map((e: any) => {
           const cloneList = cloneDeep(list)
-          cloneList.cellData = e
+          cloneList.$cellData = e
           const extraDataAttrs = {
             props: {
               data: cloneList,
@@ -61,7 +61,7 @@ export default class extends Vue {
             on: this.$listeners,
             scopedSlots
           }
-          bodyVnodes.push(<lists-body v-show={this.expandParams.columnID === list.columnID && this.expandParams.isExpand} {...extraDataAttrs}></lists-body>)
+          bodyVnodes.push(<lists-body v-show={this.expandParams.columnID === list.$columnID && this.expandParams.isExpand} {...extraDataAttrs}></lists-body>)
         })
       }
       return bodyVnodes

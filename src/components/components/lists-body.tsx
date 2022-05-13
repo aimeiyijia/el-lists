@@ -14,7 +14,7 @@ export default class extends Vue {
   @Prop({ default: () => { } }) private readonly layout!: ILayout
 
   render(h: CreateElement): VNode {
-    const cellData = this.data.cellData
+    const cellData = this.data.$cellData
     const { row = { gutter: 20 }, col = { span: 6 }, operaStyle = {}, operaStyleClass = '' } = this.layout
     const renderOperaSlot = () => {
       if (!this.$scopedSlots.hasOwnProperty('opera')) return
