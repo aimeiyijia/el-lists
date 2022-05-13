@@ -27,10 +27,10 @@
       </template>
       <template #title>
         <span>名称</span>
-      </template> -->
+      </template>
       <template #right>
         <span>右边</span>
-      </template>
+      </template> -->
       <template #expand>
         <span>展开插槽</span>
       </template>
