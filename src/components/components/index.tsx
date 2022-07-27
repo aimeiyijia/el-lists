@@ -28,10 +28,10 @@ declare interface IHeigthDirectives {
 }
 
 declare interface IRowProps {
-  titleProp: string,
-  statusProp: string,
-  extraProp: string,
-  statusTypeProp: string,
+  titleProp: string
+  statusProp: string
+  extraProp: string
+  statusTypeProp: string
 }
 
 const defaultRowProps: IRowProps = {
@@ -59,6 +59,8 @@ export default class extends Vue {
   @Prop({ type: [Boolean, Object], default: () => { return { pageSize: 10, currentPage: 1 } } }) readonly pagination: Pagination | undefined | boolean
   @Prop({ type: Number, default: 0 }) readonly total: number | undefined
 
+  // 表格所在的容器元素ID或Element，必须指定容器的高度
+  @Prop({ type: [String, Object], default: '' }) readonly container?: string | Element
   // 表格组件的 bodyWrapper元素
   private elListsContainer: any = null
 
@@ -89,7 +91,7 @@ export default class extends Vue {
     const { titleProp, statusProp, extraProp, statusTypeProp } = this.mergeProps
     this.data.forEach((o: any) => {
       let cellData: any[] = []
-      let singleColumnExtraData: any[] = []
+      const singleColumnExtraData: any[] = []
       o.$columnID = guid()
       cellData = this.confgDataToListData(o)
 
@@ -219,7 +221,12 @@ export default class extends Vue {
   render(h: CreateElement): VNode {
 
     const directives = [
-      { name: 'height-adaptive', value: { offset: this.directives!.offset } }
+      {
+        name: 'height-adaptive', value: {
+          container: this.container,
+          offset: this.directives!.offset
+        }
+      }
     ]
 
     const renderLists = () => {

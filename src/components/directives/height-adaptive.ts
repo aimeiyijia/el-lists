@@ -13,30 +13,66 @@ interface IHTMLElement extends HTMLElement {
   offsetParent: HTMLElement
 }
 
-interface IOffset {
-  offset: number
+interface IParams {
+  offset?: number
+  container?: string | HTMLElement
 }
 
-function getOffsetTop(elem: IHTMLElement): number {
+function getInnerHeight(elem: HTMLElement) {
+  const computed = getComputedStyle(elem);
+  const padding = parseInt(computed.paddingTop) + parseInt(computed.paddingBottom);
+
+  return elem.clientHeight - padding
+}
+
+function query(el: string | HTMLElement): HTMLElement {
+  if (typeof el === 'string') {
+    const selected = document.querySelector(el)
+    return selected as HTMLElement
+  } else {
+    return el
+  }
+}
+
+function getOffsetTop(elem: HTMLElement, inContainer: boolean): number {
   let top = elem.offsetTop;
-  let parent = elem.offsetParent;
+  if (inContainer) return top
+
+  let parent = elem.offsetParent as HTMLElement;
   while (parent) {
     top += parent.offsetTop;
-    parent = parent.offsetParent as IHTMLElement;
+    parent = parent.offsetParent as HTMLElement;
   }
   return top;
 }
 
 // 表格从页面底部开始的高度。
 
-const calcTableHeight = (element: IHTMLElement, offset: IOffset) => {
-  const wiH = window.innerHeight || 400
+const calcTableHeight = (element: HTMLElement, params: IParams) => {
+  const defaultHeight = 400
 
-  const offsetTop = getOffsetTop(element)
+  let containerEl: HTMLElement = document.body
+  if (params.container) {
+    const queryEl = query(params.container)
+    if (queryEl) {
+      queryEl.style.position = 'relative'
+      containerEl = queryEl
+    }
+  }
 
-  const elOB = offset.offset || 40
+  const containerHeight = getInnerHeight(containerEl) || defaultHeight
+  const topOffset = getOffsetTop(element, !!params.container)
 
-  const height = wiH - elOB - offsetTop
+  const bottomOffset = params.offset || 0
+
+  let height = containerHeight - bottomOffset - topOffset
+
+  // 高度是负数，将被设置为默认高度
+  if (height <= 0) {
+    console.warn('表格高度为负，已设置为默认高度(400)，请检查body元素或指定的容器元素高度')
+    height = defaultHeight
+  }
+
   return height
 }
 
