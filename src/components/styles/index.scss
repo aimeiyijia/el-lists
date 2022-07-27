@@ -122,6 +122,13 @@
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid #e1e4f8;
+  position: relative;
+}
+
+.el-lists_top-right-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .el-lists_opera{
@@ -155,9 +162,7 @@
   .data {
     color: #303133;
     flex: 1;
-
     width: 0;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

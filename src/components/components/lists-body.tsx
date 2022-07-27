@@ -2,7 +2,7 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
 import ListsCell from './lists-cell'
 
-import { isBoolean, isFunction, isUndefined } from '../utils/types'
+import { isBoolean, isFunction } from '../utils/types'
 
 import { ICell, IListData, ILayout } from 'types/index.d'
 @Component({
@@ -23,8 +23,21 @@ export default class extends Vue {
         h
       })
     }
+    const renderTopRightCornerSlot = () => {
+      if (!this.$scopedSlots.hasOwnProperty('topRight')) return
+      return this.$scopedSlots.topRight!({
+        data: this.data,
+        h
+      })
+    }
     return (
       <div class="el-lists_main">
+        {
+          renderTopRightCornerSlot() &&
+          (<div class="el-lists_top-right-corner">
+            {renderTopRightCornerSlot()}
+          </div>)
+        }
         <div class="el-lists_content">
           <el-row {...{ props: row }}>
             {

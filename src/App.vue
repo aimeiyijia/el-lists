@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <div class="big-leg">我是超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的占位元素</div>
+    <div class="big-leg">
+      我是超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的占位元素
+    </div>
     <el-lists
       :data="listData"
       :columns="columns"
@@ -28,10 +30,13 @@
       </template>
       <template #title>
         <span>名称</span>
-      </template>
+      </template> -->
       <template #right>
         <span>右边</span>
-      </template> -->
+      </template>
+      <template #topRight>
+        <span>右上角</span>
+      </template>
       <template #expand>
         <span>展开插槽</span>
       </template>
@@ -65,7 +70,7 @@ export default {
           // 内置 行名称
           title: '标题一',
           title123: {
-            abc: '标题一123'
+            abc: '我是超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的标题',
           },
           other: 123,
           extra: [
@@ -230,8 +235,8 @@ export default {
         col: { xs: 24, sm: 12, md: 6, lg: 6, xl: 8 },
         operaStyleClass: '',
         operaStyle: {
-          width: '240px'
-        }
+          width: '240px',
+        },
       },
       pagination: {
         pageSizes: [10, 20, 50, 70],
@@ -249,9 +254,9 @@ export default {
     // }, 3000)
   },
   methods: {
-    currentClick(data){
+    currentClick(data) {
       console.log(data, '项点击')
-    }
+    },
   },
 }
 </script>
