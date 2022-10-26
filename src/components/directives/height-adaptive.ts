@@ -62,14 +62,13 @@ const calcTableHeight = (element: HTMLElement, params: IParams) => {
 
   const containerHeight = getInnerHeight(containerEl) || defaultHeight
   const topOffset = getOffsetTop(element, !!params.container)
-
   const bottomOffset = params.offset || 0
 
   let height = containerHeight - bottomOffset - topOffset
 
   // 高度是负数，将被设置为默认高度
   if (height <= 0) {
-    console.warn('表格高度为负，已设置为默认高度(400)，请检查body元素或指定的容器元素高度')
+    // console.warn('表格高度为负，已设置为默认高度(400)，请检查body元素或指定的容器元素高度')
     height = defaultHeight
   }
 
@@ -81,8 +80,7 @@ const doResize = (el: IHTMLElement, binding: DirectiveBinding, vnode: VNode) => 
   el.style.height = `${height}px`
   const {componentInstance: $ElLists} = vnode!.children![0] as any
   if($ElLists){
-    console.log($ElLists, '实例')
-    $ElLists.update()
+    $ElLists.update && $ElLists.update()
   }
 }
 
@@ -93,7 +91,9 @@ const directive: DirectiveOptions = {
     globalEventListener.f = debounce(resizeListener, 100)
     window.addEventListener('resize', globalEventListener.f)
     // 立刻执行一次
-    doResize(elType, binding, vnode)
+    setTimeout(() => {
+      doResize(elType, binding, vnode)
+    })
   },
   update(el, binding, vnode) {
     window.removeEventListener('resize', globalEventListener.f)

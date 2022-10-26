@@ -4,11 +4,13 @@ import cloneDeep from 'lodash/cloneDeep'
 import omit from 'lodash/omit'
 import isBoolean from 'lodash/isBoolean'
 import isObject from 'lodash/isObject'
-import { Pagination, TableColumn } from 'element-ui'
+import { Pagination } from 'element-ui'
 
 import '../directives/height-adaptive'
 
 import { guid } from '../utils'
+
+import NoData from './no-data'
 
 import ListsBase from './lists-base'
 
@@ -43,7 +45,7 @@ const defaultRowProps: IRowProps = {
 
 @Component({
   name: 'ElLists',
-  components: { ListsBase },
+  components: { ListsBase, NoData },
 })
 export default class extends Vue {
   // 内置指令的配置项
@@ -109,8 +111,12 @@ export default class extends Vue {
       this.$set(o, '$columnExtraData', singleColumnExtraData)
       listsData.push(o)
     })
-    console.log(listsData, '所有的列表数据')
     return listsData
+  }
+
+  get hasData() {
+    if(this.data && this.data.length && this.data.length > 0) return true
+    return false
   }
 
   // 支持深层次的对象取值
@@ -160,6 +166,7 @@ export default class extends Vue {
   // 设置表格滚动监听器
   setTableScrollListener() {
     const elListsContainer: any = (this.$refs['el-lists-container'] as HTMLElement).querySelector('.el-scrollbar__wrap')
+    if (!elListsContainer) return
     this.elListsContainer = elListsContainer
 
     elListsContainer.addEventListener('scroll', this.listScroll)
@@ -244,7 +251,7 @@ export default class extends Vue {
     }
 
     const renderPageSlot = () => {
-      if (!this.$scopedSlots.hasOwnProperty('pagination')) return
+      if (!Object.prototype.hasOwnProperty.call(this.$scopedSlots, 'pagination')) return
       return this.$scopedSlots.pagination!({
         h,
         total: this.total,
@@ -252,18 +259,25 @@ export default class extends Vue {
       })
     }
 
+    const decideRender = () => {
+      return this.hasData
+        ?
+        (<el-scrollbar
+          native={false}
+          noresize={true}
+        >
+          {renderLists()}
+        </el-scrollbar>)
+        :
+        (<no-data></no-data>)
+    }
+
     return (
       <div class="el-lists" ref="el-lists">
         <div class="el-lists-container" ref="el-lists-container" {...{ directives }}>
-          <el-scrollbar
-            native={false}
-            noresize={true}
-          >
-            {renderLists()}
-          </el-scrollbar>
-
+          {decideRender()}
         </div>
-        {this.isShowPag && (
+        {(this.hasData && this.isShowPag) && (
           <el-pagination
             {...{ props: this.defPagination }}
             total={this.total}
@@ -280,7 +294,6 @@ export default class extends Vue {
           </el-pagination>
         )}
       </div>
-
     )
   }
 }
