@@ -1,6 +1,6 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
-import { Fragment } from 'vue-fragment'
+import { Fragment } from 'vue-frag'
 
 import { IListData } from 'types/index.d'
 @Component({
