@@ -95,7 +95,7 @@ export default class extends Vue {
       let cellData: any[] = []
       const singleColumnExtraData: any[] = []
       o.$columnID = guid()
-      cellData = this.confgDataToListData(o)
+      cellData = this.transformDataToListData(o)
 
       o.$columnTitle = this.getValueByKey(titleProp, o)
       o.$columnStatus = this.getValueByKey(statusProp, o)
@@ -104,7 +104,7 @@ export default class extends Vue {
       const singleColumnExtra = this.getValueByKey(extraProp, o)
       if (singleColumnExtra) {
         singleColumnExtra.forEach((m: any) => {
-          singleColumnExtraData.push(this.confgDataToListData(m))
+          singleColumnExtraData.push(this.transformDataToListData(m))
         })
       }
       this.$set(o, '$cellData', cellData)
@@ -129,7 +129,7 @@ export default class extends Vue {
   }
 
   // 将this.data转换成符合列表要求的结构
-  confgDataToListData(o: any) {
+  transformDataToListData(o: any) {
     const cellData: any[] = []
     cloneDeep(this.columns).forEach((c: any) => {
       const cols: any = { columnsValue: '' }
