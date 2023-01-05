@@ -17,14 +17,14 @@ export default class extends Vue {
     const cellData = this.data.$cellData
     const { row = { gutter: 20 }, col = { span: 6 }, operaStyle = {}, operaStyleClass = '' } = this.layout
     const renderOperaSlot = () => {
-      if (!this.$scopedSlots.hasOwnProperty('opera')) return
+      if (!Object.prototype.hasOwnProperty.call(this.$scopedSlots, "opera")) return
       return this.$scopedSlots.opera!({
         data: this.data,
         h
       })
     }
     const renderTopRightCornerSlot = () => {
-      if (!this.$scopedSlots.hasOwnProperty('topRight')) return
+      if (!Object.prototype.hasOwnProperty.call(this.$scopedSlots, "topRight")) return
       return this.$scopedSlots.topRight!({
         data: this.data,
         h
@@ -60,7 +60,7 @@ export default class extends Vue {
             }
           </el-row>
         </div>
-        <div class={['el-lists_opera', operaStyleClass]} style={operaStyle} >
+        <div class={['el-lists_opera', operaStyleClass]} style={{ ...operaStyle }} >
           {renderOperaSlot()}
         </div>
       </div>
