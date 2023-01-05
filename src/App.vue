@@ -228,7 +228,7 @@ export default {
       // 整体的布局配置
       layout: {
         row: {
-          gutter: 200,
+          gutter: 20,
         },
         // 优先级低于columns列配置内的col配置项
         col: { xs: 24, sm: 12, md: 6, lg: 6, xl: 8 },
