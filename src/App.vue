@@ -8,10 +8,9 @@
       :columns="columns"
       :rowProps="rowProps"
       :layout="layout"
+      :height="false"
       :pagination="pagination"
-      :directives="{
-        offset: 60
-      }"
+      :directives="false"
       :total="100"
       @current-click="currentClick"
       @expand="currentClick"

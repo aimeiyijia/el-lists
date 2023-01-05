@@ -48,8 +48,6 @@ const defaultRowProps: IRowProps = {
   components: { ListsBase, NoData },
 })
 export default class extends Vue {
-  // 内置指令的配置项
-  @Prop({ type: Object, default: () => { return { offset: 40 } } }) readonly directives?: IHeigthDirectives
 
   @Prop({ default: () => [] }) private readonly data!: object[]
 
@@ -57,6 +55,11 @@ export default class extends Vue {
 
   @Prop({ default: () => defaultRowProps }) private readonly rowProps!: IRowProps
 
+  // 表格高度
+  @Prop({ default: false }) private readonly height!: string | boolean
+
+  // 内置指令的配置项
+  @Prop({ type: [Boolean, Object], default: () => { return { offset: 40 } } }) readonly directives?: boolean | IHeigthDirectives
   // 分页
   @Prop({ type: [Boolean, Object], default: () => { return { pageSize: 10, currentPage: 1 } } }) readonly pagination: Pagination | undefined | boolean
   @Prop({ type: Number, default: 0 }) readonly total: number | undefined
@@ -115,7 +118,7 @@ export default class extends Vue {
   }
 
   get hasData() {
-    if(this.data && this.data.length && this.data.length > 0) return true
+    if (this.data && this.data.length && this.data.length > 0) return true
     return false
   }
 
@@ -227,14 +230,29 @@ export default class extends Vue {
 
   render(h: CreateElement): VNode {
 
-    const directives = [
-      {
-        name: 'height-adaptive', value: {
-          container: this.container,
-          offset: this.directives!.offset
-        }
+    const getDirectives = () => {
+      if (isBoolean(this.directives) && !this.directives) {
+        return []
       }
-    ]
+      return [
+        {
+          name: 'height-adaptive', value: {
+            container: this.container,
+            offset: (this.directives as IHeigthDirectives).offset
+          }
+        }
+      ]
+    }
+
+    const getStyle = () => {
+      if (isBoolean(this.height)) {
+        if (this.height) return { height: 'auto' }
+        return {}
+      }
+      return {
+        height: this.height
+      }
+    }
 
     const renderLists = () => {
       return cloneDeep(this.listsData).map((list) => {
@@ -274,7 +292,14 @@ export default class extends Vue {
 
     return (
       <div class="el-lists" ref="el-lists">
-        <div class="el-lists-container" ref="el-lists-container" {...{ directives }}>
+        <div
+          class="el-lists-container"
+          ref="el-lists-container"
+          style={ getStyle() }
+          {...{
+            directives: getDirectives()
+          }}
+        >
           {decideRender()}
         </div>
         {(this.hasData && this.isShowPag) && (
