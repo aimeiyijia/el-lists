@@ -10,7 +10,7 @@
       :layout="layout"
       :pagination="pagination"
       :directives="{
-        offset: 20
+        offset: 60
       }"
       :total="100"
       @current-click="currentClick"
