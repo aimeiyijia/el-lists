@@ -63,8 +63,12 @@ export default class extends Vue {
 
       return (
         <fragment>
-          <span class={['status', data.$columnStatusType]}>{renderStatusSlot()}</span>
-          <span class="title">{renderTitleSlot()}</span>
+          {
+            renderStatusSlot() && <span class={['status', data.$columnStatusType]}>{renderStatusSlot()}</span>
+          }
+          {
+            renderTitleSlot() && <span class="title">{renderTitleSlot()}</span>
+          }
         </fragment>
       )
     }
