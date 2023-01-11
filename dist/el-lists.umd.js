@@ -7650,9 +7650,9 @@ var lists_header_default_1 = /** @class */function (_super) {
       if (renderLeftSlot()) {
         return renderLeftSlot();
       }
-      return h("fragment", [h("span", {
+      return h("fragment", [renderStatusSlot() && h("span", {
         "class": ['status', data.$columnStatusType]
-      }, [renderStatusSlot()]), h("span", {
+      }, [renderStatusSlot()]), renderTitleSlot() && h("span", {
         "class": "title"
       }, [renderTitleSlot()])]);
     };
