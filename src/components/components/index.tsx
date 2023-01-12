@@ -17,7 +17,7 @@ import ListsBase from './lists-base'
 import PagStore from '../utils/store'
 
 import '../styles/index.scss'
-declare class ElListsDefPagination {
+export declare class ElListsDefPagination {
   currentPage: number
   pageSizes: number[]
   pageSize: number
@@ -25,11 +25,11 @@ declare class ElListsDefPagination {
   background: boolean
 }
 
-declare interface IHeigthDirectives {
+export declare interface IHeigthDirectives {
   offset: number
 }
 
-declare interface IRowProps {
+export declare interface IRowProps {
   titleProp: string
   statusProp: string
   extraProp: string
