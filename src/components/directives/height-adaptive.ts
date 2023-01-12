@@ -78,10 +78,13 @@ const calcTableHeight = (element: HTMLElement, params: IParams) => {
 const doResize = (el: IHTMLElement, binding: DirectiveBinding, vnode: VNode) => {
   const height = calcTableHeight(el, binding.value)
   el.style.height = `${height}px`
-  const {componentInstance: $ElLists} = vnode!.children![0] as any
-  if($ElLists){
-    $ElLists.update && $ElLists.update()
+  if (vnode && vnode.children && vnode.children[0]) {
+    const { componentInstance: $ElLists } = vnode!.children![0] as any
+    if ($ElLists) {
+      $ElLists.update && $ElLists.update()
+    }
   }
+
 }
 
 const directive: DirectiveOptions = {
