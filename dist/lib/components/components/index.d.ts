@@ -3,10 +3,17 @@ import { VNode, CreateElement } from 'vue';
 import { Pagination } from 'element-ui';
 import '../directives/height-adaptive';
 import '../styles/index.scss';
-declare interface IHeigthDirectives {
+export declare class ElListsDefPagination {
+    currentPage: number;
+    pageSizes: number[];
+    pageSize: number;
+    layout: string;
+    background: boolean;
+}
+export declare interface IHeigthDirectives {
     offset: number;
 }
-declare interface IRowProps {
+export declare interface IRowProps {
     titleProp: string;
     statusProp: string;
     extraProp: string;
@@ -54,4 +61,3 @@ export default class extends Vue {
     };
     render(h: CreateElement): VNode;
 }
-export {};

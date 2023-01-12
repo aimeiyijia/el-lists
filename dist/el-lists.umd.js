@@ -1573,13 +1573,6 @@ module.exports = getSymbols;
 
 /***/ }),
 
-/***/ "3429":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "img/noData.f0f60138.png";
-
-/***/ }),
-
 /***/ "342f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7257,9 +7250,11 @@ var calcTableHeight = function (element, params) {
 var doResize = function (el, binding, vnode) {
   var height = calcTableHeight(el, binding.value);
   el.style.height = "".concat(height, "px");
-  var $ElLists = vnode.children[0].componentInstance;
-  if ($ElLists) {
-    $ElLists.update && $ElLists.update();
+  if (vnode && vnode.children && vnode.children[0]) {
+    var $ElLists = vnode.children[0].componentInstance;
+    if ($ElLists) {
+      $ElLists.update && $ElLists.update();
+    }
   }
 };
 var directive = {
@@ -7301,7 +7296,6 @@ function guid() {
 // CONCATENATED MODULE: ./src/components/components/no-data.tsx
 
 
-var noDataPng = __webpack_require__("3429");
 var no_data_default_1 = /** @class */function (_super) {
   __extends(default_1, _super);
   function default_1() {
@@ -7310,11 +7304,7 @@ var no_data_default_1 = /** @class */function (_super) {
   default_1.prototype.render = function (h) {
     return h("div", {
       "class": "el-lists_nodata"
-    }, [h("el-image", {
-      "attrs": {
-        "src": noDataPng
-      }
-    }), h("span", ["\u6682\u65E0\u6570\u636E"])]);
+    }, [h("el-empty")]);
   };
   default_1 = __decorate([vue_class_component_esm({
     name: 'NOData'
