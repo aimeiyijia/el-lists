@@ -29,7 +29,7 @@ export default class extends Vue {
 
   render(h: CreateElement): VNode {
     const data = this.data
-    const { status, title, left, right } = this.$scopedSlots
+    const { insertLeft, status, insertMiddle, title, insertRight, left, right } = this.$scopedSlots
 
     // 左侧-状态插槽
     const renderStatusSlot = () => {
@@ -43,6 +43,30 @@ export default class extends Vue {
     const renderTitleSlot = () => {
       if (!title) return data.$columnTitle
       return title({
+        h,
+        data: this.data,
+      })
+    }
+    // 左侧-在状态插槽左边的插槽
+    const renderInsertLeft = () => {
+      if (!insertLeft) return ''
+      return insertLeft({
+        h,
+        data: this.data,
+      })
+    }
+    // 状态与title中间的插槽
+    const renderInsertMiddle = () => {
+      if (!insertMiddle) return ''
+      return insertMiddle({
+        h,
+        data: this.data,
+      })
+    }
+    // 左侧-在title插槽右边的插槽
+    const renderInsertRight = () => {
+      if (!insertRight) return ''
+      return insertRight({
         h,
         data: this.data,
       })
@@ -64,10 +88,19 @@ export default class extends Vue {
       return (
         <fragment>
           {
-            renderStatusSlot() && <span class={['status', data.$columnStatusType]}>{renderStatusSlot()}</span>
+            renderInsertLeft()
           }
           {
-            renderTitleSlot() && <span class="title">{renderTitleSlot()}</span>
+            renderStatusSlot() && <div class={['status', data.$columnStatusType]}>{renderStatusSlot()}</div>
+          }
+          {
+            renderInsertMiddle()
+          }
+          {
+            renderTitleSlot() && <div class="title">{renderTitleSlot()}</div>
+          }
+          {
+            renderInsertRight()
           }
         </fragment>
       )

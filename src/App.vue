@@ -8,13 +8,23 @@
       :columns="columns"
       :rowProps="rowProps"
       :layout="layout"
-      :height="false"
       :pagination="pagination"
-      :directives="false"
+      :directives="{
+        offset: 60
+      }"
       :total="100"
       @current-click="currentClick"
       @expand="currentClick"
     >
+      <template #insertLeft>
+        左
+      </template>
+      <template #insertMiddle>
+        中
+      </template>
+      <template #insertRight>
+        右
+      </template>
       <template #handleTitle>
         <span>自定义title</span>
       </template>
@@ -262,6 +272,7 @@ export default {
 <style>
 #app {
   background-color: #fafbff;
+  padding: 0 12px;
 }
 .big-leg {
   font-size: 24px;

@@ -32,6 +32,8 @@
   border: 1px solid #e1e4f8;
   margin-top: 16px;
   background-color: #fff;
+  border-radius: 4px;
+  transition: all .2s;
 
   &:nth-child(1) {
     margin-top: 0;
@@ -118,7 +120,7 @@
   &:hover {
     border-color: #92a5fc;
     box-shadow: 0 0 10px #d5d9eb;
-    transition: all .3s
+    transition: all .2s
   }
 
 
