@@ -10,9 +10,9 @@ import '../directives/height-adaptive'
 
 import { guid } from '../utils'
 
-import NoData from './no-data'
+import NoData from '../components/no-data'
 
-import ListsBase from './lists-base'
+import ListsBase from '../components/lists-base'
 
 import PagStore from '../utils/store'
 
@@ -40,32 +40,49 @@ const defaultRowProps: IRowProps = {
   titleProp: 'title',
   statusProp: 'status',
   extraProp: 'extra',
-  statusTypeProp: 'statusType',
+  statusTypeProp: 'statusType'
 }
 
 @Component({
   name: 'ElLists',
-  components: { ListsBase, NoData },
+  components: { ListsBase, NoData }
 })
 export default class extends Vue {
-
   @Prop({ default: () => [] }) private readonly data!: object[]
 
-  @Prop({ default: () => [] }) private readonly columns!: object[]
+  @Prop({ default: () => [] }) private readonly rows!: object[]
 
-  @Prop({ default: () => defaultRowProps }) private readonly rowProps!: IRowProps
+  @Prop({ default: () => defaultRowProps })
+  private readonly rowProps!: IRowProps
 
   // 表格高度
   @Prop({ default: false }) private readonly height!: string | boolean
 
   // 内置指令的配置项
-  @Prop({ type: [Boolean, Object], default: () => { return { offset: 40 } } }) readonly directives?: boolean | IHeigthDirectives
+  @Prop({
+    type: [Boolean, Object],
+    default: () => {
+      return { offset: 40 }
+    }
+  })
+  readonly directives?: boolean | IHeigthDirectives
+
   // 分页
-  @Prop({ type: [Boolean, Object], default: () => { return { pageSize: 10, currentPage: 1 } } }) readonly pagination: Pagination | undefined | boolean
+  @Prop({
+    type: [Boolean, Object],
+    default: () => {
+      return { pageSize: 10, currentPage: 1 }
+    }
+  })
+  readonly pagination: Pagination | undefined | boolean
+
   @Prop({ type: Number, default: 0 }) readonly total: number | undefined
 
   // 表格所在的容器元素ID或Element，必须指定容器的高度
-  @Prop({ type: [String, Object], default: '' }) readonly container?: string | Element
+  @Prop({ type: [String, Object], default: '' }) readonly container?:
+    | string
+    | Element
+
   // 表格组件的 bodyWrapper元素
   private elListsContainer: any = null
 
@@ -78,7 +95,7 @@ export default class extends Vue {
     pageSizes: [10, 20, 30, 50],
     pageSize: 10,
     layout: 'prev, pager, next, sizes, total',
-    background: true,
+    background: true
   }
 
   @Watch('pagination', { deep: true })
@@ -93,32 +110,34 @@ export default class extends Vue {
   // 拼装好的数据
   get listsData() {
     const listsData: any[] = []
+    const mergeRows = this.mergeDataToRows(this.data, this.rows)
+    console.log(mergeRows, '合并data与rows')
     const { titleProp, statusProp, extraProp, statusTypeProp } = this.mergeProps
-    this.data.forEach((o: any) => {
+    mergeRows.forEach((o: any) => {
       let cellData: any[] = []
-      const singleColumnExtraData: any[] = []
+      // const singleColumnExtraData: any[] = []
       o.$columnID = guid()
-      cellData = this.transformDataToListData(o)
+      cellData = this.mergerRowDataToCell(o)
 
       o.$columnTitle = this.getValueByKey(titleProp, o)
       o.$columnStatus = this.getValueByKey(statusProp, o)
       o.$columnStatusType = this.getValueByKey(statusTypeProp, o)
 
-      const singleColumnExtra = this.getValueByKey(extraProp, o)
-      if (singleColumnExtra) {
-        singleColumnExtra.forEach((m: any) => {
-          singleColumnExtraData.push(this.transformDataToListData(m))
-        })
-      }
+      // const singleColumnExtra = this.getValueByKey(extraProp, o)
+      // if (singleColumnExtra) {
+      //   singleColumnExtra.forEach((m: any) => {
+      //     singleColumnExtraData.push(this.mergerRowDataToCell(m))
+      //   })
+      // }
       this.$set(o, '$cellData', cellData)
-      this.$set(o, '$columnExtraData', singleColumnExtraData)
+      // this.$set(o, '$columnExtraData', singleColumnExtraData)
       listsData.push(o)
     })
     return listsData
   }
 
   get hasData() {
-    if (this.data && this.data.length && this.data.length > 0) return true
+    if (this.data && Object.keys(this.data).length > 0) return true
     return false
   }
 
@@ -131,31 +150,40 @@ export default class extends Vue {
     }, row)
   }
 
-  // 将this.data转换成符合列表要求的结构
-  transformDataToListData(o: any) {
-    const cellData: any[] = []
-    cloneDeep(this.columns).forEach((c: any) => {
-      const cols: any = { columnsValue: '' }
-      cols.columnsValue = this.getValueByKey(c.prop, o)
-      Object.assign(cols, c)
-      cellData.push(cols)
+  mergeDataToRows(data: any, cols: any) {
+    const cloneData = cloneDeep(data)
+    const cloneCols = cloneDeep(cols)
+    return cloneCols.map((o: any) => {
+      // 取出来行对应的值
+      const data = cloneData[o.prop]
+      Object.assign(o, {
+        $rowData: data || {}
+      })
+      return o
     })
-    return cellData
+  }
+
+  mergerRowDataToCell(o: any) {
+    const { cell, $rowData } = o
+    const cloneCell = cloneDeep(cell)
+    return cloneCell.map((o: any) => {
+      return Object.assign(o, {
+        columnsValue: $rowData[o.prop]
+      })
+    })
   }
 
   mounted() {
-
     this.setPagination()
 
     this.setTableScrollListener()
-
   }
 
   // 设置分页配置
   setPagination() {
     const pagination = this.pagination
     if (isBoolean(pagination)) {
-      this.isShowPag = (pagination as boolean)
+      this.isShowPag = pagination as boolean
     }
     if (isObject(pagination)) {
       this.isShowPag = true
@@ -168,7 +196,9 @@ export default class extends Vue {
 
   // 设置表格滚动监听器
   setTableScrollListener() {
-    const elListsContainer: any = (this.$refs['el-lists-container'] as HTMLElement).querySelector('.el-scrollbar__wrap')
+    const elListsContainer: any = (
+      this.$refs['el-lists-container'] as HTMLElement
+    ).querySelector('.el-scrollbar__wrap')
     if (!elListsContainer) return
     this.elListsContainer = elListsContainer
 
@@ -188,13 +218,11 @@ export default class extends Vue {
     this.emitPageChangeEvent()
   }
 
-
   @Emit('scroll')
   listScroll(e: MouseEvent) {
     e.preventDefault()
     return e
   }
-
 
   @Emit('page-change')
   emitPageChangeEvent() {
@@ -229,16 +257,14 @@ export default class extends Vue {
   }
 
   render(h: CreateElement): VNode {
-
-    console.log(this.listsData, '拼接好的数据')
-
     const getDirectives = () => {
       if (isBoolean(this.directives) && !this.directives) {
         return []
       }
       return [
         {
-          name: 'height-adaptive', value: {
+          name: 'height-adaptive',
+          value: {
             container: this.container,
             offset: (this.directives as IHeigthDirectives).offset
           }
@@ -257,21 +283,24 @@ export default class extends Vue {
     }
 
     const renderLists = () => {
-      return cloneDeep(this.listsData).map((list) => {
+      return cloneDeep(this.listsData).map(list => {
         const attrs = {
           props: {
             ...this.$attrs,
-            data: list,
+            data: list
           },
           on: this.$listeners,
           scopedSlots: this.$scopedSlots
         }
-        return <lists-base  {...attrs}></lists-base>
+        return <lists-base {...attrs}></lists-base>
       })
     }
 
     const renderPageSlot = () => {
-      if (!Object.prototype.hasOwnProperty.call(this.$scopedSlots, 'pagination')) return
+      if (
+        !Object.prototype.hasOwnProperty.call(this.$scopedSlots, 'pagination')
+      )
+        return
       return this.$scopedSlots.pagination!({
         h,
         total: this.total,
@@ -280,16 +309,13 @@ export default class extends Vue {
     }
 
     const decideRender = () => {
-      return this.hasData
-        ?
-        (<el-scrollbar
-          native={false}
-          noresize={true}
-        >
+      return this.hasData ? (
+        <el-scrollbar native={false} noresize={true}>
           {renderLists()}
-        </el-scrollbar>)
-        :
-        (<no-data></no-data>)
+        </el-scrollbar>
+      ) : (
+        <no-data></no-data>
+      )
     }
 
     return (
@@ -297,14 +323,14 @@ export default class extends Vue {
         <div
           class="el-lists-container"
           ref="el-lists-container"
-          style={ getStyle() }
+          style={getStyle()}
           {...{
             directives: getDirectives()
           }}
         >
           {decideRender()}
         </div>
-        {(this.hasData && this.isShowPag) && (
+        {this.hasData && this.isShowPag && (
           <el-pagination
             {...{ props: this.defPagination }}
             total={this.total}
@@ -317,7 +343,9 @@ export default class extends Vue {
               }
             }}
           >
-            {renderPageSlot() && <span class="el-pagination__slot">{renderPageSlot()}</span>}
+            {renderPageSlot() && (
+              <span class="el-pagination__slot">{renderPageSlot()}</span>
+            )}
           </el-pagination>
         )}
       </div>

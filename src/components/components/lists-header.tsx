@@ -8,7 +8,7 @@ import { IListData } from 'types/index.d'
   components: { Fragment }
 })
 export default class extends Vue {
-  @Prop({ default: () => { } }) private readonly data!: IListData
+  @Prop({ default: () => {} }) private readonly data!: IListData
 
   // 展开状态
   private isExpand = false
@@ -29,14 +29,22 @@ export default class extends Vue {
 
   render(h: CreateElement): VNode {
     const data = this.data
-    const { insertLeft, status, insertMiddle, title, insertRight, left, right } = this.$scopedSlots
+    const {
+      insertLeft,
+      status,
+      insertMiddle,
+      title,
+      insertRight,
+      left,
+      right
+    } = this.$scopedSlots
 
     // 左侧-状态插槽
     const renderStatusSlot = () => {
       if (!status) return data.$columnStatus
       return status({
         h,
-        data: this.data,
+        data: this.data
       })
     }
     // 左侧-title插槽
@@ -44,7 +52,7 @@ export default class extends Vue {
       if (!title) return data.$columnTitle
       return title({
         h,
-        data: this.data,
+        data: this.data
       })
     }
     // 左侧-在状态插槽左边的插槽
@@ -52,7 +60,7 @@ export default class extends Vue {
       if (!insertLeft) return ''
       return insertLeft({
         h,
-        data: this.data,
+        data: this.data
       })
     }
     // 状态与title中间的插槽
@@ -60,7 +68,7 @@ export default class extends Vue {
       if (!insertMiddle) return ''
       return insertMiddle({
         h,
-        data: this.data,
+        data: this.data
       })
     }
     // 左侧-在title插槽右边的插槽
@@ -68,7 +76,7 @@ export default class extends Vue {
       if (!insertRight) return ''
       return insertRight({
         h,
-        data: this.data,
+        data: this.data
       })
     }
     // 左侧插槽
@@ -76,7 +84,7 @@ export default class extends Vue {
       if (!left) return
       return left({
         h,
-        data: this.data,
+        data: this.data
       })
     }
     const renderLeft = () => {
@@ -87,21 +95,15 @@ export default class extends Vue {
 
       return (
         <fragment>
-          {
-            renderInsertLeft()
-          }
-          {
-            renderStatusSlot() && <div class={['status', data.$columnStatusType]}>{renderStatusSlot()}</div>
-          }
-          {
-            renderInsertMiddle()
-          }
-          {
-            renderTitleSlot() && <div class="title">{renderTitleSlot()}</div>
-          }
-          {
-            renderInsertRight()
-          }
+          {renderInsertLeft()}
+          {renderStatusSlot() && (
+            <div class={['status', data.$columnStatusType]}>
+              {renderStatusSlot()}
+            </div>
+          )}
+          {renderInsertMiddle()}
+          {renderTitleSlot() && <div class="title">{renderTitleSlot()}</div>}
+          {renderInsertRight()}
         </fragment>
       )
     }
@@ -109,14 +111,24 @@ export default class extends Vue {
       if (!right) return
       return right({
         h,
-        data: this.data,
+        data: this.data
       })
     }
     return (
       <div class="el-lists_header">
         <div class="header_left">{renderLeft()}</div>
-        {renderRightSlot() && <div class="header_right">{renderRightSlot()}</div>}
-        {this.data.$columnExtraData.length > 0 && <i class={[this.isExpand ? 'el-icon-arrow-down' : 'el-icon-arrow-right']} onClick={this.toggleExpand} />}
+        {renderRightSlot() && (
+          <div class="header_right">{renderRightSlot()}</div>
+        )}
+        {this.data.$columnExtraData &&
+          this.data.$columnExtraData.length > 0 && (
+            <i
+              class={[
+                this.isExpand ? 'el-icon-arrow-down' : 'el-icon-arrow-right'
+              ]}
+              onClick={this.toggleExpand}
+            />
+          )}
       </div>
     )
   }

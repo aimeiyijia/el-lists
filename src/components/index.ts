@@ -1,4 +1,5 @@
 import ElLists from './components/index'
+import ElListsSingle from './modules/el-lists-single'
 import _Vue, { PluginFunction, VueConstructor } from 'vue'
 
 interface InstallFunction extends PluginFunction<any> {
@@ -7,6 +8,7 @@ interface InstallFunction extends PluginFunction<any> {
 
 const Components: { [key: string]: VueConstructor } = {
   ElLists: ElLists,
+  ElListsSingle: ElListsSingle
 }
 
 const install: InstallFunction = (Vue: typeof _Vue) => {
