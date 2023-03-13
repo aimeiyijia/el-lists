@@ -20,8 +20,8 @@ export declare interface IRowProps {
     statusTypeProp: string;
 }
 export default class extends Vue {
-    private readonly data;
-    private readonly columns;
+    private readonly listsData;
+    private readonly hasDataFlag;
     private readonly rowProps;
     private readonly height;
     readonly directives?: boolean | IHeigthDirectives;
@@ -31,12 +31,8 @@ export default class extends Vue {
     private elListsContainer;
     isShowPag: boolean;
     private defPagination;
-    onPaginationChanged(): void;
-    get mergeProps(): IRowProps;
-    get listsData(): any[];
     get hasData(): boolean;
-    getValueByKey(key: string, row: any): any;
-    transformDataToListData(o: any): any[];
+    onPaginationChanged(): void;
     mounted(): void;
     setPagination(): void;
     setTableScrollListener(): void;

@@ -6203,9 +6203,6 @@ var helper_default = /*#__PURE__*/__webpack_require__.n(helper);
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.push.js
 var es_array_push = __webpack_require__("14d9");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.reduce.js
-var es_array_reduce = __webpack_require__("13d5");
-
 // CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.js
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -7170,6 +7167,26 @@ function Watch(path, options) {
 var cloneDeep = __webpack_require__("0644");
 var cloneDeep_default = /*#__PURE__*/__webpack_require__.n(cloneDeep);
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.reduce.js
+var es_array_reduce = __webpack_require__("13d5");
+
+// CONCATENATED MODULE: ./src/components/utils/index.ts
+
+function guid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0;
+    var v = c === 'x' ? r : r & 0x3 | 0x8;
+    return v.toString(16);
+  });
+}
+// 支持深层次的对象取值
+function getValueByKey(key, row) {
+  return key.split('.').reduce(function (obj, cur) {
+    if (obj) {
+      return obj[cur];
+    }
+  }, row);
+}
 // EXTERNAL MODULE: ./node_modules/lodash/omit.js
 var omit = __webpack_require__("3eea");
 var omit_default = /*#__PURE__*/__webpack_require__.n(omit);
@@ -7276,14 +7293,6 @@ var directive = {
   }
 };
 external_vue_default.a.directive('height-adaptive', directive);
-// CONCATENATED MODULE: ./src/components/utils/index.ts
-function guid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = Math.random() * 16 | 0;
-    var v = c === 'x' ? r : r & 0x3 | 0x8;
-    return v.toString(16);
-  });
-}
 // CONCATENATED MODULE: ./src/components/components/no-data.tsx
 
 
@@ -7598,8 +7607,11 @@ var lists_header_default_1 = /** @class */function (_super) {
     var _this = this;
     var data = this.data;
     var _a = this.$scopedSlots,
+      insertLeft = _a.insertLeft,
       status = _a.status,
+      insertMiddle = _a.insertMiddle,
       title = _a.title,
+      insertRight = _a.insertRight,
       left = _a.left,
       right = _a.right;
     // 左侧-状态插槽
@@ -7618,6 +7630,30 @@ var lists_header_default_1 = /** @class */function (_super) {
         data: _this.data
       });
     };
+    // 左侧-在状态插槽左边的插槽
+    var renderInsertLeft = function () {
+      if (!insertLeft) return '';
+      return insertLeft({
+        h: h,
+        data: _this.data
+      });
+    };
+    // 状态与title中间的插槽
+    var renderInsertMiddle = function () {
+      if (!insertMiddle) return '';
+      return insertMiddle({
+        h: h,
+        data: _this.data
+      });
+    };
+    // 左侧-在title插槽右边的插槽
+    var renderInsertRight = function () {
+      if (!insertRight) return '';
+      return insertRight({
+        h: h,
+        data: _this.data
+      });
+    };
     // 左侧插槽
     var renderLeftSlot = function () {
       if (!left) return;
@@ -7631,11 +7667,11 @@ var lists_header_default_1 = /** @class */function (_super) {
       if (renderLeftSlot()) {
         return renderLeftSlot();
       }
-      return h("fragment", [renderStatusSlot() && h("span", {
+      return h("fragment", [renderInsertLeft(), renderStatusSlot() && h("div", {
         "class": ['status', data.$columnStatusType]
-      }, [renderStatusSlot()]), renderTitleSlot() && h("span", {
+      }, [renderStatusSlot()]), renderInsertMiddle(), renderTitleSlot() && h("div", {
         "class": "title"
-      }, [renderTitleSlot()])]);
+      }, [renderTitleSlot()]), renderInsertRight()]);
     };
     var renderRightSlot = function () {
       if (!right) return;
@@ -7650,7 +7686,7 @@ var lists_header_default_1 = /** @class */function (_super) {
       "class": "header_left"
     }, [renderLeft()]), renderRightSlot() && h("div", {
       "class": "header_right"
-    }, [renderRightSlot()]), this.data.$columnExtraData.length > 0 && h("i", {
+    }, [renderRightSlot()]), this.data.$columnExtraData && this.data.$columnExtraData.length > 0 && h("i", {
       "class": [this.isExpand ? 'el-icon-arrow-down' : 'el-icon-arrow-right'],
       "on": {
         "click": this.toggleExpand
@@ -12204,7 +12240,7 @@ var lists_cell_default_1 = /** @class */function (_super) {
           cellData: cellData
         });
       }
-      return cellData.columnsValue;
+      return cellData.$columnsValue;
     };
     return h("div", {
       "class": "el-lists_item",
@@ -12499,9 +12535,6 @@ var PagStore = /** @class */function () {
 
 
 
-
-
-
 var defaultRowProps = {
   titleProp: 'title',
   statusProp: 'status',
@@ -12526,78 +12559,15 @@ var components_default_1 = /** @class */function (_super) {
     };
     return _this;
   }
-  default_1.prototype.onPaginationChanged = function () {
-    this.setPagination();
-  };
-  Object.defineProperty(default_1.prototype, "mergeProps", {
-    get: function () {
-      return Object.assign({}, defaultRowProps, this.rowProps);
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(default_1.prototype, "listsData", {
-    // 拼装好的数据
-    get: function () {
-      var _this = this;
-      var listsData = [];
-      var _a = this.mergeProps,
-        titleProp = _a.titleProp,
-        statusProp = _a.statusProp,
-        extraProp = _a.extraProp,
-        statusTypeProp = _a.statusTypeProp;
-      this.data.forEach(function (o) {
-        var cellData = [];
-        var singleColumnExtraData = [];
-        o.$columnID = guid();
-        cellData = _this.transformDataToListData(o);
-        o.$columnTitle = _this.getValueByKey(titleProp, o);
-        o.$columnStatus = _this.getValueByKey(statusProp, o);
-        o.$columnStatusType = _this.getValueByKey(statusTypeProp, o);
-        var singleColumnExtra = _this.getValueByKey(extraProp, o);
-        if (singleColumnExtra) {
-          singleColumnExtra.forEach(function (m) {
-            singleColumnExtraData.push(_this.transformDataToListData(m));
-          });
-        }
-        _this.$set(o, '$cellData', cellData);
-        _this.$set(o, '$columnExtraData', singleColumnExtraData);
-        listsData.push(o);
-      });
-      return listsData;
-    },
-    enumerable: false,
-    configurable: true
-  });
   Object.defineProperty(default_1.prototype, "hasData", {
     get: function () {
-      if (this.data && this.data.length && this.data.length > 0) return true;
-      return false;
+      return this.hasDataFlag;
     },
     enumerable: false,
     configurable: true
   });
-  // 支持深层次的对象取值
-  default_1.prototype.getValueByKey = function (key, row) {
-    return key.split('.').reduce(function (obj, cur) {
-      if (obj) {
-        return obj[cur];
-      }
-    }, row);
-  };
-  // 将this.data转换成符合列表要求的结构
-  default_1.prototype.transformDataToListData = function (o) {
-    var _this = this;
-    var cellData = [];
-    cloneDeep_default()(this.columns).forEach(function (c) {
-      var cols = {
-        columnsValue: ''
-      };
-      cols.columnsValue = _this.getValueByKey(c.prop, o);
-      Object.assign(cols, c);
-      cellData.push(cols);
-    });
-    return cellData;
+  default_1.prototype.onPaginationChanged = function () {
+    this.setPagination();
   };
   default_1.prototype.mounted = function () {
     this.setPagination();
@@ -12751,12 +12721,10 @@ var components_default_1 = /** @class */function (_super) {
     default: function () {
       return [];
     }
-  })], default_1.prototype, "data", void 0);
+  })], default_1.prototype, "listsData", void 0);
   __decorate([Prop({
-    default: function () {
-      return [];
-    }
-  })], default_1.prototype, "columns", void 0);
+    default: false
+  })], default_1.prototype, "hasDataFlag", void 0);
   __decorate([Prop({
     default: function () {
       return defaultRowProps;
@@ -12799,7 +12767,7 @@ var components_default_1 = /** @class */function (_super) {
   __decorate([Emit('prev-click')], default_1.prototype, "emitPrevClick", null);
   __decorate([Emit('next-click')], default_1.prototype, "emitNextClick", null);
   default_1 = __decorate([vue_class_component_esm({
-    name: 'ElLists',
+    name: 'ElListsBase',
     components: {
       ListsBase: lists_base,
       NoData: no_data
@@ -12808,10 +12776,242 @@ var components_default_1 = /** @class */function (_super) {
   return default_1;
 }(external_vue_default.a);
 /* harmony default export */ var components = (components_default_1);
+// CONCATENATED MODULE: ./src/components/modules/mixins/props.tsx
+
+
+var props_defaultRowProps = {
+  titleProp: 'title',
+  statusProp: 'status',
+  extraProp: 'extra',
+  statusTypeProp: 'statusType'
+};
+var props_default_1 = /** @class */function (_super) {
+  __extends(default_1, _super);
+  function default_1() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+  Object.defineProperty(default_1.prototype, "mergeProps", {
+    get: function () {
+      return Object.assign({}, props_defaultRowProps, this.rowProps);
+    },
+    enumerable: false,
+    configurable: true
+  });
+  __decorate([Prop({
+    default: function () {
+      return props_defaultRowProps;
+    }
+  })], default_1.prototype, "rowProps", void 0);
+  default_1 = __decorate([vue_class_component_esm({
+    name: 'ElListsMergePropsMixins'
+  })], default_1);
+  return default_1;
+}(external_vue_default.a);
+/* harmony default export */ var mixins_props = (props_default_1);
+// CONCATENATED MODULE: ./src/components/modules/el-lists.tsx
+
+
+
+
+
+
+
+
+var el_lists_default_1 = /** @class */function (_super) {
+  __extends(default_1, _super);
+  function default_1() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+  Object.defineProperty(default_1.prototype, "listsData", {
+    // 拼装好的数据
+    get: function () {
+      var _this = this;
+      var listsData = [];
+      var _a = this.mergeProps,
+        titleProp = _a.titleProp,
+        statusProp = _a.statusProp,
+        extraProp = _a.extraProp,
+        statusTypeProp = _a.statusTypeProp;
+      this.data.forEach(function (o) {
+        var cellData = [];
+        var singleColumnExtraData = [];
+        o.$columnID = guid();
+        cellData = _this.transformDataToListData(o);
+        o.$columnTitle = getValueByKey(titleProp, o);
+        o.$columnStatus = getValueByKey(statusProp, o);
+        o.$columnStatusType = getValueByKey(statusTypeProp, o);
+        var singleColumnExtra = getValueByKey(extraProp, o);
+        if (singleColumnExtra) {
+          singleColumnExtra.forEach(function (m) {
+            singleColumnExtraData.push(_this.transformDataToListData(m));
+          });
+        }
+        _this.$set(o, '$cellData', cellData);
+        _this.$set(o, '$columnExtraData', singleColumnExtraData);
+        listsData.push(o);
+      });
+      return listsData;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Object.defineProperty(default_1.prototype, "hasData", {
+    get: function () {
+      if (this.data && this.data.length && this.data.length > 0) return true;
+      return false;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  // 将this.data转换成符合列表要求的结构
+  default_1.prototype.transformDataToListData = function (o) {
+    var cellData = [];
+    cloneDeep_default()(this.columns).forEach(function (c) {
+      var cols = {
+        $columnsValue: ''
+      };
+      cols.$columnsValue = getValueByKey(c.prop, o);
+      Object.assign(cols, c);
+      cellData.push(cols);
+    });
+    return cellData;
+  };
+  default_1.prototype.render = function (h) {
+    return h("el-lists-base", helper_default()([{}, {
+      props: __assign(__assign({}, this.$attrs), {
+        listsData: this.listsData,
+        hasDataFlag: this.hasData
+      }),
+      on: this.$listeners,
+      scopedSlots: this.$scopedSlots
+    }]));
+  };
+  __decorate([Prop({
+    default: function () {
+      return [];
+    }
+  })], default_1.prototype, "data", void 0);
+  __decorate([Prop({
+    default: function () {
+      return [];
+    }
+  })], default_1.prototype, "columns", void 0);
+  default_1 = __decorate([vue_class_component_esm({
+    name: 'ElLists',
+    components: {
+      ElListsBase: components
+    }
+  })], default_1);
+  return default_1;
+}(mixins(mixins_props));
+/* harmony default export */ var el_lists = (el_lists_default_1);
+// CONCATENATED MODULE: ./src/components/modules/el-lists-single.tsx
+
+
+
+
+
+
+
+
+var el_lists_single_default_1 = /** @class */function (_super) {
+  __extends(default_1, _super);
+  function default_1() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+  Object.defineProperty(default_1.prototype, "listsData", {
+    // 拼装好的数据
+    get: function () {
+      var _this = this;
+      var listsData = [];
+      var mergeRows = this.mergeDataToRows(this.data, this.rows);
+      var _a = this.mergeProps,
+        titleProp = _a.titleProp,
+        statusProp = _a.statusProp,
+        statusTypeProp = _a.statusTypeProp;
+      mergeRows.forEach(function (o) {
+        var cellData = [];
+        o.$columnID = guid();
+        cellData = _this.mergerRowDataToCell(o);
+        o.$columnTitle = getValueByKey(titleProp, o);
+        o.$columnStatus = getValueByKey(statusProp, o);
+        o.$columnStatusType = getValueByKey(statusTypeProp, o);
+        _this.$set(o, '$cellData', cellData);
+        listsData.push(o);
+      });
+      return listsData;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Object.defineProperty(default_1.prototype, "hasData", {
+    get: function () {
+      if (this.data && Object.keys(this.data).length > 0) return true;
+      return false;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  default_1.prototype.mergeDataToRows = function (data, cols) {
+    var cloneData = cloneDeep_default()(data);
+    var cloneCols = cloneDeep_default()(cols);
+    return cloneCols.map(function (o) {
+      // 取出来行对应的值
+      var data = cloneData[o.prop];
+      Object.assign(o, {
+        $rowData: data || {}
+      });
+      return o;
+    });
+  };
+  default_1.prototype.mergerRowDataToCell = function (o) {
+    var cell = o.cell,
+      $rowData = o.$rowData;
+    var cloneCell = cloneDeep_default()(cell);
+    return cloneCell.map(function (o) {
+      return Object.assign(o, {
+        $columnsValue: $rowData[o.prop]
+      });
+    });
+  };
+  default_1.prototype.render = function (h) {
+    return h("el-lists-base", helper_default()([{}, {
+      props: __assign(__assign({}, this.$attrs), {
+        listsData: this.listsData,
+        hasDataFlag: this.hasData
+      }),
+      on: this.$listeners,
+      scopedSlots: this.$scopedSlots
+    }]));
+  };
+  __decorate([Prop({
+    default: function () {
+      return [];
+    }
+  })], default_1.prototype, "data", void 0);
+  __decorate([Prop({
+    default: function () {
+      return [];
+    }
+  })], default_1.prototype, "rows", void 0);
+  default_1 = __decorate([vue_class_component_esm({
+    name: 'ElLists',
+    components: {
+      ElListsBase: components
+    }
+  })], default_1);
+  return default_1;
+}(mixins(mixins_props));
+/* harmony default export */ var el_lists_single = (el_lists_single_default_1);
+// CONCATENATED MODULE: ./src/components/modules/index.ts
+
+
+
 // CONCATENATED MODULE: ./src/components/index.ts
 
 var Components = {
-  ElLists: components
+  ElLists: el_lists,
+  ElListsSingle: el_lists_single
 };
 var install = function (Vue) {
   if (install.installed) return;
