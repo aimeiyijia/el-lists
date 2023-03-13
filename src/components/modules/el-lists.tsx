@@ -49,8 +49,8 @@ export default class extends Mixins(ElListsMergePropsMixins) {
   transformDataToListData(o: any) {
     const cellData: any[] = []
     cloneDeep(this.columns).forEach((c: any) => {
-      const cols: any = { columnsValue: '' }
-      cols.columnsValue = getValueByKey(c.prop, o)
+      const cols: any = { $columnsValue: '' }
+      cols.$columnsValue = getValueByKey(c.prop, o)
       Object.assign(cols, c)
       cellData.push(cols)
     })

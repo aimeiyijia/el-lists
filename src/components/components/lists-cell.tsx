@@ -79,7 +79,7 @@ export default class extends Vue {
           cellData
         })
       }
-      return cellData.columnsValue
+      return cellData.$columnsValue
     }
 
     return (

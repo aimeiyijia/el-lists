@@ -15,7 +15,7 @@ export interface IScopedSlots {
   customTitle?: string
 }
 export interface ICell {
-  columnsValue: string
+  $columnsValue: string
   col?: {}
   label?: string
   prop?: string

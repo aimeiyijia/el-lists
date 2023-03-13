@@ -56,7 +56,7 @@ export default class extends Mixins(ElListsMergePropsMixins) {
     const cloneCell = cloneDeep(cell)
     return cloneCell.map((o: any) => {
       return Object.assign(o, {
-        columnsValue: $rowData[o.prop]
+        $columnsValue: $rowData[o.prop]
       })
     })
   }
