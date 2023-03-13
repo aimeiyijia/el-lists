@@ -1,5 +1,4 @@
-import ElLists from './components/index'
-import ElListsSingle from './modules/el-lists-single'
+import { ElLists, ElListsSingle } from './modules'
 import _Vue, { PluginFunction, VueConstructor } from 'vue'
 
 interface InstallFunction extends PluginFunction<any> {
