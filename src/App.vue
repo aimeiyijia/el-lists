@@ -51,7 +51,11 @@
         <div>又一个占位</div>
       </template>
     </el-lists>
-    <el-lists-single :data="singleListData" :rows="singleRows">
+    <el-lists-single
+      :data="singleListData"
+      :rows="singleRows"
+      :rowProps="singleRowProps"
+    >
       <template #opera="row">
         <el-button type="primary" size="small">
           {{ row.data.status }}
@@ -257,6 +261,25 @@ export default {
         background: true,
         currentPage: 1
       },
+      testData: [
+        {
+          openType: '1',
+          openId: 'openId1',
+          nodeName: '我是标题1',
+          label1: 'label1',
+          label2: 'label2'
+        },
+        {
+          openType: '2',
+          openId: 'openId2',
+          nodeName: '我是标题2',
+          label3: 'label3',
+          label4: 'label4'
+        }
+      ],
+      singleRowProps: {
+        titleProp: 'nodeName'
+      },
       singleListData: {
         data: {
           title: 'title',
@@ -300,6 +323,37 @@ export default {
     //   console.log('定时器')
     //   this.listData[0].name3 = '899088908'
     // }, 3000)
+    const cellTypes = {
+      1: [
+        { prop: 'label1', label: 'label1' },
+        { prop: 'label2', label: 'label2' }
+      ],
+      2: [
+        { prop: 'label3', label: 'label3' },
+        { prop: 'label4', label: 'label4' }
+      ]
+    }
+    const getData = () => {
+      const singleRows = []
+      const singleListData = {}
+      const finallyData = this.testData.forEach(o => {
+        const { openId, openType } = o
+        singleListData[openId] = o
+        singleRows.push({
+          prop: openId,
+          cell: cellTypes[openType]
+        })
+      })
+      return {
+        singleRows,
+        singleListData
+      }
+    }
+
+    const { singleListData, singleRows } = getData()
+    this.singleRows = singleRows
+    this.singleListData = singleListData
+    console.log(getData(), '拼好的数据')
   },
   methods: {
     currentClick(data) {
