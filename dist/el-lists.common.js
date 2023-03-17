@@ -12925,17 +12925,10 @@ var el_lists_single_default_1 = /** @class */function (_super) {
       var _this = this;
       var listsData = [];
       var mergeRows = this.mergeDataToRows(this.data, this.rows);
-      var _a = this.mergeProps,
-        titleProp = _a.titleProp,
-        statusProp = _a.statusProp,
-        statusTypeProp = _a.statusTypeProp;
       mergeRows.forEach(function (o) {
         var cellData = [];
         o.$columnID = guid();
         cellData = _this.mergerRowDataToCell(o);
-        o.$columnTitle = getValueByKey(titleProp, o);
-        o.$columnStatus = getValueByKey(statusProp, o);
-        o.$columnStatusType = getValueByKey(statusTypeProp, o);
         _this.$set(o, '$cellData', cellData);
         listsData.push(o);
       });
@@ -12953,12 +12946,20 @@ var el_lists_single_default_1 = /** @class */function (_super) {
     configurable: true
   });
   default_1.prototype.mergeDataToRows = function (data, cols) {
+    var _a = this.mergeProps,
+      titleProp = _a.titleProp,
+      statusProp = _a.statusProp,
+      statusTypeProp = _a.statusTypeProp;
     var cloneData = cloneDeep_default()(data);
     var cloneCols = cloneDeep_default()(cols);
     return cloneCols.map(function (o) {
+      console.log(o, '单行数据');
       // 取出来行对应的值
       var data = cloneData[o.prop];
       Object.assign(o, {
+        $columnTitle: getValueByKey(titleProp, data),
+        $columnStatus: getValueByKey(statusProp, data),
+        $columnStatusType: getValueByKey(statusTypeProp, data),
         $rowData: data || {}
       });
       return o;
