@@ -259,22 +259,11 @@ export default {
       },
       singleListData: {
         data: {
+          title: 'title',
+          status: 'status',
+          statusType: 'success',
           childData1: '数据1',
-          childData2: '数据2',
-          extra: [
-            {
-              name: 'in1测试',
-              name1: 111111,
-              name2: 2,
-              name3: { name: 'in1测试' },
-              // 内置 状态描述
-              status: '转账成功',
-              // 内置 css className 或者使用内置
-              statusType: 'success',
-              // 内置 行名称
-              title: '标题一'
-            }
-          ]
+          childData2: '数据2'
         },
         data1: {
           childData3: '数据3',
@@ -284,9 +273,13 @@ export default {
       singleRows: [
         {
           prop: 'data',
-          title: 'title',
-          status: 'status',
-          statusType: 'success',
+          cell: [
+            { prop: 'childData1', label: '数据项1' },
+            { prop: 'childData2', label: '数据项2' }
+          ]
+        },
+        {
+          prop: 'data123',
           cell: [
             { prop: 'childData1', label: '数据项1' },
             { prop: 'childData2', label: '数据项2' }

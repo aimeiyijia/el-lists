@@ -18,15 +18,10 @@ export default class extends Mixins(ElListsMergePropsMixins) {
   get listsData() {
     const listsData: any[] = []
     const mergeRows = this.mergeDataToRows(this.data, this.rows)
-    const { titleProp, statusProp, statusTypeProp } = this.mergeProps
     mergeRows.forEach((o: any) => {
       let cellData: any[] = []
       o.$columnID = guid()
       cellData = this.mergerRowDataToCell(o)
-
-      o.$columnTitle = getValueByKey(titleProp, o)
-      o.$columnStatus = getValueByKey(statusProp, o)
-      o.$columnStatusType = getValueByKey(statusTypeProp, o)
       this.$set(o, '$cellData', cellData)
       listsData.push(o)
     })
@@ -39,12 +34,17 @@ export default class extends Mixins(ElListsMergePropsMixins) {
   }
 
   mergeDataToRows(data: any, cols: any) {
+    const { titleProp, statusProp, statusTypeProp } = this.mergeProps
     const cloneData = cloneDeep(data)
     const cloneCols = cloneDeep(cols)
     return cloneCols.map((o: any) => {
+      console.log(o, '单行数据')
       // 取出来行对应的值
       const data = cloneData[o.prop]
       Object.assign(o, {
+        $columnTitle: getValueByKey(titleProp, data),
+        $columnStatus: getValueByKey(statusProp, data),
+        $columnStatusType: getValueByKey(statusTypeProp, data),
         $rowData: data || {}
       })
       return o
