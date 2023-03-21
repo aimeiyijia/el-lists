@@ -38,7 +38,6 @@ export default class extends Mixins(ElListsMergePropsMixins) {
     const cloneData = cloneDeep(data)
     const cloneCols = cloneDeep(cols)
     return cloneCols.map((o: any) => {
-      console.log(o, '单行数据')
       // 取出来行对应的值
       const data = cloneData[o.prop]
       Object.assign(o, {

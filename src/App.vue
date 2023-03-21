@@ -336,7 +336,7 @@ export default {
     const getData = () => {
       const singleRows = []
       const singleListData = {}
-      const finallyData = this.testData.forEach(o => {
+      this.testData.forEach(o => {
         const { openId, openType } = o
         singleListData[openId] = o
         singleRows.push({

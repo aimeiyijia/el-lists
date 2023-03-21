@@ -12953,7 +12953,6 @@ var el_lists_single_default_1 = /** @class */function (_super) {
     var cloneData = cloneDeep_default()(data);
     var cloneCols = cloneDeep_default()(cols);
     return cloneCols.map(function (o) {
-      console.log(o, '单行数据');
       // 取出来行对应的值
       var data = cloneData[o.prop];
       Object.assign(o, {
