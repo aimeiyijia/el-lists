@@ -11,14 +11,14 @@ import '../styles/index.scss'
 
 @Component({
   name: 'ListsBase',
-  components: { ListsHeader, ListsBody },
+  components: { ListsHeader, ListsBody }
 })
 export default class extends Vue {
-
   @Prop({ default: () => [] }) private readonly data!: object[]
 
   @Prop({ default: () => {} }) private readonly layout?: ILayout
 
+  @Prop({ default: false }) private readonly expand!: boolean
   // 展开状态
   private expandParams = {
     isExpand: false,
@@ -61,7 +61,15 @@ export default class extends Vue {
             on: this.$listeners,
             scopedSlots
           }
-          bodyVnodes.push(<lists-body v-show={this.expandParams.columnID === list.$columnID && this.expandParams.isExpand} {...extraDataAttrs}></lists-body>)
+          bodyVnodes.push(
+            <lists-body
+              v-show={
+                this.expandParams.columnID === list.$columnID &&
+                this.expandParams.isExpand
+              }
+              {...extraDataAttrs}
+            ></lists-body>
+          )
         })
       }
       return bodyVnodes
@@ -70,15 +78,21 @@ export default class extends Vue {
     const attrs = {
       props: {
         data: this.data,
+        expand: this.expand,
         layout
       },
       scopedSlots
     }
-    return  (
-        <div class="el-lists_single">
-          <lists-header {...attrs} {... { on: {  ...this.$listeners, 'expand-change': this.handleExpandChange } }}></lists-header>
-          {renderBody(this.data)}
-        </div>
-      )
+    return (
+      <div class="el-lists_single">
+        <lists-header
+          {...attrs}
+          {...{
+            on: { ...this.$listeners, 'expand-change': this.handleExpandChange }
+          }}
+        ></lists-header>
+        {renderBody(this.data)}
+      </div>
+    )
   }
 }

@@ -10,8 +10,14 @@ import { IListData } from 'types/index.d'
 export default class extends Vue {
   @Prop({ default: () => {} }) private readonly data!: IListData
 
+  @Prop({ default: false }) private readonly expand!: boolean
   // 展开状态
   private isExpand = false
+
+  created() {
+    this.isExpand = this.expand
+    this.emitExpandChangeEvent()
+  }
 
   private toggleExpand() {
     this.isExpand = !this.isExpand

@@ -1,6 +1,7 @@
 <template>
   <div class="el-lists-container">
     <el-lists
+      :expand="true"
       :data="listData"
       :columns="columns"
       :rowProps="rowProps"

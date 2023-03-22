@@ -1,13 +1,14 @@
 <template>
   <div class="el-lists-single-container">
     <el-lists-single
+      :expand="true"
       :data="singleListData"
       :rows="singleRows"
       :rowProps="singleRowProps"
     >
-      <template #opera="row">
-        <el-button type="primary" size="small">
-          {{ row.data.status }}
+      <template #opera="{data}">
+        <el-button type="primary" size="small" @click="handleViewRow(data)">
+          {{ data.$rowData.nodeName }}
         </el-button>
         <div>操作栏占位</div>
         <div>又一个占位</div>
@@ -26,13 +27,25 @@ export default {
       },
       singleListData: {
         data: {
-          title: 'title',
+          nodeName: '标题1',
           status: 'status',
           statusType: 'success',
           childData1: '数据1',
-          childData2: '数据2'
+          childData2: '数据2',
+          extra: [
+            {
+              childData1: '额外的数据1',
+              childData2: '额外的数据2'
+            }
+          ]
+        },
+        data123: {
+          nodeName: '标题2',
+          name: '刘小凡',
+          age: '18'
         },
         data1: {
+          nodeName: '标题3',
           childData3: '数据3',
           childData4: '数据4'
         }
@@ -48,8 +61,8 @@ export default {
         {
           prop: 'data123',
           cell: [
-            { prop: 'childData1', label: '数据项1' },
-            { prop: 'childData2', label: '数据项2' }
+            { prop: 'name', label: '姓名' },
+            { prop: 'age', label: '年龄' }
           ]
         },
         {
@@ -60,6 +73,11 @@ export default {
           ]
         }
       ]
+    }
+  },
+  methods: {
+    handleViewRow(data) {
+      console.log(data, '行数据')
     }
   }
 }

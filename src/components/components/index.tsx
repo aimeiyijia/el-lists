@@ -53,6 +53,9 @@ export default class extends Vue {
   @Prop({ default: () => defaultRowProps })
   private readonly rowProps!: IRowProps
 
+  // 默认情况下是否展开同类list
+  @Prop({ default: false }) private readonly expand!: boolean
+
   // 表格高度
   @Prop({ default: false }) private readonly height!: string | boolean
 
@@ -213,13 +216,13 @@ export default class extends Vue {
         height: this.height
       }
     }
-
     const renderLists = () => {
       return cloneDeep(this.listsData).map(list => {
         const attrs = {
           props: {
             ...this.$attrs,
-            data: list
+            data: list,
+            expand: this.expand
           },
           on: this.$listeners,
           scopedSlots: this.$scopedSlots
