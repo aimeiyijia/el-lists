@@ -7592,6 +7592,10 @@ var lists_header_default_1 = /** @class */function (_super) {
     _this.isExpand = false;
     return _this;
   }
+  default_1.prototype.created = function () {
+    this.isExpand = this.expand;
+    this.emitExpandChangeEvent();
+  };
   default_1.prototype.toggleExpand = function () {
     this.isExpand = !this.isExpand;
     this.emitExpandChangeEvent();
@@ -7696,6 +7700,9 @@ var lists_header_default_1 = /** @class */function (_super) {
   __decorate([Prop({
     default: function () {}
   })], default_1.prototype, "data", void 0);
+  __decorate([Prop({
+    default: false
+  })], default_1.prototype, "expand", void 0);
   __decorate([Emit('expand-change')], default_1.prototype, "emitExpandChangeEvent", null);
   default_1 = __decorate([vue_class_component_esm({
     name: 'ListsHeader',
@@ -12468,6 +12475,7 @@ var lists_base_default_1 = /** @class */function (_super) {
     var attrs = {
       props: {
         data: this.data,
+        expand: this.expand,
         layout: layout
       },
       scopedSlots: scopedSlots
@@ -12490,6 +12498,9 @@ var lists_base_default_1 = /** @class */function (_super) {
   __decorate([Prop({
     default: function () {}
   })], default_1.prototype, "layout", void 0);
+  __decorate([Prop({
+    default: false
+  })], default_1.prototype, "expand", void 0);
   default_1 = __decorate([vue_class_component_esm({
     name: 'ListsBase',
     components: {
@@ -12665,7 +12676,8 @@ var components_default_1 = /** @class */function (_super) {
       return cloneDeep_default()(_this.listsData).map(function (list) {
         var attrs = {
           props: __assign(__assign({}, _this.$attrs), {
-            data: list
+            data: list,
+            expand: _this.expand
           }),
           on: _this.$listeners,
           scopedSlots: _this.$scopedSlots
@@ -12730,6 +12742,9 @@ var components_default_1 = /** @class */function (_super) {
       return defaultRowProps;
     }
   })], default_1.prototype, "rowProps", void 0);
+  __decorate([Prop({
+    default: false
+  })], default_1.prototype, "expand", void 0);
   __decorate([Prop({
     default: false
   })], default_1.prototype, "height", void 0);
@@ -12924,6 +12939,7 @@ var el_lists_single_default_1 = /** @class */function (_super) {
     get: function () {
       var _this = this;
       var listsData = [];
+      var extraProp = this.mergeProps.extraProp;
       var mergeRows = this.mergeDataToRows(this.data, this.rows);
       mergeRows.forEach(function (o) {
         var cellData = [];
@@ -12946,19 +12962,32 @@ var el_lists_single_default_1 = /** @class */function (_super) {
     configurable: true
   });
   default_1.prototype.mergeDataToRows = function (data, cols) {
+    var _this = this;
     var _a = this.mergeProps,
       titleProp = _a.titleProp,
       statusProp = _a.statusProp,
-      statusTypeProp = _a.statusTypeProp;
+      statusTypeProp = _a.statusTypeProp,
+      extraProp = _a.extraProp;
     var cloneData = cloneDeep_default()(data);
     var cloneCols = cloneDeep_default()(cols);
     return cloneCols.map(function (o) {
       // 取出来行对应的值
       var data = cloneData[o.prop];
+      var singleColumnExtraData = [];
+      var singleColumnExtra = getValueByKey(extraProp, data);
+      if (singleColumnExtra) {
+        singleColumnExtra.forEach(function (m) {
+          singleColumnExtraData.push(_this.mergerRowDataToCell({
+            cell: o.cell,
+            $rowData: m
+          }));
+        });
+      }
       Object.assign(o, {
         $columnTitle: getValueByKey(titleProp, data),
         $columnStatus: getValueByKey(statusProp, data),
         $columnStatusType: getValueByKey(statusTypeProp, data),
+        $columnExtraData: singleColumnExtraData,
         $rowData: data || {}
       });
       return o;

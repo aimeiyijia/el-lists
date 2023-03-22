@@ -23,6 +23,7 @@ export default class extends Vue {
     private readonly listsData;
     private readonly hasDataFlag;
     private readonly rowProps;
+    private readonly expand;
     private readonly height;
     readonly directives?: boolean | IHeigthDirectives;
     readonly pagination: Pagination | undefined | boolean;
