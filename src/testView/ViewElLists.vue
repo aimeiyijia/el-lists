@@ -38,9 +38,10 @@
       <template #topRight>
         <span>右上角</span>
       </template>
-      <template #expand>
+      <!-- expand的优先级高于extra配置项 -->
+      <!-- <template #expand>
         <span>展开插槽</span>
-      </template>
+      </template> -->
       <template #opera="row">
         <el-button type="primary" size="small">
           {{ row.data.status }}
