@@ -13,7 +13,6 @@
     "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6"
   },
   "dependencies": {
-    "format-money-js": "^1.5.5",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "tippy.js": "^6.3.1",
