@@ -12416,6 +12416,7 @@ var styles = __webpack_require__("c2cd");
 
 
 
+
 var lists_base_default_1 = /** @class */function (_super) {
   __extends(default_1, _super);
   function default_1() {
@@ -12438,6 +12439,7 @@ var lists_base_default_1 = /** @class */function (_super) {
   default_1.prototype.render = function (h) {
     var _this = this;
     var scopedSlots = this.$scopedSlots;
+    var expand = scopedSlots.expand;
     var layout = this.layout || {};
     var renderBody = function (list) {
       var bodyVnodes = [];
@@ -12450,26 +12452,44 @@ var lists_base_default_1 = /** @class */function (_super) {
         scopedSlots: scopedSlots
       };
       bodyVnodes.push(h("lists-body", helper_default()([{}, attrs])));
-      if (list.$columnExtraData) {
-        list.$columnExtraData.map(function (e) {
-          var cloneList = cloneDeep_default()(list);
-          cloneList.$cellData = e;
-          var extraDataAttrs = {
-            props: {
-              data: cloneList,
-              layout: layout
-            },
-            on: _this.$listeners,
-            scopedSlots: scopedSlots
-          };
-          bodyVnodes.push(h("lists-body", helper_default()([{
-            "directives": [{
-              name: "show",
-              value: _this.expandParams.columnID === list.$columnID && _this.expandParams.isExpand
-            }]
-          }, extraDataAttrs])));
-        });
-      }
+      var renderSlotsOrExtraData = function () {
+        if (expand) {
+          return expand({
+            data: list,
+            h: h
+          });
+        }
+        if (list.$columnExtraData) {
+          var Vnodes_1 = [];
+          list.$columnExtraData.map(function (e) {
+            var cloneList = cloneDeep_default()(list);
+            cloneList.$cellData = e;
+            var extraDataAttrs = {
+              props: {
+                data: cloneList,
+                layout: layout
+              },
+              on: _this.$listeners,
+              scopedSlots: scopedSlots
+            };
+            Vnodes_1.push(h("lists-body", helper_default()([{
+              "directives": [{
+                name: "show",
+                value: _this.expandParams.columnID === list.$columnID && _this.expandParams.isExpand
+              }]
+            }, extraDataAttrs])));
+          });
+          return Vnodes_1;
+        }
+        return [];
+      };
+      bodyVnodes.push(h("div", {
+        "class": "el-lists_expand",
+        "directives": [{
+          name: "show",
+          value: _this.expandParams.columnID === list.$columnID && _this.expandParams.isExpand
+        }]
+      }, [renderSlotsOrExtraData()]));
       return bodyVnodes;
     };
     var attrs = {
@@ -12496,7 +12516,9 @@ var lists_base_default_1 = /** @class */function (_super) {
     }
   })], default_1.prototype, "data", void 0);
   __decorate([Prop({
-    default: function () {}
+    default: function () {
+      return {};
+    }
   })], default_1.prototype, "layout", void 0);
   __decorate([Prop({
     default: false
@@ -12505,7 +12527,8 @@ var lists_base_default_1 = /** @class */function (_super) {
     name: 'ListsBase',
     components: {
       ListsHeader: lists_header,
-      ListsBody: lists_body
+      ListsBody: lists_body,
+      Fragment: fragment
     }
   })], default_1);
   return default_1;
@@ -12897,6 +12920,7 @@ var el_lists_default_1 = /** @class */function (_super) {
         listsData: this.listsData,
         hasDataFlag: this.hasData
       }),
+      attrs: this.$attrs,
       on: this.$listeners,
       scopedSlots: this.$scopedSlots
     }]));
