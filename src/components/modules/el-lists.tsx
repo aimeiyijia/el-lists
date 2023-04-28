@@ -66,6 +66,7 @@ export default class extends Mixins(ElListsMergePropsMixins) {
             listsData: this.listsData,
             hasDataFlag: this.hasData
           },
+          attrs: this.$attrs,
           on: this.$listeners,
           scopedSlots: this.$scopedSlots
         }}

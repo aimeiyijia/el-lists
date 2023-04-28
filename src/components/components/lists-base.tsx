@@ -17,7 +17,7 @@ import '../styles/index.scss'
 export default class extends Vue {
   @Prop({ default: () => [] }) private readonly data!: object[]
 
-  @Prop({ default: () => {} }) private readonly layout?: ILayout
+  @Prop({ default: () => ({}) }) private readonly layout?: ILayout
 
   @Prop({ default: false }) private readonly expand!: boolean
   // 展开状态
