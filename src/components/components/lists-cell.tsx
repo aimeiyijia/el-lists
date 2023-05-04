@@ -1,12 +1,8 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
 import ListsCell from './lists-cell'
-import isBoolean from 'lodash/isBoolean'
 
-import tippy from 'tippy.js'
-import 'tippy.js/dist/tippy.css' // optional for styling
-import 'tippy.js/animations/scale-extreme.css'
-import 'tippy.js/themes/light.css'
+import ToolTip from '../shared/toolTip'
 
 import { ICell } from 'types/index.d'
 
@@ -20,36 +16,18 @@ export default class extends Vue {
   @Prop({ default: () => { } }) private readonly data!: ICell
   @Prop({ default: () => [] }) private readonly columnData!: ICell[]
 
-  private instance: any = null
+  private toolTip: any = null
 
-  createTooltip(el: HTMLElement, content: string) {
-    const instance = tippy(el, {
-      allowHTML: true,
-      content,
-      animation: 'scale-extreme',
-      theme: 'light'
-    })
-    return instance
+  mounted() {
+    this.toolTip = new ToolTip(this, 'data')
   }
 
-  isShowTooltip(item: ICell) {
-    const isExit = Object.hasOwnProperty.call(item, 'showTooltip')
-    if (isExit && !isBoolean(item.showTooltip)) return console.error('showTooltip must be boolean')
-    if (!isExit || item.showTooltip) {
-      const box = this.$el.querySelector('.data') as HTMLElement
-      if (box.scrollWidth > box.offsetWidth) {
-        this.instance = this.createTooltip(
-          box,
-          box.innerHTML
-        )
-      }
-    }
+  showTooltip() {
+    this.toolTip && this.toolTip.showTooltip()
   }
 
   hideTooltip() {
-    if (this.instance) {
-      this.instance.destroy()
-    }
+    this.toolTip && this.toolTip.hideTooltip()
   }
 
   render(h: CreateElement): VNode {
@@ -86,7 +64,7 @@ export default class extends Vue {
       <div class="el-lists_item"
         {...{
           on: {
-            mouseover: () => this.isShowTooltip(cellData),
+            mouseover: this.showTooltip,
             mouseout: this.hideTooltip,
             click: () => this.$emit('current-click', {
               data: this.columnData,

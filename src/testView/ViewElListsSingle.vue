@@ -8,7 +8,7 @@
     >
       <template #opera="{data}">
         <el-button type="primary" size="small" @click="handleViewRow(data)">
-          {{ data.$rowData.nodeName }}
+          {{ data.$rowData.statusType }}
         </el-button>
         <div>操作栏占位</div>
         <div>又一个占位</div>
@@ -27,7 +27,8 @@ export default {
       },
       singleListData: {
         data: {
-          nodeName: '标题1',
+          nodeName:
+            '超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长超级长标题1',
           status: 'status',
           statusType: 'success',
           childData1: '数据1',

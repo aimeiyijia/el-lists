@@ -104,6 +104,11 @@
       line-height: 24px;
       font-weight: 700;
       color: #363f4a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 0;
+      flex: 1;
     }
 
     .el-icon-arrow-right,

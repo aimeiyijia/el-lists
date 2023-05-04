@@ -2,6 +2,8 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
 import { Fragment } from 'vue-frag'
 
+import ToolTip from '../shared/toolTip'
+
 import { IListData } from 'types/index.d'
 @Component({
   name: 'ListsHeader',
@@ -14,9 +16,15 @@ export default class extends Vue {
   // 展开状态
   private isExpand = false
 
+  private toolTip: any = null
+
   created() {
     this.isExpand = this.expand
     this.emitExpandChangeEvent()
+  }
+
+  mounted() {
+    this.toolTip = new ToolTip(this, 'title')
   }
 
   private toggleExpand() {
@@ -31,6 +39,14 @@ export default class extends Vue {
       columnID: this.data.$columnID,
       isExpand: this.isExpand
     }
+  }
+
+  showTooltip() {
+    this.toolTip && this.toolTip.showTooltip()
+  }
+
+  hideTooltip() {
+    this.toolTip && this.toolTip.hideTooltip()
   }
 
   render(h: CreateElement): VNode {
@@ -108,7 +124,19 @@ export default class extends Vue {
             </div>
           )}
           {renderInsertMiddle()}
-          {renderTitleSlot() && <div class="title">{renderTitleSlot()}</div>}
+          {renderTitleSlot() && (
+            <div
+              class="title"
+              {...{
+                on: {
+                  mouseover: this.showTooltip,
+                  mouseout: this.hideTooltip
+                }
+              }}
+            >
+              {renderTitleSlot()}
+            </div>
+          )}
           {renderInsertRight()}
         </fragment>
       )
