@@ -13,6 +13,7 @@
     "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6"
   },
   "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
     "normalize.css": "^8.0.1",
     "tippy.js": "^6.3.1",
     "ts-debounce": "^4.0.0",
@@ -28,6 +29,7 @@
     "@types/express": "^4.17.8",
     "@types/jest": "^26.0.15",
     "@types/lodash": "^4.14.168",
+    "@types/lodash.clonedeep": "^4.5.7",
     "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.6",
     "@types/webpack-env": "^1.15.3",

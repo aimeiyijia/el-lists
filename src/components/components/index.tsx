@@ -1,9 +1,8 @@
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
-import { cloneDeep } from '../utils/index'
-import omit from 'lodash/omit'
-import isBoolean from 'lodash/isBoolean'
-import isObject from 'lodash/isObject'
+import cloneDeep from 'lodash.clonedeep'
+import { omit } from '../utils/index'
+import { isBoolean, isObject } from '../utils/types'
 import { Pagination } from 'element-ui'
 
 import '../directives/height-adaptive'
@@ -213,7 +212,7 @@ export default class extends Vue {
         return {}
       }
       return {
-        height: this.height
+        height: this.height as string
       }
     }
     const renderLists = () => {

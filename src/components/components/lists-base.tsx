@@ -1,7 +1,7 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
 import { Fragment } from 'vue-frag'
-import { cloneDeep } from '../utils/index'
+import cloneDeep from 'lodash.clonedeep'
 
 import ListsHeader from './lists-header'
 import ListsBody from './lists-body'

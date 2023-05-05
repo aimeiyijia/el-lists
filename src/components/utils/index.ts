@@ -15,21 +15,31 @@ export function getValueByKey(key: string, row: any) {
   }, row)
 }
 
-// 深拷贝
-export function cloneDeep<T>(source: T): T {
-  return Array.isArray(source)
-    ? source.map(item => cloneDeep(item))
-    : source instanceof Date
-    ? new Date(source.getTime())
-    : source && typeof source === 'object'
-    ? Object.getOwnPropertyNames(source).reduce((o, prop) => {
-        Object.defineProperty(
-          o,
-          prop,
-          Object.getOwnPropertyDescriptor(source, prop)!
-        )
-        o[prop] = cloneDeep((source as { [key: string]: any })[prop])
-        return o
-      }, Object.create(Object.getPrototypeOf(source)))
-    : (source as T)
+export function omit<
+  T extends Record<string, any>,
+  K extends string,
+  K2 extends keyof T
+>(obj: T, keys: (K | K2)[]) {
+  const result = { ...obj }
+
+  keys.forEach(key => {
+    delete result[key]
+  })
+
+  return result as Omit<T, K>
+}
+
+export function omitBy<T extends Record<string, any>, K extends keyof T>(
+  object: T,
+  callback: (value: T[K], key: K) => boolean
+) {
+  const result = { ...object }
+
+  Object.entries(result).forEach(([key, value]) => {
+    const isDrop = callback(value, key as K)
+
+    if (isDrop) delete result[key]
+  })
+
+  return result as Partial<T>
 }

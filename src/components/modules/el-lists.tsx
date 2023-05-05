@@ -1,6 +1,7 @@
 import { Component, Prop, Mixins } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
-import { guid, getValueByKey, cloneDeep } from '../utils/index'
+import cloneDeep from 'lodash.clonedeep'
+import { guid, getValueByKey } from '../utils/index'
 import ElListsIndex from '../components/index'
 import ElListsMergePropsMixins from './mixins/props'
 @Component({
