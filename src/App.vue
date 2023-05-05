@@ -21,7 +21,7 @@ export default {
   components: { ViewElLists, ViewElListsSingle },
   data() {
     return {
-      curComponent: ViewElListsSingle
+      curComponent: ViewElLists
     }
   },
   methods: {

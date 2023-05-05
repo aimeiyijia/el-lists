@@ -33,7 +33,7 @@
   margin-top: 16px;
   background-color: #fff;
   border-radius: 4px;
-  transition: all .2s;
+  transition: all 0.2s;
 
   &:nth-child(1) {
     margin-top: 0;
@@ -42,7 +42,7 @@
   .el-lists_header {
     padding: 8px 25px;
     display: flex;
-    background: linear-gradient(to bottom, #FEFEFF, #F7F7FF);
+    background: linear-gradient(to bottom, #fefeff, #f7f7ff);
     align-items: center;
 
     .header_left,
@@ -64,7 +64,7 @@
     .status {
       display: inline-block;
       color: #fff;
-      background-color: #92A5FC;
+      background-color: #92a5fc;
       height: 24px;
       line-height: 24px;
       margin-right: 12px;
@@ -75,27 +75,27 @@
       flex: 0 0 auto;
 
       &.success {
-        background-color: #00C1CE;
+        background-color: #00c1ce;
       }
 
       &.error {
-        background-color: #FF637B;
+        background-color: #ff637b;
       }
 
       &.warning {
-        background-color: #EEC08E;
+        background-color: #eec08e;
       }
 
       &.wait {
-        background-color: #92A5FC;
+        background-color: #92a5fc;
       }
 
       &.back {
-        background-color: #C0C4CC;
+        background-color: #c0c4cc;
       }
 
       &.other {
-        background-color: #FF9BAA;
+        background-color: #ff9baa;
       }
     }
 
@@ -104,11 +104,14 @@
       line-height: 24px;
       font-weight: 700;
       color: #363f4a;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      width: 0;
-      flex: 1;
+
+      &.title-tooltip {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 0;
+        flex: 1;
+      }
     }
 
     .el-icon-arrow-right,
@@ -125,10 +128,8 @@
   &:hover {
     border-color: #92a5fc;
     box-shadow: 0 0 10px #d5d9eb;
-    transition: all .2s
+    transition: all 0.2s;
   }
-
-
 }
 
 .el-lists_main {

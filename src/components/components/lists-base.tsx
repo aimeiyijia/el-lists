@@ -38,6 +38,7 @@ export default class extends Vue {
 
   render(h: CreateElement): VNode {
     const scopedSlots = this.$scopedSlots
+    const { titleToolTip = false } = this.$attrs.rowProps as any
     const { expand } = scopedSlots
     const layout = this.layout || {}
     const renderBody = (list: any) => {
@@ -106,6 +107,7 @@ export default class extends Vue {
       props: {
         data: this.data,
         expand: this.expand,
+        titleToolTip,
         layout
       },
       scopedSlots

@@ -13,6 +13,7 @@ export default class extends Vue {
   @Prop({ default: () => {} }) private readonly data!: IListData
 
   @Prop({ default: false }) private readonly expand!: boolean
+  @Prop({ default: false }) private readonly titleToolTip!: boolean
   // 展开状态
   private isExpand = false
 
@@ -24,7 +25,9 @@ export default class extends Vue {
   }
 
   mounted() {
-    this.toolTip = new ToolTip(this, 'title')
+    if (this.titleToolTip) {
+      this.toolTip = new ToolTip(this, 'title')
+    }
   }
 
   private toggleExpand() {
@@ -126,7 +129,9 @@ export default class extends Vue {
           {renderInsertMiddle()}
           {renderTitleSlot() && (
             <div
-              class="title"
+              class={
+                ['title', this.titleToolTip ? 'title-tooltip' : '']
+              }
               {...{
                 on: {
                   mouseover: this.showTooltip,

@@ -17,7 +17,6 @@ export default class extends Mixins(ElListsMergePropsMixins) {
   // 拼装好的数据
   get listsData() {
     const listsData: any[] = []
-    const { extraProp } = this.mergeProps
     const mergeRows = this.mergeDataToRows(this.data, this.rows)
     mergeRows.forEach((o: any) => {
       let cellData: any[] = []

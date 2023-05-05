@@ -224,6 +224,9 @@ export default class extends Vue {
             data: list,
             expand: this.expand
           },
+          attrs: {
+            rowProps: this.rowProps
+          },
           on: this.$listeners,
           scopedSlots: this.$scopedSlots
         }

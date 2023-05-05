@@ -175,8 +175,10 @@ export default {
           title: '标题六'
         }
       ],
-      // 每行的通用的字段在data中的取值key
+      // 行配置项
       rowProps: {
+        titleToolTip: true,
+        // 每行的通用的字段在data中的取值key
         titleProp: 'title123.abc'
         // statusProp: 'status',
         // extraProp: 'extra',
