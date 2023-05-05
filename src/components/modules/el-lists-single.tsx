@@ -1,13 +1,12 @@
 import { Component, Prop, Mixins, Watch } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
-import cloneDeep from 'lodash/cloneDeep'
-import { guid, getValueByKey } from '../utils/index'
-import ElListsBase from '../components/index'
+import { guid, getValueByKey, cloneDeep } from '../utils/index'
+import ElListsIndex from '../components/index'
 import ElListsMergePropsMixins from './mixins/props'
 
 @Component({
   name: 'ElLists',
-  components: { ElListsBase }
+  components: { ElListsIndex }
 })
 export default class extends Mixins(ElListsMergePropsMixins) {
   @Prop({ default: () => [] }) private readonly data!: object[]
@@ -75,7 +74,7 @@ export default class extends Mixins(ElListsMergePropsMixins) {
 
   render(h: CreateElement): VNode {
     return (
-      <el-lists-base
+      <el-lists-index
         {...{
           props: {
             ...this.$attrs,
@@ -85,7 +84,7 @@ export default class extends Mixins(ElListsMergePropsMixins) {
           on: this.$listeners,
           scopedSlots: this.$scopedSlots
         }}
-      ></el-lists-base>
+      ></el-lists-index>
     )
   }
 }

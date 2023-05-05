@@ -6,19 +6,21 @@ import ToolTip from '../shared/toolTip'
 
 import { ICell } from 'types/index.d'
 
-
-
 @Component({
   name: 'ListsCell',
   components: { ListsCell }
 })
 export default class extends Vue {
-  @Prop({ default: () => { } }) private readonly data!: ICell
+  @Prop({ default: () => {} }) private readonly data!: ICell
   @Prop({ default: () => [] }) private readonly columnData!: ICell[]
 
   private toolTip: any = null
 
   mounted() {
+    this.createTootip()
+  }
+
+  createTootip() {
     this.toolTip = new ToolTip(this, 'data')
   }
 
@@ -61,22 +63,22 @@ export default class extends Vue {
     }
 
     return (
-      <div class="el-lists_item"
+      <div
+        class="el-lists_item"
         {...{
           on: {
             mouseover: this.showTooltip,
             mouseout: this.hideTooltip,
-            click: () => this.$emit('current-click', {
-              data: this.columnData,
-              cellData
-            })
+            click: () =>
+              this.$emit('current-click', {
+                data: this.columnData,
+                cellData
+              })
           }
-        }}>
-        <span class="name">{renderTitle()}</span>
-        ：
-        <span class={['data', cellData.prop]}>
-          {renderValue()}
-        </span>
+        }}
+      >
+        <span class="name">{renderTitle()}</span>：
+        <span class={['data', cellData.prop]}>{renderValue()}</span>
       </div>
     )
   }

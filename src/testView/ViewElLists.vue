@@ -119,7 +119,10 @@ export default {
           name3: { name: '多层对象' },
           status: '等待结果中',
           statusType: 'wait',
-          title: '标题三'
+          title: '标题三',
+          title123: {
+            abc: '我是超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的标题'
+          },
         },
         {
           name: '测试3',
@@ -177,7 +180,8 @@ export default {
       ],
       // 行配置项
       rowProps: {
-        titleToolTip: true,
+        // 标题过长时省略显示、鼠标移上去后显示toolTip
+        titleTooltip: true,
         // 每行的通用的字段在data中的取值key
         titleProp: 'title123.abc'
         // statusProp: 'status',

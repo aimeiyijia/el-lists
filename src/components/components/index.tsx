@@ -1,6 +1,6 @@
 import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
-import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from '../utils/index'
 import omit from 'lodash/omit'
 import isBoolean from 'lodash/isBoolean'
 import isObject from 'lodash/isObject'

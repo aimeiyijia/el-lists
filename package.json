@@ -13,7 +13,6 @@
     "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "tippy.js": "^6.3.1",
     "ts-debounce": "^4.0.0",

@@ -1,7 +1,7 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
 import { Fragment } from 'vue-frag'
-import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from '../utils/index'
 
 import ListsHeader from './lists-header'
 import ListsBody from './lists-body'
@@ -38,7 +38,7 @@ export default class extends Vue {
 
   render(h: CreateElement): VNode {
     const scopedSlots = this.$scopedSlots
-    const { titleToolTip = false } = this.$attrs.rowProps as any
+    const { titleTooltip = false } = this.$attrs.rowProps as any
     const { expand } = scopedSlots
     const layout = this.layout || {}
     const renderBody = (list: any) => {
@@ -107,7 +107,7 @@ export default class extends Vue {
       props: {
         data: this.data,
         expand: this.expand,
-        titleToolTip,
+        titleTooltip,
         layout
       },
       scopedSlots
