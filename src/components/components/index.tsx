@@ -3,7 +3,7 @@ import { VNode, CreateElement } from 'vue'
 import cloneDeep from 'lodash.clonedeep'
 import { omit } from '../utils/index'
 import { isBoolean, isObject } from '../utils/types'
-import { Pagination } from 'element-ui'
+import type { Pagination, Empty } from 'element-ui'
 
 import '../directives/height-adaptive'
 
@@ -51,6 +51,9 @@ export default class extends Vue {
 
   @Prop({ default: () => defaultRowProps })
   private readonly rowProps!: IRowProps
+
+  @Prop({ default: () => ({}) })
+  private readonly empty!: Empty
 
   // 默认情况下是否展开同类list
   @Prop({ default: false }) private readonly expand!: boolean
@@ -245,13 +248,22 @@ export default class extends Vue {
       })
     }
 
+    console.log(this, 'this')
+
     const decideRender = () => {
       return this.hasData ? (
         <el-scrollbar native={false} noresize={true}>
           {renderLists()}
         </el-scrollbar>
       ) : (
-        <no-data></no-data>
+        <no-data
+          {...{
+            props: {
+              empty: this.empty
+            },
+            scopedSlots: this.$scopedSlots
+          }}
+        ></no-data>
       )
     }
 

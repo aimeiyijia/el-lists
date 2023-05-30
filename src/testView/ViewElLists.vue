@@ -5,6 +5,7 @@
       :data="listData"
       :columns="columns"
       :rowProps="rowProps"
+      :empty="empty"
       :layout="layout"
       :pagination="pagination"
       :directives="{
@@ -14,6 +15,9 @@
       @current-click="currentClick"
       @expand="currentClick"
     >
+      <!-- <template #emptyDefault>Default 插槽</template>
+      <template #emptyImage>Image 插槽</template>
+      <template #emptyDescription>Description 插槽</template> -->
       <template #insertLeft>左</template>
       <template #insertMiddle>中</template>
       <template #insertRight>右</template>
@@ -187,6 +191,11 @@ export default {
         // statusProp: 'status',
         // extraProp: 'extra',
         // statusTypeProp: 'statusType',
+      },
+      empty: {
+        image: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
+        imageSize: 56,
+        description: '自定义的描述信息'
       },
       columns: [
         {
