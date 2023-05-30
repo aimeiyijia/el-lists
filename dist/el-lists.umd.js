@@ -4682,16 +4682,65 @@ external_vue_default.a.directive('height-adaptive', directive);
 // CONCATENATED MODULE: ./src/components/components/no-data.tsx
 
 
+
+
 var no_data_default_1 = /** @class */function (_super) {
   __extends(default_1, _super);
   function default_1() {
     return _super !== null && _super.apply(this, arguments) || this;
   }
   default_1.prototype.render = function (h) {
+    var _a = this.$scopedSlots,
+      emptyImage = _a.emptyImage,
+      emptyDefault = _a.emptyDefault,
+      emptyDescription = _a.emptyDescription;
+    // 组装插槽及作用域插槽
+    var scopedSlots = {};
+    if (emptyDefault) {
+      Object.assign(scopedSlots, {
+        default: emptyDefault
+      });
+    }
+    if (emptyDescription) {
+      Object.assign(scopedSlots, {
+        description: emptyDescription
+      });
+    }
+    var slots = [];
+    var customScopedSlots = {};
+    var _loop_1 = function (slot) {
+      slots.push({
+        name: slot,
+        value: [h('template')]
+      });
+      // 插槽额外增加h函数，便于生成vnode
+      customScopedSlots[slot] = function () {
+        return scopedSlots[slot]({
+          h: h
+        });
+      };
+    };
+    for (var slot in scopedSlots) {
+      _loop_1(slot);
+    }
     return h("div", {
       "class": "el-lists_nodata"
-    }, [h("el-empty")]);
+    }, [h("el-empty", helper_default()([{}, {
+      props: this.empty,
+      scopedSlots: __assign({
+        image: emptyImage
+      }, customScopedSlots)
+    }]), [slots.map(function (o) {
+      return h("template", {
+        "slot": o.name
+      }, [o.value]);
+    })])]);
   };
+  __decorate([Prop({
+    default: function () {
+      return {};
+    }
+  })], default_1.prototype, "empty", void 0);
   default_1 = __decorate([vue_class_component_esm({
     name: 'NOData'
   })], default_1);
@@ -9983,6 +10032,7 @@ var PagStore = /** @class */function () {
 
 
 
+
 var defaultRowProps = {
   titleProp: 'title',
   statusProp: 'status',
@@ -10133,13 +10183,19 @@ var components_default_1 = /** @class */function (_super) {
         config: omit(_this.defPagination, ['pageSize', 'currentPage'])
       });
     };
+    console.log(this, 'this');
     var decideRender = function () {
       return _this.hasData ? h("el-scrollbar", {
         "attrs": {
           "native": false,
           "noresize": true
         }
-      }, [renderLists()]) : h("no-data");
+      }, [renderLists()]) : h("no-data", helper_default()([{}, {
+        props: {
+          empty: _this.empty
+        },
+        scopedSlots: _this.$scopedSlots
+      }]));
     };
     return h("div", {
       "class": "el-lists",
@@ -10182,6 +10238,11 @@ var components_default_1 = /** @class */function (_super) {
       return defaultRowProps;
     }
   })], default_1.prototype, "rowProps", void 0);
+  __decorate([Prop({
+    default: function () {
+      return {};
+    }
+  })], default_1.prototype, "empty", void 0);
   __decorate([Prop({
     default: false
   })], default_1.prototype, "expand", void 0);
@@ -10336,7 +10397,7 @@ var el_lists_default_1 = /** @class */function (_super) {
       props: __assign(__assign({}, this.$attrs), {
         rowProps: this.mergeProps,
         listsData: this.listsData,
-        hasDataFlag: this.hasData
+        hasDataFlag: false
       }),
       attrs: this.$attrs,
       on: this.$listeners,

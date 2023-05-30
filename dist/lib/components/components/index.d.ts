@@ -1,6 +1,6 @@
 import { Vue } from 'vue-property-decorator';
 import { VNode, CreateElement } from 'vue';
-import { Pagination } from 'element-ui';
+import type { Pagination } from 'element-ui';
 import '../directives/height-adaptive';
 import '../styles/index.scss';
 export declare class ElListsDefPagination {
@@ -23,6 +23,7 @@ export default class extends Vue {
     private readonly listsData;
     private readonly hasDataFlag;
     private readonly rowProps;
+    private readonly empty;
     private readonly expand;
     private readonly height;
     readonly directives?: boolean | IHeigthDirectives;
