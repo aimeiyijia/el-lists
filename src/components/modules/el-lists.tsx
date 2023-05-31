@@ -2,6 +2,7 @@ import { Component, Prop, Mixins } from 'vue-property-decorator'
 import { VNode, CreateElement } from 'vue'
 import cloneDeep from 'lodash.clonedeep'
 import { guid, getValueByKey } from '../utils/index'
+import { judgeAndMask } from '../utils/maskData'
 import ElListsIndex from '../components/index'
 import ElListsMergePropsMixins from './mixins/props'
 @Component({
@@ -12,6 +13,9 @@ export default class extends Mixins(ElListsMergePropsMixins) {
   @Prop({ default: () => [] }) private readonly data!: object[]
 
   @Prop({ default: () => [] }) private readonly columns!: object[]
+
+  // 更加统一化的列配置项
+  @Prop({ type: Object, default: () => {} }) readonly colAttrs?: object
 
   // 拼装好的数据
   get listsData() {
@@ -49,8 +53,11 @@ export default class extends Mixins(ElListsMergePropsMixins) {
   transformDataToListData(o: any) {
     const cellData: any[] = []
     cloneDeep(this.columns).forEach((c: any) => {
+      const mergeCols = Object.assign({}, this.colAttrs, c)
+      const { mask = true, prop } = mergeCols
       const cols: any = { $columnsValue: '' }
-      cols.$columnsValue = getValueByKey(c.prop, o)
+      const value = getValueByKey(prop, o)
+      cols.$columnsValue = mask ? judgeAndMask(value) : value
       Object.assign(cols, c)
       cellData.push(cols)
     })
@@ -65,7 +72,7 @@ export default class extends Mixins(ElListsMergePropsMixins) {
             ...this.$attrs,
             rowProps: this.mergeProps,
             listsData: this.listsData,
-            hasDataFlag: false
+            hasDataFlag: this.hasData
           },
           attrs: this.$attrs,
           on: this.$listeners,

@@ -5,6 +5,7 @@
       :data="listData"
       :columns="columns"
       :rowProps="rowProps"
+      :col-attrs="{mask: true}"
       :empty="empty"
       :layout="layout"
       :pagination="pagination"
@@ -66,7 +67,7 @@ export default {
         {
           name: '测试',
           name1: 111111,
-          name2: 2,
+          name2: '1456723200@qq.com',
           name3: { name: '多层对象' },
           name4: 4,
           // 内置 状态描述
@@ -126,7 +127,7 @@ export default {
           title: '标题三',
           title123: {
             abc: '我是超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的超级长的标题'
-          },
+          }
         },
         {
           name: '测试3',
@@ -193,7 +194,8 @@ export default {
         // statusTypeProp: 'statusType',
       },
       empty: {
-        image: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
+        image:
+          'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
         imageSize: 56,
         description: '自定义的描述信息'
       },

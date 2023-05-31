@@ -248,8 +248,6 @@ export default class extends Vue {
       })
     }
 
-    console.log(this, 'this')
-
     const decideRender = () => {
       return this.hasData ? (
         <el-scrollbar native={false} noresize={true}>
