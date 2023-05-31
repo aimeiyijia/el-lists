@@ -4,6 +4,7 @@ declare const default_base: import("vue-class-component/lib/declarations").VueCl
 export default class extends default_base {
     private readonly data;
     private readonly columns;
+    readonly colAttrs?: object;
     get listsData(): any[];
     get hasData(): boolean;
     transformDataToListData(o: any): any[];
