@@ -44,6 +44,8 @@
     display: flex;
     background: linear-gradient(to bottom, #fefeff, #f7f7ff);
     align-items: center;
+    position: relative;
+    z-index: 1;
 
     .header_left,
     .header_right {
